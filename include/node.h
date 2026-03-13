@@ -1,20 +1,13 @@
 #pragma once
 #include <cstddef>
 
+// NODE FOR SINGLY LINKED LIST
 template <typename T>
 struct Node
 {
-    T x;
-    Node *prev;
-    Node *next;
+    T data;
+    Node<T> *next;
 
-    Node()
-    {
-        prev = next = this;
-    }
-
-    Node(const T &x) : x(x)
-    {
-        prev = next = this;
-    }
+    Node(const T &x, Node *n = nullptr)
+        : data(x), next(n) {}
 };
