@@ -39,6 +39,8 @@ int main()
     std::vector<long long> sizes = {1000, 10000, 100000, 1000000, 100000000};
     // 1,000 - 10,000 - 100,000 - 1,000,000 - 100,000,000
 
+    std::cout << "FIFO QUEUE: SINGLY LINKED LIST" << std::endl;
+
     std::cout << std::left << std::setw(12) << "Elements"
               << std::setw(15) << "Enqueue Time"
               << std::setw(15) << "Dequeue Time"

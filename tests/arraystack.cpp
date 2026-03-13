@@ -28,7 +28,6 @@ void run_benchmark(long long N)
     auto end_remove = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff_remove = end_remove - start_remove;
 
-    // Print results in a table format
     std::cout << std::setw(12) << N
               << std::setw(15) << diff_add.count()
               << std::setw(15) << diff_remove.count()
@@ -37,8 +36,10 @@ void run_benchmark(long long N)
 
 int main()
 {
-    std::vector<long long> sizes = {1000, 10000, 100000, 1000000};
+    std::vector<long long> sizes = {1000, 10000, 100000, 1000000, 100000000};
     // 1,000 - 10,000 - 100,000 - 1,000,000 - 100,000,000
+
+    std::cout << "FILO QUEUE: ARRAY STACK" << std::endl;
 
     std::cout << std::left << std::setw(12) << "Elements"
               << std::setw(15) << "Add Time"
