@@ -11,7 +11,7 @@ private:
 
     void resize()
     {
-        size_t newCap = (n == 0) ? 1 : 2 * n;
+        size_t newCap = (n == 0) ? 1 : (n < 100 ? n + 1 : 2 * n);
         array<T> b(newCap);
         for (size_t i = 0; i < n; i++)
             b[i] = arr[i];
@@ -51,11 +51,16 @@ public:
     T remove(const size_t i) override
     {
         T removed = arr[i];
+
         for (size_t j = i; j < n - 1; j++)
             arr[j] = arr[j + 1];
+
+        arr[n - 1] = T();
+
         n--;
-        if (arr.length >= 3 * n && n > 0)
+        if (arr.length >= 2 * n && n > 0)
             resize();
+
         return removed;
     }
 };

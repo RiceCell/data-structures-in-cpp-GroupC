@@ -37,8 +37,8 @@ void run_benchmark(long long N)
 
 int main()
 {
-    std::vector<long long> sizes = {10000, 100000, 1000000, 100000000};
-    // 10,000 - 100,000 - 1,000,000 - 100,000,000
+    std::vector<long long> sizes = {10000, 100000, 1000000, 100000000, 1000000000};
+    // 10,000 - 100,000 - 1,000,000 - 100,000,000 - 1,000,000,000
 
     std::cout << std::left << std::setw(12) << "Elements"
               << std::setw(15) << "Add Time"
