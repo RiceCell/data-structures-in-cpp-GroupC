@@ -108,7 +108,9 @@ public:
         tail = u;
         n++;
 
-        heal_cycles();
+        if (tail && tail->next != nullptr)
+            heal_cycles();
+
         return x;
     }
 
