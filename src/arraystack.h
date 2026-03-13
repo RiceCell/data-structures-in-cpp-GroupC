@@ -1,5 +1,3 @@
-// RUSSEL's
-
 #pragma once
 #include "array.h"
 #include "list.h"
@@ -9,63 +7,54 @@ class ArrayStack : public List<T>
 {
 private:
     array<T> arr;
-    size_t size;
+    size_t n;
 
     void resize()
     {
-        size_t newCap = (arr.length == 0) ? 1 : arr.length * 2; // Use arr.length for the calculation, not size
-        if (size > 0 && arr.length >= 3 * size)
-        {
-            newCap = arr.length / 2;
-        }
-
+        size_t newCap = (n == 0) ? 1 : 2 * n;
         array<T> b(newCap);
-        for (size_t k = 0; k < size; k++)
-        {
-            b[k] = arr[k];
-        }
-        arr = b; //  uses custom assignment operator
+        for (size_t i = 0; i < n; i++)
+            b[i] = arr[i];
+        arr = b;
     }
 
 public:
-    ArrayStack(size_t capacity = 1) : arr(capacity), size(0) {}
+    ArrayStack(size_t capacity = 1) : arr(capacity), n(0) {}
 
     size_t size() const override
     {
-        return size;
+        return n;
     }
 
-    T get(size_t i) const override
+    T get(const size_t i) const override
     {
         return arr[i];
     }
 
-    T set(size_t i, const T &x) override
+    T set(const size_t i, const T &x) override
     {
         T y = arr[i];
         arr[i] = x;
         return y;
     }
 
-    void add(size_t i, const T &x) override
+    void add(const size_t i, const T &x) override
     {
-        assert(i < arr.length);
-        if (size + 1 > arr.length)
+        if (n + 1 > arr.length)
             resize();
-        for (size_t j = size; j > i; j--)
+        for (size_t j = n; j > i; j--)
             arr[j] = arr[j - 1];
         arr[i] = x;
-        size++;
+        n++;
     }
 
-    T remove(size_t i) override
+    T remove(const size_t i) override
     {
-        assert(i < arr.length);
         T removed = arr[i];
-        for (size_t j = i; j < size - 1; j++)
+        for (size_t j = i; j < n - 1; j++)
             arr[j] = arr[j + 1];
-        size--;
-        if (arr.length >= 3 * size && size > 0)
+        n--;
+        if (arr.length >= 3 * n && n > 0)
             resize();
         return removed;
     }

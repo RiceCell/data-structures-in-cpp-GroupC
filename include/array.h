@@ -1,5 +1,4 @@
-// array wrapper
-#include <cassert>
+#include <cassert> // array wrapper
 #include <cstddef>
 
 template <typename T>
