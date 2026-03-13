@@ -1,6 +1,10 @@
-// ==========================================
-// ============== FILO Queue ================
-// ==========================================
+
+// FILO Queue: An array-based stack
+
+// TWISTS:
+//   1. Ghost Scrubbing  — zeroes out vacated memory on remove and resize to prevent data lingering
+//   2. Boundary Guarding — safe get/set access that returns default values instead of crashing
+//   3. Allocation Telemetry — tracks internal resize events to monitor growth efficiency
 
 #pragma once
 #include <iostream>
@@ -23,6 +27,8 @@ private:
         array<T> b(newCap);
         for (size_t i = 0; i < n; i++)
             b[i] = arr[i];
+
+        // Clean slate for new capacity
         for (size_t i = n; i < newCap; i++)
             b[i] = T();
 
@@ -34,6 +40,7 @@ public:
 
     size_t size() const override { return n; }
 
+    // Safe get with boundary check
     T get(const size_t i) const override
     {
         if (i >= n)
@@ -41,6 +48,7 @@ public:
         return arr[i];
     }
 
+    // Safe set with boundary check
     T set(const size_t i, const T &x) override
     {
         if (i >= n)
@@ -70,6 +78,7 @@ public:
         for (size_t j = i; j < n - 1; j++)
             arr[j] = arr[j + 1];
 
+        // Ghost Scrubbing
         arr[n - 1] = T();
 
         n--;
@@ -77,4 +86,7 @@ public:
             resize();
         return removed;
     }
+
+    // Accessor for Telemetry twist
+    size_t get_resize_count() const { return resize_count; }
 };
