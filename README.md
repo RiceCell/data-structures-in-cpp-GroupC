@@ -208,13 +208,13 @@ Elements     Add Time (s)    Remove Time (s)   Total (s)    Add Merges    Remove
 
 **Merge counter — empirical O(log n) proof:**
 
-| Elements | Add Merges | Remove Merges | Add Merges / Element | log₂(N) |
-|----------|-----------|---------------|---------------------|---------|
-| 1,000 | 6,563 | 9,094 | 6.56 | 10.0 |
-| 10,000 | 85,243 | 135,748 | 8.52 | 13.3 |
-| 100,000 | 1,106,468 | 1,818,090 | 11.06 | 16.6 |
-| 1,000,000 | 13,092,266 | 22,754,210 | 13.09 | 19.9 |
-| 10,000,000 | 149,584,776 | 270,311,261 | 14.96 | 23.3 | 9.1           | ~13.0          | 19.9    |
+| Elements | Add Merges | Remove Merges | Add Merges / Element | Remove Merges / Element | log₂(N) |
+|----------|-----------|---------------|---------------------|------------------------|---------|
+| 1,000 | 6,563 | 9,094 | 6.56 | 9.09 | 10.0 |
+| 10,000 | 85,243 | 135,748 | 8.52 | 13.57 | 13.3 |
+| 100,000 | 1,106,468 | 1,818,090 | 11.06 | 18.18 | 16.6 |
+| 1,000,000 | 13,092,266 | 22,754,210 | 13.09 | 22.75 | 19.9 |
+| 10,000,000 | 149,584,776 | 270,311,261 | 14.96 | 27.03 | 23.3 |
 
 > Merges per element grow as ~0.65 × log₂(N) across all tested scales, which is consistent with expected O(log n) behavior. The constant < 1 is due to the randomized coin flip reducing average path length.
 
