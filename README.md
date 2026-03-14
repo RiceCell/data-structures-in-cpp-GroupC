@@ -163,7 +163,7 @@ Benchmarks measure:
 
 ---
 
-## 📊 Benchmark Results
+## Benchmark Results
 
 Full benchmark results, STL comparisons, merge counter analysis, and absorb timing are documented separately.
 
