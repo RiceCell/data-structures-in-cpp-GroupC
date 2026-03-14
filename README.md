@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=28&pause=1000&color=00FF88&center=true&vCenter=true&width=700&lines=CMSC+123%3A+Data+Structures+and+Algorithms+in+C%2B%2B;Built+from+scratch.+Learned+from+lessons.+With+twists.;From+GROUP+C%3A+Buno%2C+Manlangit%2C+Reyes;Manifesting+pasar+%F0%9F%99%8F" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=22&pause=1000&color=00FF88&center=true&vCenter=true&width=750&multiline=false&lines=CMSC%20123%3A%20Data%20Structures%20and%20Algorithms%20in%20C%2B%2B;Built%20from%20scratch.%20Learned%20from%20lessons.%20With%20twists.;From%20GROUP%20C%3A%20Buno%2C%20Manlangit%2C%20Reyes;Manifesting%20pasar%20%F0%9F%99%8F" alt="Typing SVG" />
 
 # Data Structures in C++
 
