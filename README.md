@@ -295,7 +295,7 @@ See [`LICENSE`](./LICENSE) for the full license text.
 
 | Name | Implementations |
 |------|----------------|
-| Russel Niño Buno | ArrayStack, SLList, MeldableHeap |
+| Russel Niño Buno | ArrayStack, SLList, MeldableHeap, README |
 | Angelo Mari Manlangit | ArrayDeque, DLList, Skiplist, Red-Black Tree |
 | Gian Jefferson Reyes | ChainedHashTable, AdjacencyMatrix |
 
