@@ -15,7 +15,7 @@
 
 ---
 
-## 📖 Table of Contents
+## Table of Contents
 
 1. [➤ About](#-about)
 2. [➤ Data Structures](#-data-structures)
@@ -31,7 +31,7 @@
 
 ---
 
-## 📝 About
+## About
 
 This is a small open-source library of fundamental Abstract Data Types (ADTs) implemented in C++17, written as a course project for **CMSC 123: Data Structures and Algorithms**.
 
@@ -43,7 +43,7 @@ The library is benchmarked at scales from **1,000 to 10,000,000 elements** to de
 
 ---
 
-## 🗂️ Data Structures
+## Data Structures
 
 | ADT | Implementation | File | Twist | Author |
 |-----|---------------|------|-------|--------|
@@ -58,7 +58,7 @@ The library is benchmarked at scales from **1,000 to 10,000,000 elements** to de
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 data-structures-in-cpp-GroupC/
@@ -98,7 +98,7 @@ data-structures-in-cpp-GroupC/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -115,7 +115,7 @@ cd data-structures-in-cpp-GroupC
 
 ---
 
-## 🔨 How to Build
+## How to Build
 
 ### Using Makefile
 
@@ -147,7 +147,7 @@ g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/meldableheap.cpp -o meldheap_test
 
 ---
 
-## 📊 Running Benchmarks
+## Running Benchmarks
 
 Each data structure has its own benchmark in `tests/`. Run them after building:
 
@@ -164,11 +164,11 @@ Benchmarks measure:
 
 ---
 
-## 📈 Benchmark Results
+## Benchmark Results
 
 > Benchmarked on: Windows 11, MSYS2/MinGW64, g++ 13.1, `-O2`
 
-### 🥞 FILO Queue: Array Stack (E-FIX NAKO SOON, ONLY ADDING A PLACEHOLDER)
+### FILO Queue: Array Stack 
 
 ```
 Elements    Add Time (s)    Remove Time (s)   Total (s)
@@ -180,7 +180,7 @@ Elements    Add Time (s)    Remove Time (s)   Total (s)
 10,000,000   ~0.494428        ~0.621236       ~1.11566
 ```
 
-### 🔗 FIFO Queue: Singly Linked List
+### FIFO Queue: Singly Linked List
 
 ```
 Elements    Enqueue Time (s)   Dequeue Time (s)   Total (s)
@@ -194,7 +194,7 @@ Elements    Enqueue Time (s)   Dequeue Time (s)   Total (s)
 
 > Note: LinkedList is significantly slower than ArrayStack due to per-node heap allocation and cache misses. Node Pooling twist reduces this overhead after warmup.
 
-### ⛰️ Priority Queue: Meldable Heap
+### Priority Queue: Meldable Heap
 
 ```
 Elements     Add Time (s)    Remove Time (s)   Total (s)    Add Merges    Remove Merges
@@ -233,7 +233,7 @@ Elements    Absorb Time (s)
 
 ---
 
-## 🌀 The Twists
+## The Twists
 
 Each data structure was given a non-standard twist beyond the textbook implementation.
 
@@ -271,7 +271,7 @@ This empirically shows that the average merge depth per operation is ~0.65 × lo
 
 ---
 
-## 📚 References
+## References
 
 - Morin, P. *Open Data Structures (C++ Edition)*. [opendatastructures.org](https://opendatastructures.org)
   - §3 — Linked Lists
@@ -281,7 +281,7 @@ This empirically shows that the average merge depth per operation is ~0.65 × lo
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **GNU General Public License v3.0**.
 
@@ -291,7 +291,7 @@ See [`LICENSE`](./LICENSE) for the full license text.
 
 ---
 
-## 👥 Authors
+## Authors
 
 **Group C**
 
@@ -306,7 +306,7 @@ See [`LICENSE`](./LICENSE) for the full license text.
 
 <div align="center">
 
-Made with ☕ and too many benchmark runs. Sana perfect sa project, Sir <3
+Made with ☕ and too many benchmark runs. Manifesting perfect sa project Sir <3
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
