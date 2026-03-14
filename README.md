@@ -37,9 +37,9 @@ This is a small open-source library of fundamental Abstract Data Types (ADTs) im
 
 Every implementation is written **from scratch** with the aid of discussion notes from class — no direct copy-pasting from textbooks or external sources. Each data structure also includes a **creative twist**: a non-standard feature that either improves real-world performance, adds safety, or reveals something empirically interesting about the structure's behavior.
 
-The library is benchmarked at scales from **1,000 to 100,000,000 elements** to demonstrate real-world performance characteristics beyond Big-O notation.
+The library is benchmarked at scales from **1,000 to 10,000,000 elements** to demonstrate real-world performance characteristics beyond Big-O notation.
 
-> *"It is worth noting though that Big-O doesn't tell the whole story. Constant factors, cache behavior, and allocation patterns also matter."*
+> *It is worth noting though that Big-O doesn't tell the whole story. Constant factors, cache behavior, and allocation patterns also matter.
 
 ---
 
@@ -47,7 +47,7 @@ The library is benchmarked at scales from **1,000 to 100,000,000 elements** to d
 
 | ADT | Implementation | File | Twist | Author |
 |-----|---------------|------|-------|--------|
-| **FILO Queue / Stack** | Array Stack | `src/arraystack.h` | Ghost Scrubbing, Boundary Guarding, Allocation Telemetry | Russel Niño Buno |
+| **FILO Queue** | Array Stack | `src/arraystack.h` | Ghost Scrubbing, Boundary Guarding, Allocation Telemetry | Russel Niño Buno |
 | **FIFO Queue** | Singly Linked List | `src/sllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection) | Russel Niño Buno |
 | **Priority Queue** | Meldable Heap | `src/meldableheap.h` | Merge Counter as O(log n) proof | Russel Niño Buno |
 | **Deque** | Array Deque | `src/arraydeque.h` | *TO ADD* | Angelo Mari Manlangit |
@@ -133,13 +133,13 @@ make meld_test
 
 ```bash
 # Array Stack
-g++ -std=c++17 -g -Iinclude -Isrc tests/arraystack.cpp -o arraystack_test
+g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/arraystack.cpp -o arraystack_test
 
 # Singly Linked List
-g++ -std=c++17 -g -Iinclude -Isrc tests/sllist.cpp -o sllist_test
+g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/sllist.cpp -o sllist_test
 
 # Meldable Heap
-g++ -std=c++17 -g -Iinclude -Isrc tests/meldableheap.cpp -o meldheap_test
+g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/meldableheap.cpp -o meldheap_test
 
 ```
 
@@ -171,25 +171,25 @@ Benchmarks measure:
 ### 🥞 FILO Queue: Array Stack (E-FIX NAKO SOON, ONLY ADDING A PLACEHOLDER)
 
 ```
-Elements    Add Time       Remove Time    Total
+Elements    Add Time (s)    Remove Time (s)   Total (s)
 ---------------------------------------------------------
-1,000       0.0000X s      0.0000X s      0.0000X s
-10,000      0.000X s       0.000X s       0.000X s
-100,000     0.00X s        0.00X s        0.00X s
-1,000,000   0.0X s         0.0X s         0.0X s
-100,000,000 X.X s          X.X s          X.X s
+1,000        ~1.13e-05        ~4.2e-06        ~1.55e-05
+10,000       ~7.17e-05        ~4.35e-05       ~0.0001152
+100,000      ~0.0003166       ~0.0003475      ~0.0006641
+1,000,000    ~0.0028325       ~0.002509       ~0.0053415
+10,000,000   ~0.494428        ~0.621236       ~1.11566
 ```
 
 ### 🔗 FIFO Queue: Singly Linked List
 
 ```
-Elements    Enqueue Time   Dequeue Time   Total
+Elements    Enqueue Time (s)   Dequeue Time (s)   Total (s)
 ---------------------------------------------------------
-1,000       ~0.0001 s      ~0.0001 s      ~0.0002 s
-10,000      ~0.001 s       ~0.001 s       ~0.002 s
-100,000     ~0.01 s        ~0.008 s       ~0.018 s
-1,000,000   ~0.09 s        ~0.06 s        ~0.15 s
-100,000,000 ~9 s           ~7 s           ~16 s
+1,000         ~7.05e-05         ~1.32e-05        ~8.37e-05
+10,000        ~0.0003012        ~8.16e-05        ~0.0003828
+100,000       ~0.0028018        ~0.001054        ~0.0038558
+1,000,000     ~0.0262555        ~0.0106014       ~0.0368569
+10,000,000    ~4.6761           ~16.0114         ~20.6875
 ```
 
 > Note: LinkedList is significantly slower than ArrayStack due to per-node heap allocation and cache misses. Node Pooling twist reduces this overhead after warmup.
@@ -197,37 +197,39 @@ Elements    Enqueue Time   Dequeue Time   Total
 ### ⛰️ Priority Queue: Meldable Heap
 
 ```
-Elements    Add Time       Remove Time    Total(s)       Add Merges     Remove Merges
+Elements     Add Time (s)    Remove Time (s)   Total (s)    Add Merges    Remove Merges
 ---------------------------------------------------------------------------------------
-1,000       ~0.00015 s     ~0.0002 s      ~0.00035 s     ~6,500         ~9,000
-10,000      ~0.0017 s      ~0.003 s       ~0.005 s       ~85,000        ~135,000
-100,000     ~0.022 s       ~0.041 s       ~0.063 s       ~1,100,000     ~1,800,000
-1,000,000   ~0.27 s        ~0.87 s        ~1.15 s        ~13,000,000    ~22,700,000
+1,000        ~0.0001402       ~0.0001563       ~0.0002965     6563           9094
+10,000       ~0.001421        ~0.0023863       ~0.0038073     85243          135748
+100,000      ~0.0176354       ~0.0347571       ~0.0523925     1106468        1818090
+1,000,000    ~0.224961        ~0.84833         ~1.07329       13092266       22754210
+10,000,000   ~5.88856         ~20.347          ~26.2356       149584776      270311261
 ```
 
-**Merge counter — empirical O(log n) proof:** (DI PANI REAL only adding table for now)
+**Merge counter — empirical O(log n) proof:**
 
-| Elements | Add Merges | Merges / Element | log₂(N) |
-|----------|-----------|-----------------|---------|
-| 1,000    | ~6,500    | ~6.5            | 10.0    |
-| 10,000   | ~85,000   | ~8.5            | 13.3    |
-| 100,000  | ~1,100,000| ~11.0           | 16.6    |
-| 1,000,000| ~13,000,000| ~13.0          | 19.9    |
+| Elements | Add Merges | Remove Merges | Add Merges / Element | log₂(N) |
+|----------|-----------|---------------|---------------------|---------|
+| 1,000 | 6,563 | 9,094 | 6.56 | 10.0 |
+| 10,000 | 85,243 | 135,748 | 8.52 | 13.3 |
+| 100,000 | 1,106,468 | 1,818,090 | 11.06 | 16.6 |
+| 1,000,000 | 13,092,266 | 22,754,210 | 13.09 | 19.9 |
+| 10,000,000 | 149,584,776 | 270,311,261 | 14.96 | 23.3 | 9.1           | ~13.0          | 19.9    |
 
-> Merges per element grow as ~0.65 × log₂(N) — consistent with expected O(log n) behavior. The constant < 1 is due to the randomized coin flip reducing average path length. 
+> Merges per element grow as ~0.65 × log₂(N) across all tested scales, which is consistent with expected O(log n) behavior. The constant < 1 is due to the randomized coin flip reducing average path length.
 
-**Absorb Benchmark** — merging two heaps of N elements each:
+**Absorb Benchmark** — merging two heaps of N elements each (excl. 10,000,000):
 
 ```
-Elements    Absorb Time
+Elements    Absorb Time (s)
 ------------------------------------------
-2,000       ~0.000001 s
-20,000      ~0.0000014 s
-200,000     ~0.0000032 s
-2,000,000   ~0.0000055 s
+2,000       ~4e-07
+20,000      ~6e-07
+200,000     ~1.6e-06
+2,000,000   ~3.8e-06 
 ```
 
-> Absorbing 2 million elements takes ~5 microseconds. This is the defining feature of a meldable heap — O(log n) merge regardless of heap size.
+> Absorbing 2 million elements takes ~3.8 microseconds. From 2,000 to 2,000,000 elements — a 1000× increase in data — absorb time grows only ~10×, consistent with O(log n). This is the defining feature of a meldable heap; merging two massive heaps is essentially instant regardless of size.
 
 ---
 
