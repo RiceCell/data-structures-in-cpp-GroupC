@@ -17,17 +17,17 @@
 
 ## Table of Contents
 
-1. [➤ About](#-about)
-2. [➤ Data Structures](#-data-structures)
-3. [➤ Project Structure](#-project-structure)
-4. [➤ Getting Started](#-getting-started)
-5. [➤ How to Build](#-how-to-build)
-6. [➤ Running Benchmarks](#-running-benchmarks)
-7. [➤ Benchmark Results](#-benchmark-results)
-8. [➤ Fundamental Twists](#-the-twists)
-9. [➤ References](#-references)
-10. [➤ License](#-license)
-11. [➤ Authors](#-authors)
+1. [➤ About](#about)
+2. [➤ Data Structures](#data-structures)
+3. [➤ Project Structure](#project-structure)
+4. [➤ Getting Started](#getting-started)
+5. [➤ How to Build](#how-to-build)
+6. [➤ Running Benchmarks](#running-benchmarks)
+7. [➤ Benchmark Results](#benchmark-results)
+8. [➤ Fundamental Twists](#the-twists)
+9. [➤ References](#references)
+10. [➤ License](#license)
+11. [➤ Authors](#authors)
 
 ---
 
@@ -236,7 +236,7 @@ Elements    Absorb Time (s)
 ## Custom vs Standard Template Library (STL)
 
 Benchmarked against C++ Standard Library equivalents at the same scales.
-Fixed random seed (42) for reproducibility.
+Fixed random seed (67) for reproducibility.
 
 ### ArrayStack vs `std::stack`
 
