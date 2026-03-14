@@ -233,7 +233,7 @@ Elements    Absorb Time (s)
 
 ---
 
-### Custom vs Standard Template Library (STL)
+## Custom vs Standard Template Library (STL)
 
 Benchmarked against C++ Standard Library equivalents at the same scales.
 Fixed random seed (42) for reproducibility.
