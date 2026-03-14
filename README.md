@@ -2,9 +2,9 @@
 
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=28&pause=1000&color=00FF88&center=true&vCenter=true&width=600&lines=Data+Structures+in+C%2B%2B;Open+Source+%7C+Group+C;Built+from+scratch.+With+twists." alt="Typing SVG" />
 
-# 🏗️ Data Structures in C++
+# Data Structures in C++
 
-**A handcrafted open-source library of fundamental data structures — built from scratch and learned from class, benchmarked at scale, and twisted for fun. This project is made as a requirement for CMSC 123: Data Structures and Algorithms | BSCS UPC**
+**A handcrafted open-source library of fundamental data structures — built from scratch and learned from class, benchmarked at scale, and twisted for fun. This project is made as a requirement for CMSC 123: Data Structures and Algorithms | Bachelor of Science in Computer Science, University of the Philippines Cebu**
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Language: C++17](https://img.shields.io/badge/Language-C%2B%2B17-00599C?logo=c%2B%2B)](https://isocpp.org/)
