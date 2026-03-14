@@ -233,6 +233,60 @@ Elements    Absorb Time (s)
 
 ---
 
+### Custom vs Standard Template Library (STL)
+
+Benchmarked against C++ Standard Library equivalents at the same scales.
+Fixed random seed (42) for reproducibility.
+
+### ArrayStack vs `std::stack`
+
+| Elements | Custom Push (s) | STL Push (s) | Custom Pop (s) | STL Pop (s) | Winner |
+|----------|----------------|-------------|----------------|------------|--------|
+| 1,000 | 1.36e-05 | 1.4e-06 | 6.5e-06 | 8e-07 | STL +813% |
+| 10,000 | 7.76e-05 | 2.49e-05 | 1.306e-04 | 9.6e-06 | STL +503% |
+| 100,000 | 3.359e-04 | 2.332e-04 | 3.182e-04 | 7.89e-05 | STL +109% |
+| 1,000,000 | 2.767e-03 | 2.515e-03 | 2.879e-03 | 8.877e-04 | STL +65% |
+
+> The gap **narrows significantly** as N grows — from 813% slower at 1K to only 65% slower at 1M. This is the amortized cost of our resize strategy evening out. `std::stack` wraps `std::deque` which uses a chunked memory layout, giving it better cache behavior than our single contiguous array at small sizes.
+
+---
+
+### SLList vs `std::queue`
+
+| Elements | Custom Push (s) | STL Push (s) | Custom Pop (s) | STL Pop (s) | Winner |
+|----------|----------------|-------------|----------------|------------|--------|
+| 1,000 | 3.45e-05 | 1.6e-06 | 7.6e-06 | 5e-07 | STL +1904% |
+| 10,000 | 2.594e-04 | 1.66e-05 | 9.45e-05 | 4.5e-06 | STL +1577% |
+| 100,000 | 2.761e-03 | 3.871e-04 | 1.230e-03 | 1.114e-04 | STL +700% |
+| 1,000,000 | 2.745e-02 | 2.069e-03 | 1.331e-02 | 8.038e-04 | STL +1318% |
+
+> This is the largest gap and the most expected result. `std::queue` wraps `std::deque` — a chunked array structure that avoids per-element heap allocation entirely. Our SLList calls `new`/`delete` (or pool recycle) on every node, which is fundamentally slower due to pointer chasing and cache misses. This is the classic linked list vs array-backed structure tradeoff — same O(1) complexity, vastly different constant factors.
+
+---
+
+### MeldableHeap vs `std::priority_queue`
+
+| Elements | Custom Push (s) | STL Push (s) | Custom Pop (s) | STL Pop (s) | Winner |
+|----------|----------------|-------------|----------------|------------|--------|
+| 1,000 | 1.301e-04 | 7.77e-05 | 1.587e-04 | 4.06e-05 | STL +144% |
+| 10,000 | 1.289e-03 | 1.847e-04 | 2.508e-03 | 5.38e-04 | STL +425% |
+| 100,000 | 1.843e-02 | 1.395e-03 | 3.785e-02 | 6.734e-03 | STL +592% |
+| 1,000,000 | 2.085e-01 | 1.171e-02 | 7.633e-01 | 8.527e-02 | STL +902% |
+
+> `std::priority_queue` uses a binary heap on a contiguous `std::vector` — every operation benefits from CPU cache prefetching. Our MeldableHeap uses pointer-based tree nodes scattered in memory, making every merge step a potential cache miss. However, `std::priority_queue` **cannot merge two heaps** — there is no `absorb()` equivalent in the STL. Merging two `std::priority_queue` instances requires re-inserting every element at O(n log n) cost. Our MeldableHeap does it in **O(log n) — ~3.8 microseconds for 2 million elements**.
+
+---
+
+### Summary
+
+| Structure | vs STL | Why STL wins | What we have that STL doesn't |
+|-----------|--------|-------------|-------------------------------|
+| ArrayStack | STL +65–813% | `std::deque` chunked layout | Ghost Scrubbing, Boundary Guarding, Resize Telemetry |
+| SLList | STL +700–1904% | No per-node allocation | Node Pooling, Self-Healing cycle detection |
+| MeldableHeap | STL +144–902% | Contiguous array cache locality | `absorb()` — O(log n) heap merge |
+
+> STL wins on raw speed in all cases — this is expected. STL containers are engineered by the C++ standards committee and optimized over decades. The value of these custom implementations lies not in beating STL, but in understanding *why* the gap exists, and offering capabilities that STL simply does not provide.
+
 ## The Twists
 
 Each data structure was given a non-standard twist beyond the textbook implementation.
