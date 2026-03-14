@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=22&pause=1000&color=00FF88&center=true&vCenter=true&width=750&multiline=false&lines=CMSC%20123%3A%20Data%20Structures%20and%20Algorithms%20in%20C%2B%2B;Built%20from%20scratch.%20Learned%20from%20lessons.%20With%20twists.;From%20GROUP%20C%3A%20Buno%2C%20Manlangit%2C%20Reyes;Manifesting%20pasar%20%F0%9F%99%8F" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=22&pause=1000&color=00FF88&center=true&vCenter=true&width=750&multiline=false&lines=CMSC%20123%3A%20Data%20Structures%20and%20Algorithms%20in%20C%2B%2B;Built%20from%20scratch.%20Learned%20from%20class.%20With%20twists.;From%20GROUP%20C%3A%20Buno%2C%20Manlangit%2C%20Reyes;Manifesting%20pasar%20%F0%9F%99%8F" alt="Typing SVG" />
 
 # Data Structures in C++
 
@@ -39,7 +39,7 @@ Every implementation is written **rom scratch** with the aid of discussion notes
 
 The library is benchmarked at scales from **1,000 to 100,000,000 elements** to demonstrate real-world performance characteristics beyond Big-O notation.
 
-> *"It is worth noting that Big-O doesn't tell the whole story. Constant factors, cache behavior, and allocation patterns also matter."*
+> *"It is worth noting though that Big-O doesn't tell the whole story. Constant factors, cache behavior, and allocation patterns also matter."*
 
 ---
 
