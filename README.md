@@ -216,7 +216,7 @@ Elements     Add Time (s)    Remove Time (s)   Total (s)    Add Merges    Remove
 | 1,000,000 | 13,092,266 | 22,754,210 | 13.09 | 22.75 | 19.9 |
 | 10,000,000 | 149,584,776 | 270,311,261 | 14.96 | 27.03 | 23.3 |
 
-> Merges per element grow as ~0.65 × log₂(N) across all tested scales, which is consistent with expected O(log n) behavior. The constant < 1 is due to the randomized coin flip reducing average path length.
+> Add merges per element grow as ~0.65 × log₂(N) across all tested scales. Remove merges per element track closer to log₂(N) — slightly below at small N and slightly above at large N, reflecting that remove() merges two existing subtrees rather than a single new node against the root, resulting in deeper average traversal.
 
 **Absorb Benchmark** — merging two heaps of N elements each (excl. 10,000,000):
 
