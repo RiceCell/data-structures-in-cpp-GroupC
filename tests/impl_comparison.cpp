@@ -140,9 +140,7 @@ void compare_queue(long long N)
               << "\n";
 }
 
-// ─────────────────────────────────────────────
 // MELDABLEHEAP vs std::priority_queue
-// ─────────────────────────────────────────────
 
 void compare_heap(long long N)
 {
