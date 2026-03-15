@@ -14,26 +14,26 @@ template <typename T>
 class SLList
 {
 private:
-    Node<T> *head;
-    Node<T> *tail;
+    SingleNode<T> *head;
+    SingleNode<T> *tail;
     size_t n;
 
-    std::vector<Node<T> *> pool;
+    std::vector<SingleNode<T> *> pool;
 
-    Node<T> *acquire(const T &x)
+    SingleNode<T> *acquire(const T &x)
     {
         if (!pool.empty())
         {
-            Node<T> *recycled = pool.back();
+            SingleNode<T> *recycled = pool.back();
             pool.pop_back();
             recycled->data = x;
             recycled->next = nullptr;
             return recycled;
         }
-        return new Node<T>(x);
+        return new SingleNode<T>(x);
     }
 
-    void release(Node<T> *u)
+    void release(SingleNode<T> *u)
     {
         u->next = nullptr;
         pool.push_back(u);
@@ -48,8 +48,8 @@ private:
         if (!head)
             return;
 
-        Node<T> *slow = head;
-        Node<T> *fast = head;
+        SingleNode<T> *slow = head;
+        SingleNode<T> *fast = head;
 
         bool cycle_found = false;
         while (fast && fast->next)
@@ -73,7 +73,7 @@ private:
             fast = fast->next;
         }
 
-        Node<T> *cycle_end = slow;
+        SingleNode<T> *cycle_end = slow;
         while (cycle_end->next != slow)
             cycle_end = cycle_end->next;
 
@@ -88,19 +88,19 @@ public:
     {
         while (head)
         {
-            Node<T> *temp = head;
+            SingleNode<T> *temp = head;
             head = head->next;
             delete temp;
         }
 
-        for (Node<T> *u : pool)
+        for (SingleNode<T> *u : pool)
             delete u;
         pool.clear();
     }
 
     T push(const T &x)
     {
-        Node<T> *u = acquire(x);
+        SingleNode<T> *u = acquire(x);
         if (n == 0)
             head = u;
         else
@@ -118,7 +118,7 @@ public:
     {
         assert(n > 0);
         T x = head->data;
-        Node<T> *u = head;
+        SingleNode<T> *u = head;
         head = head->next;
         release(u);
         n--;
@@ -130,7 +130,7 @@ public:
     T get(size_t i)
     {
         assert(i < n);
-        Node<T> *ptr = head;
+        SingleNode<T> *ptr = head;
         for (size_t j = 0; j < i; j++)
             ptr = ptr->next;
         return ptr->data;
