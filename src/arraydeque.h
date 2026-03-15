@@ -20,7 +20,7 @@ class ArrayDeque : public Deque<T>, public List<T>
         size_t startingIndex;
         size_t resizeCount;
 
-        size_t indexing(size_t i) const { return (i + startingIndex) % dequeSize; }
+        size_t indexing(size_t i) const { return (i + startingIndex) % backingArray.length; }
             
 
         void resize() {
