@@ -45,7 +45,7 @@ The library is benchmarked at scales from **1,000 to 10,000,000 elements** to de
 
 | ADT | Implementation | File | Features | Author |
 |-----|---------------|------|-------|--------|
-| **FILO Queue** | Array Stack | `src/arraystack.h` | Ghost Scrubbing, Boundary Guarding, Allocation Telemetry | Russel Niño Buno |
+| **FILO Queue** | Array Stack | `src/arraystack.h` | Data Shredding, Safety Netting, Growth Tracking | Russel Niño Buno |
 | **FIFO Queue** | Singly Linked List | `src/sllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection) | Russel Niño Buno |
 | **Priority Queue** | Meldable Heap | `src/meldableheap.h` | Merge Counter as O(log n) proof | Russel Niño Buno |
 | **Deque** | Array Deque | `src/arraydeque.h` | *TO ADD* | Angelo Mari Manlangit |
@@ -175,13 +175,13 @@ Each data structure was given a non-standard twist beyond the textbook implement
 
 ### ArrayStack — Three Twists
 
-**1. Ghost Scrubbing**
-Vacated memory slots are zeroed out with `T()` after every `remove()` and `resize()`. This prevents sensitive data from lingering in memory beyond its logical lifetime — a subtle but important security consideration.
+**1. Data Shredding**
+Vacated memory slots are zeroed out with `T()` after every `remove()` and `resize()`. This prevents sensitive data from lingering in memory beyond its logical lifetime which is a subtle but important security consideration.
 
-**2. Boundary Guarding**
-`get()` and `set()` return a default `T()` value instead of crashing when accessing out-of-bounds indices. Safe access without exceptions.
+**2. Safety Netting**
+`get()` and `set()` return a default `T()` value instead of crashing when accessing out-of-bounds indices. Therefore, providing safe access without exceptions.
 
-**3. Allocation Telemetry**
+**3. Growth Tracking**
 The stack tracks every internal `resize()` event via a counter accessible through `get_resize_count()`. This lets you observe the amortized growth pattern and verify that resize events are infrequent even at 100M operations.
 
 ---
