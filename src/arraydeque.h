@@ -6,6 +6,7 @@
 //  3. Allocation Telemetry — tracks internal resize events to monitor growth efficiency
 //  4. Contains - checks if an element is within the deque, returns true or false
 
+#pragma once
 #include "array.h"
 #include "deque.h"
 #include "list.h"
@@ -19,10 +20,11 @@ class ArrayDeque : public Deque<T>, public List<T>
         size_t startingIndex;
         size_t resizeCount;
 
-        size_t indexing(size_t i) const
-            return (i + startingIndex) % dequeSize;
+        size_t indexing(size_t i) const { return (i + startingIndex) % dequeSize; }
+            
 
         void resize() {
+            resizeCount++;
             int newSize = 2 * this->dequeSize;
             if (newSize <= 0)
                 newSize = 1;
@@ -78,7 +80,7 @@ class ArrayDeque : public Deque<T>, public List<T>
 
 	    T remove(const size_t i) override {
             // boundary check
-            if (arrSize <= 0)
+            if (dequeSize <= 0)
                 return T();
 
             T temp = backingArray[indexing(i)];
@@ -170,4 +172,7 @@ class ArrayDeque : public Deque<T>, public List<T>
             this->startingIndex = 0;
             return;
         }
+
+        // Accessor for Telemetry twist
+        size_t getResizeCount() const { return resizeCount; }
 };
