@@ -131,7 +131,7 @@ int main()
     std::cout << "RUN 0.REGULAR OR 1.TRAVERSAL?: ";
     std::cin  >> benchmarkMode;
 
-    std::cout << "FIFO QUEUE: DOUBLY LINKED LIST" << std::endl;
+    std::cout << "\nFIFO QUEUE: DOUBLY LINKED LIST" << std::endl;
 
     if (benchmarkMode) {
         return traversal_mode(sizes);
