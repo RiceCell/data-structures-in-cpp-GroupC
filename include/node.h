@@ -27,8 +27,8 @@ class SkipNode {
                 next[i] = nullptr;
             }
         }
-        
-        SkipNode(Order x, size_t height) : data(x), height(height) {
+
+        SkipNode(T x, size_t height) : data(x), height(height) {
             next = new SkipNode*[height];
 
             for (size_t i = 0; i < height; i++) {
