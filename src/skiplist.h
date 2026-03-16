@@ -14,9 +14,9 @@
 template <typename T>
 class SkipList {
     private: 
-        SkipNode *sentinel;
+        SkipNode<T> *sentinel;
         size_t currHeight = 0;
-        size_t size = 0;
+        size_t listSize = 0;
         int searchCount = 0;
 
         // custom helper functions
@@ -35,7 +35,7 @@ class SkipList {
     public:
         
         SkipList() {
-            sentinel = new SkipNode(MAXHEIGHT + 1);
+            sentinel = new SkipNode<T>(MAXHEIGHT + 1);
             sentinel->height = MAXHEIGHT + 1;
             
             for (size_t i = 0; i < MAXHEIGHT; i++) {
@@ -44,8 +44,8 @@ class SkipList {
         }
 
         bool insert(const T& x) {
-            SkipNode *stack[MAXHEIGHT + 1];
-            SkipNode *u = sentinel;
+            SkipNode<T> *stack[MAXHEIGHT + 1];
+            SkipNode<T> *u = sentinel;
             size_t r = currHeight;
 
             while (true) {
@@ -62,7 +62,7 @@ class SkipList {
             }
 
             size_t newHeight = randomHeightGenerator() + 1;
-            SkipNode *w = new SkipNode(x, newHeight);
+            SkipNode<T> *w = new SkipNode<T>(x, newHeight);
             while (currHeight < newHeight - 1) {
                 currHeight++;
                 stack[currHeight] = sentinel;
@@ -73,13 +73,13 @@ class SkipList {
                 stack[i]->next[i] = w;
             }
 
-            this->size++;
+            this->listSize++;
             return true;
         }
 
         T remove(const T& x) {
             T temp = T(); // default value
-            SkipNode *u = sentinel, *del = nullptr, *stack[MAXHEIGHT + 1];
+            SkipNode<T> *u = sentinel, *del = nullptr, *stack[MAXHEIGHT + 1];
             size_t r = currHeight;
             
             while (true) {
@@ -119,7 +119,7 @@ class SkipList {
             }
 
             delete del;
-            this->size--;
+            this->listSize--;
             while (currHeight > 0 && sentinel->next[currHeight - 1] == nullptr) {
                 currHeight--;
             }
@@ -128,7 +128,7 @@ class SkipList {
         }
 
         T find(const T &x) {
-            SkipNode *u = sentinel;
+            SkipNode<T> *u = sentinel;
             size_t r = currHeight;
             this->searchCount = 0;
             
@@ -154,7 +154,7 @@ class SkipList {
         // must do find(x) first
         int currentFindCount() { return this->searchCount; }
 
-        size_t size() { return this->size; }
+        size_t size() { return this->listSize; }
 
         size_t height() { return this->currHeight; }
 
