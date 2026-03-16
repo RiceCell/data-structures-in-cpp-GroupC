@@ -3,15 +3,28 @@
 
 // NODE FOR SINGLY LINKED LIST
 template <typename T>
-struct Node
+struct SingleNode
 {
     T data;
-    Node<T> *next;
+    SingleNode<T> *next;
 
-    Node(const T &x, Node *n = nullptr)
+    SingleNode(const T &x, SingleNode *n = nullptr)
         : data(x), next(n) {}
 };
 
+// NODE FOR DOUBLY LINKED LIST
+template <typename T>
+struct DoubleNode
+{
+    T data;
+    DoubleNode<T> *prev;
+    DoubleNode<T> *next;
+
+    DoubleNode(const T &x, DoubleNode *p = nullptr, DoubleNode *n = nullptr)
+        : data(x), prev(p), next(n) {}
+};
+
+// NODE FOR SKIPLISTS
 template <typename T>
 class SkipNode {
     public:
@@ -39,4 +52,4 @@ class SkipNode {
         ~SkipNode() {
             delete[] next;
         }
-};
+}
