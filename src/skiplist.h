@@ -1,10 +1,9 @@
 // Skiplist
 
 // TWISTS:
-//  1. Remove item via element  — remove all inputted items within the deque
-//  2. Boundary guards          — safe get/set access that returns default values instead of crashing
-//  3. Allocation Telemetry     — tracks internal resize events to monitor growth efficiency
-//  4. Counting Search          — couting how many iterations it takes to find a specific number
+//  1. Boundary guards          — safe get/set access that returns default values instead of crashing
+//  2. Allocation Telemetry     — tracks internal resize events to monitor growth efficiency
+//  3. Counting Search          — couting how many iterations it takes to find a specific number
 
 #pragma once
 #include "node.h"
