@@ -54,7 +54,6 @@ void run_randomizer_benchmark(long long N, int findInput) {
     auto start_add = std::chrono::high_resolution_clock::now();
     for (long long i = 0; i < N; i++)
     {
-        std::cout << i << " ";
         list.insert(std::rand() % 1001);
     }
     auto end_add = std::chrono::high_resolution_clock::now();
