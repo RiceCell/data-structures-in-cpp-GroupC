@@ -142,7 +142,7 @@ g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/meldableheap.cpp -o meldheap_test
 
 ```
 
-> **Tip:** Use `-O2` for optimized builds when running benchmarks. Use `-g` for debug builds when testing.
+> Use `-O2` for optimized builds when running benchmarks. Use `-g` for debug builds when testing.
 
 ---
 
