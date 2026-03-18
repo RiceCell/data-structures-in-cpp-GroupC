@@ -6,7 +6,7 @@
 //  3. Counting Search          — couting how many iterations it takes to find a specific number
 
 #pragma once
-#include "node.h"
+#include "sset.h"
 
 #define MAXHEIGHT 10 
 

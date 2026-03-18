@@ -33,9 +33,9 @@ template <typename T>
 struct RBTNode {
     T data;
     bool isBlack;
-    RBTNode<T> *left;
-    RBTNode<T> *right;
-    RBTNode<T> *parent;
+    RBTNode<T> *left = nullptr;
+    RBTNode<T> *right = nullptr;
+    RBTNode<T> *parent = nullptr;
 
     RBTNode(const T &x, bool isB = false) : data(x), isBlack(isB) {};
 };
