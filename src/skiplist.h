@@ -2,8 +2,7 @@
 
 // TWISTS:
 //  1. Boundary guards          — safe get/set access that returns default values instead of crashing
-//  2. Allocation Telemetry     — tracks internal resize events to monitor growth efficiency
-//  3. Counting Search          — couting how many iterations it takes to find a specific number
+//  2. Counting Search          — couting how many iterations it takes to find a specific number 
 
 #pragma once
 #include "sset.h"
@@ -125,7 +124,7 @@ class SkipList : SSet<T> {
             return temp; // invalid
         }
 
-        bool find(const T &x) const override {
+        bool find(const T &x) override {
             SkipNode<T> *u = sentinel;
             size_t r = currHeight;
             this->searchCount = 0;
@@ -154,7 +153,7 @@ class SkipList : SSet<T> {
 
         size_t size() const override { return this->listSize; }
 
-        size_t height() { return this->currHeight; }
+        size_t height() const override { return this->currHeight; }
 
         ~SkipList() { delete[] sentinel->next; }
 };

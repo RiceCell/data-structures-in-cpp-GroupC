@@ -5,8 +5,9 @@ struct SSet
 {
     virtual void insert(const T &x) = 0;
     virtual T remove(const T &x) = 0;
-    virtual bool find(const T &x) const = 0;
+    virtual bool find(const T &x) = 0;
     virtual size_t size() const = 0;
+    virtual size_t height() const = 0;
 };
 
 // NODE FOR SKIPLISTS

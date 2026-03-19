@@ -1,5 +1,13 @@
+// Skiplist
+
+// TWISTS:
+//  1. Boundary guards          — safe get/set access that returns default values instead of crashing
+//  2. Counting Search          — couting how many iterations it takes to find a specific number 
+//  3. Display leaves           — sorted list and their corresponding colors are able to be displayed
+
 #pragma once
 #include "sset.h"
+#include <iostream>
 
 template <typename T>
 class RedBlackTree: SSet<T> {
@@ -148,7 +156,7 @@ class RedBlackTree: SSet<T> {
                         sibling->isBlack = true;
                         n->parent->isBlack = false;
                         rotateLeft(n->parent);
-                        sibling = n->parent->right
+                        sibling = n->parent->right;
                     }
                 
                     if (sibling->left->isBlack && sibling->right->isBlack) {
@@ -177,7 +185,7 @@ class RedBlackTree: SSet<T> {
                         sibling->isBlack = true;
                         n->parent->isBlack = false;
                         rotateRight(n->parent);
-                        sibling = n->parent->left
+                        sibling = n->parent->left;
                     }
                 
                     if (sibling->right->isBlack && sibling->left->isBlack) {
@@ -204,7 +212,7 @@ class RedBlackTree: SSet<T> {
             }
         }
 
-        int getHeight(RBTNode<T> *r) {
+        int getHeight(const RBTNode<T> *r) const {
             if (r == this->NIL) {
                 return -1;
             }
@@ -293,7 +301,7 @@ class RedBlackTree: SSet<T> {
             return tempData;
         }
 
-        bool find(const T &x) const override {
+        bool find(const T &x) override {
             this->searchCount = 0;
             if (this->search(this->root, x) != this->NIL)
                 return true;
@@ -306,5 +314,7 @@ class RedBlackTree: SSet<T> {
 
         size_t size() const override { return this->treeSize; }
 
-        size_t height() { return getHeight(this->root); }
+        size_t height() const override { return (size_t) this->getHeight(this->root); }
+
+
 };
