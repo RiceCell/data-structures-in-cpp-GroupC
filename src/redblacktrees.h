@@ -239,6 +239,15 @@ class RedBlackTree: SSet<T> {
             return;
         }
 
+        // for the leaf display
+        void leafInOrder(RBTNode<T> *n) {
+            if (n != this->NIL) {
+                leafInOrder(n->left);
+                std::cout << n->data << "(" << ((n->isBlack) ? "BLACK" : "RED") << ") ";
+                leafInOrder(n->right);
+            }
+        }
+
     public:
         RedBlackTree() {
             this->NIL = new RBTNode<T>();
@@ -334,6 +343,11 @@ class RedBlackTree: SSet<T> {
         size_t size() const override { return this->treeSize; }
 
         size_t height() const override { return (size_t) this->getHeight(this->root); }
+
+        // displays the leaves in order
+        void displayLeaves() {
+            this->leafInOrder(this->root);
+        }
 
         ~RedBlackTree() { 
             freeNodes(this->root);

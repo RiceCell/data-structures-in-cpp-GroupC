@@ -9,6 +9,10 @@ WHAT TO DO:
 5. Times the adding, searching, removal of items
 Note: adding values will simultaneously add in front and back for random search
 6. Outputs those values
+
+Red-Black-Trees Special:
+1. Make 10 random values
+2. Display all the leaves
 */
 
 #include <iostream>
@@ -119,21 +123,49 @@ int randomizer_mode(std::vector<long long> sizes) {
     return 0;
 }
 
+int special_mode() {
+    unsigned int seed, number; // for randomizing values
+    std::cout << "ENTER NUMERICAL RANDOMIZER SEED: ";
+    std::cin  >> seed;
+
+    std::cout << "ENTER MAX NUMBER (N) [0-N]: ";
+    std::cin  >> number;
+
+    RedBlackTree<int> list;
+
+    std::mt19937 gen(seed); 
+    std::uniform_int_distribution<> dis(0, number);
+
+    for (int i = 0; i < 10; i++) {
+        list.insert(dis(gen));
+    }
+
+    std::cout << "\nSORTED LIST: RED-BLACK TREES\n\n";
+    std::cout << "LEAVES: \n";
+    list.displayLeaves();
+    std::cout << std::endl;
+    
+    return 0;
+}
+
 int main() {
     std::vector<long long> sizes = {1000, 10000, 100000, 1000000, 10000000};
     // 1,000 - 10,000 - 100,000 - 1,000,000 - 10,000,000
 
     unsigned int benchmarkMode;
     std::cout << "RED-BLACK TREE BENCHMARKING\n";
-    std::cout << "RUN 0.REGULAR OR 1.RANDOMIZER?: ";
+    std::cout << "RUN 0.REGULAR OR 1.RANDOMIZER OR 2.SPECIAL?: ";
     std::cin  >> benchmarkMode;
 
     // if choice == 0
-    if (!benchmarkMode) {
+    if (benchmarkMode == 0) {
         return regular_mode(sizes);
     }
-    else {
+    else if (benchmarkMode == 1) {
         return randomizer_mode(sizes);
+    }
+    else {
+        return special_mode();
     }
 
     return 0;
