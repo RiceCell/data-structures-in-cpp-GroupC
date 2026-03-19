@@ -1,3 +1,14 @@
+#pragma once
+
+template <typename T>
+struct SSet
+{
+    virtual void insert(const T &x) = 0;
+    virtual T remove(const T &x) = 0;
+    virtual bool find(const T &x) const = 0;
+    virtual size_t size() const = 0;
+};
+
 // NODE FOR SKIPLISTS
 template <typename T>
 class SkipNode {
@@ -33,9 +44,11 @@ template <typename T>
 struct RBTNode {
     T data;
     bool isBlack;
-    RBTNode<T> *left = nullptr;
-    RBTNode<T> *right = nullptr;
-    RBTNode<T> *parent = nullptr;
+    RBTNode<T> *left;
+    RBTNode<T> *right;
+    RBTNode<T> *parent;
 
-    RBTNode(const T &x, bool isB = false) : data(x), isBlack(isB) {};
+    RBTNode() : isBlack(true), left(nullptr), right(nullptr), parent(nullptr) {}; // for root/NIL node
+    RBTNode(const T &x, bool isB = false) : data(x), isBlack(isB), left(nullptr), 
+                                            right(nullptr), parent(nullptr) {};
 };

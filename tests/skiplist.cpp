@@ -61,7 +61,7 @@ void run_randomizer_benchmark(long long N, int findInput) {
 
     // Time FINDING
     auto start_find = std::chrono::high_resolution_clock::now();
-    list.find(findInput);
+    bool found = list.find(findInput);
     auto end_find = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff_find = end_find - start_find;
 
@@ -69,6 +69,7 @@ void run_randomizer_benchmark(long long N, int findInput) {
     std::cout << std::setw(12) << N
               << std::setw(15) << diff_add.count()
               << std::setw(15) << diff_find.count()
+              << std::setw(7)  << ((found) ? "true" : "false")
               << std::setw(12) << list.currentFindCount()
               << std::setw(15) << (diff_add.count() + diff_find.count()) << "seconds" << std::endl;
 }
@@ -105,6 +106,7 @@ int randomizer_mode(std::vector<long long> sizes) {
     std::cout << std::left << std::setw(12) << "Elements"
               << std::setw(15) << "Add Time"
               << std::setw(15) << "Find Time"
+              << std::setw(7)  << "Found"
               << std::setw(12) << "Find Count"
               << std::setw(15) << "Total" << std::endl;
     std::cout << std::string(69, '-') << std::endl; 

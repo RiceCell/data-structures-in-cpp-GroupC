@@ -11,7 +11,7 @@
 #define MAXHEIGHT 10 
 
 template <typename T>
-class SkipList {
+class SkipList : SSet<T> {
     private: 
         SkipNode<T> *sentinel;
         size_t currHeight = 0;
@@ -42,7 +42,7 @@ class SkipList {
             }
         }
 
-        bool insert(const T& x) {
+        void insert(const T& x) override {
             SkipNode<T> *stack[MAXHEIGHT + 1];
             SkipNode<T> *u = sentinel;
             size_t r = currHeight;
@@ -73,10 +73,9 @@ class SkipList {
             }
 
             this->listSize++;
-            return true;
         }
 
-        T remove(const T& x) {
+        T remove(const T& x) override {
             T temp = T(); // default value
             SkipNode<T> *u = sentinel, *del = nullptr, *stack[MAXHEIGHT + 1];
             size_t r = currHeight;
@@ -126,7 +125,7 @@ class SkipList {
             return temp; // invalid
         }
 
-        T find(const T &x) {
+        bool find(const T &x) const override {
             SkipNode<T> *u = sentinel;
             size_t r = currHeight;
             this->searchCount = 0;
@@ -144,16 +143,16 @@ class SkipList {
             
             // if that exact value is found
             if (u != nullptr && u->data == x) {
-                return u->data;
+                return true;
             }
 
-            return T(); // invalid
+            return false; // not found
         }
 
         // must do find(x) first
         int currentFindCount() { return this->searchCount; }
 
-        size_t size() { return this->listSize; }
+        size_t size() const override { return this->listSize; }
 
         size_t height() { return this->currHeight; }
 
