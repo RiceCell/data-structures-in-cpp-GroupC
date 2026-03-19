@@ -15,7 +15,7 @@ Note: adding values will simultaneously add in front and back for random search
 #include <chrono>
 #include <vector>
 #include <iomanip>
-#include <cstdlib>
+#include <random>
 #include "../src/skiplist.h"
 
 // for regular benchmark times
@@ -47,14 +47,17 @@ void run_regular_benchmark(long long N) {
 }
 
 // with searching and random values
-void run_randomizer_benchmark(long long N, int findInput) {
+void run_randomizer_benchmark(long long N, int findInput, unsigned int seed) {
     SkipList<int> list;
+
+    std::mt19937 gen(seed); 
+    std::uniform_int_distribution<> dis(0, N);
 
     // Time ADD
     auto start_add = std::chrono::high_resolution_clock::now();
     for (long long i = 0; i < N; i++)
     {
-        list.insert(std::rand() % 1001);
+        list.insert(dis(gen));
     }
     auto end_add = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff_add = end_add - start_add;
@@ -65,7 +68,6 @@ void run_randomizer_benchmark(long long N, int findInput) {
     auto end_find = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff_find = end_find - start_find;
 
-    std::cout << std::endl;
     std::cout << std::setw(12) << N
               << std::setw(15) << diff_add.count()
               << std::setw(15) << diff_find.count()
@@ -96,8 +98,6 @@ int randomizer_mode(std::vector<long long> sizes) {
     std::cout << "ENTER NUMERICAL RANDOMIZER SEED: ";
     std::cin  >> seed;
 
-    std::srand(seed);
-
     std::cout << "ENTER NUMBER TO FIND [0-1000]: ";
     std::cin  >> number;
 
@@ -113,15 +113,15 @@ int randomizer_mode(std::vector<long long> sizes) {
 
     for (long long n : sizes)
     {
-        run_randomizer_benchmark(n, number);
+        run_randomizer_benchmark(n, number, seed);
     }
 
     return 0;
 }
 
 int main() {
-    std::vector<long long> sizes = {1000, 10000, 100000, 1000000, 100000000};
-    // 1,000 - 10,000 - 100,000 - 1,000,000 - 100,000,000
+    std::vector<long long> sizes = {1000, 10000, 100000, 1000000, 10000000};
+    // 1,000 - 10,000 - 100,000 - 1,000,000 - 10,000,000
 
     unsigned int benchmarkMode;
     std::cout << "SKIPLIST BENCHMARKING\n";

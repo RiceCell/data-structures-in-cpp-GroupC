@@ -1,9 +1,8 @@
 // Skiplist
 
 // TWISTS:
-//  1. Boundary guards          — safe get/set access that returns default values instead of crashing
-//  2. Counting Search          — couting how many iterations it takes to find a specific number 
-//  3. Display leaves           — sorted list and their corresponding colors are able to be displayed
+//  1. Counting Search          — couting how many iterations it takes to find a specific number 
+//  2. Display leaves           — sorted list and their corresponding colors are able to be displayed
 
 #pragma once
 #include "sset.h"
@@ -60,8 +59,8 @@ class RedBlackTree: SSet<T> {
         void fixInsert(RBTNode<T> *n) {
             RBTNode<T> *unc; // uncle node
 
-            // while the parent aint null and the color is red
-            while (n->parent && !(n->parent->isBlack)) {
+            // while the parent & grandparent aint null and the color is red
+            while (n->parent != nullptr && n->parent->parent != nullptr && !(n->parent->isBlack)) {
                 if (n->parent == n->parent->parent->left) {
                     unc = n->parent->parent->right;
                     
@@ -111,18 +110,20 @@ class RedBlackTree: SSet<T> {
         }
 
         // remove helper functions
-        // recursively searches for the node with the data
+        // iteratively searches for the node with the data
         // gonna actually use this for the find function too so there is also searchCount
-        RBTNode<T> *search(RBTNode<T> *n, const T key) {
-            this->searchCount++;
-
-            if (n == this->NIL || key == n->data)
-                return n;
+        RBTNode<T>* search(RBTNode<T>* n, const T key) {
+            RBTNode<T>* curr = n;
             
-            if (key < n->data)
-                return search(n->left, key);
+            while (curr != this->NIL && key != curr->data) {
+                this->searchCount++;
+                if (key < curr->data)
+                    curr = curr->left;
+                else
+                    curr = curr->right;
+            }
 
-            return search(n->right, key);
+            return curr;
         }
 
         // finds the node with minimum value
@@ -146,6 +147,8 @@ class RedBlackTree: SSet<T> {
         }
 
         void fixRemove(RBTNode<T> *n) {
+            if (n == nullptr || n == this->NIL && n == this->root) { return; }
+
             RBTNode<T> *sibling;
 
             while (n != this->root && n->isBlack) {
@@ -174,7 +177,7 @@ class RedBlackTree: SSet<T> {
                         sibling->isBlack = n->parent->isBlack;
                         n->parent->isBlack = true;
                         sibling->right->isBlack = true;
-                        rotateRight(n->parent);
+                        rotateLeft(n->parent);
                         n = this->root;
                     }
                 }
@@ -210,6 +213,8 @@ class RedBlackTree: SSet<T> {
             
                 n->isBlack = true;
             }
+
+            return;
         }
 
         int getHeight(const RBTNode<T> *r) const {
@@ -221,6 +226,17 @@ class RedBlackTree: SSet<T> {
             int rightH = getHeight(r->right);
             
             return (((leftH < rightH) ? rightH : leftH) + 1);
+        }
+
+        // for destructor (post-order traversal :00)
+        void freeNodes(RBTNode<T> *n) {
+            if (n == this->NIL || n == nullptr) { return; }
+
+            freeNodes(n->left);
+            freeNodes(n->right);
+
+            delete n;
+            return;
         }
 
     public:
@@ -235,7 +251,7 @@ class RedBlackTree: SSet<T> {
             newNode->left = newNode->right = this->NIL;
 
             // for temporary parent and current nodes
-            RBTNode<T> *par, *curr = this->root;
+            RBTNode<T> *par = nullptr, *curr = this->root;
 
             while (curr != this->NIL) {
                 par = curr;
@@ -263,10 +279,9 @@ class RedBlackTree: SSet<T> {
 
             // variables to aid in deletion
             T tempData = toBeDeleted->data;
-            RBTNode<T> *tempNode = toBeDeleted;
+            RBTNode<T> *tempNode = toBeDeleted, *child;
             bool temp_isBlack_var = tempNode->isBlack;
-            RBTNode<T> *child;
-
+            
             if (toBeDeleted->left == this->NIL) {
                 child = toBeDeleted->right;
                 this->transplant(toBeDeleted, toBeDeleted->right);
@@ -297,6 +312,10 @@ class RedBlackTree: SSet<T> {
 
             if (temp_isBlack_var)
                 this->fixRemove(child);
+            
+
+            delete toBeDeleted;
+            this->treeSize--;
 
             return tempData;
         }
@@ -316,5 +335,8 @@ class RedBlackTree: SSet<T> {
 
         size_t height() const override { return (size_t) this->getHeight(this->root); }
 
-
+        ~RedBlackTree() { 
+            freeNodes(this->root);
+            delete this->NIL;    
+        }
 };
