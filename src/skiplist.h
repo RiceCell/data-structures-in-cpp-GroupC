@@ -2,16 +2,15 @@
 
 // TWISTS:
 //  1. Boundary guards          — safe get/set access that returns default values instead of crashing
-//  2. Allocation Telemetry     — tracks internal resize events to monitor growth efficiency
-//  3. Counting Search          — couting how many iterations it takes to find a specific number
+//  2. Counting Search          — couting how many iterations it takes to find a specific number 
 
 #pragma once
-#include "node.h"
+#include "sset.h"
 
 #define MAXHEIGHT 10 
 
 template <typename T>
-class SkipList {
+class SkipList : SSet<T> {
     private: 
         SkipNode<T> *sentinel;
         size_t currHeight = 0;
@@ -42,7 +41,7 @@ class SkipList {
             }
         }
 
-        bool insert(const T& x) {
+        void insert(const T& x) override {
             SkipNode<T> *stack[MAXHEIGHT + 1];
             SkipNode<T> *u = sentinel;
             size_t r = currHeight;
@@ -73,10 +72,9 @@ class SkipList {
             }
 
             this->listSize++;
-            return true;
         }
 
-        T remove(const T& x) {
+        T remove(const T& x) override {
             T temp = T(); // default value
             SkipNode<T> *u = sentinel, *del = nullptr, *stack[MAXHEIGHT + 1];
             size_t r = currHeight;
@@ -126,7 +124,7 @@ class SkipList {
             return temp; // invalid
         }
 
-        T find(const T &x) {
+        bool find(const T &x) override {
             SkipNode<T> *u = sentinel;
             size_t r = currHeight;
             this->searchCount = 0;
@@ -144,18 +142,18 @@ class SkipList {
             
             // if that exact value is found
             if (u != nullptr && u->data == x) {
-                return u->data;
+                return true;
             }
 
-            return T(); // invalid
+            return false; // not found
         }
 
         // must do find(x) first
         int currentFindCount() { return this->searchCount; }
 
-        size_t size() { return this->listSize; }
+        size_t size() const override { return this->listSize; }
 
-        size_t height() { return this->currHeight; }
+        size_t height() const override { return this->currHeight; }
 
         ~SkipList() { delete[] sentinel->next; }
 };
