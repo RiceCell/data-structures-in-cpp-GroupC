@@ -48,9 +48,9 @@ The library is benchmarked at scales from **1,000 to 10,000,000 elements** to de
 | **FILO Queue** | Array Stack | `src/arraystack.h` | Data Shredding, Safety Netting, Growth Tracking | Russel Niño Buno |
 | **FIFO Queue** | Singly Linked List | `src/sllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection) | Russel Niño Buno |
 | **Priority Queue** | Meldable Heap | `src/meldableheap.h` | Merge Counter as O(log n) proof | Russel Niño Buno |
-| **Deque** | Array Deque | `src/arraydeque.h` | *TO ADD* | Angelo Mari Manlangit |
-| **List** | Array Deque + Doubly Linked List | `src/arraydeque.h`, `src/dllist.h` | *TO ADD* | Angelo Mari Manlangit |
-| **Sorted Set** | Skiplist + Red-Black Tree | `src/skiplist.h`, `src/redblacktrees.h` | *TO ADD* | Angelo Mari Manlangit |
+| **Deque** | Array Deque | `src/arraydeque.h` | Growth Tracking, Contain | Angelo Mari Manlangit |
+| **List** | Array Deque + Doubly Linked List | `src/arraydeque.h`, `src/dllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection), Custom Traversal System | Angelo Mari Manlangit |
+| **Sorted Set** | Skiplist + Red-Black Tree | `src/skiplist.h`, `src/redblacktrees.h` | Search Iteration Count, Leaf Display (for Red-Black Trees) | Angelo Mari Manlangit |
 | **Unsorted Set** | Chained Hash Table | `src/chainedhashtable.h` | *TO ADD* | Gian Jefferson Reyes |
 | **Graph** | Adjacency Matrix | `src/adjacencymatrix.h` | *TO ADD* | Gian Jefferson Reyes |
 
@@ -63,9 +63,11 @@ data-structures-in-cpp-GroupC/
 │
 ├── include/                  # Abstract interfaces (ADTs)
 │   ├── array.h               # Generic resizable array wrapper
+│   ├── deque.h               # Deque struct
 │   ├── list.h                # List ADT interface
-│   ├── node.h                # Singly linked node struct
-│   └── queue.h               # Queue ADT interface
+│   ├── node.h                # Singly & Doubly linked node structs
+│   ├── queue.h               # Queue ADT interface
+│   └── sset.h                # Sorted Set ADT interface
 │
 ├── src/                      # Concrete implementations
 │   ├── arraystack.h          # FILO Stack (array-based)
@@ -140,6 +142,17 @@ g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/sllist.cpp -o sllist_test
 # Meldable Heap
 g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/meldableheap.cpp -o meldheap_test
 
+# Array Deque
+g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/arraydeque.cpp -o arraydeque_test
+
+# Doubly Linked List
+g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/dllist.cpp -o dllist_test
+
+# Skiplists
+g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/skiplist.cpp -o skiplist_test
+
+# Red-Black Trees
+g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/redblacktrees.cpp -o redblacktrees_test
 ```
 
 > Use `-O2` for optimized builds when running benchmarks. Use `-g` for debug builds when testing.
@@ -154,12 +167,16 @@ Each data structure has its own benchmark in `tests/`. Run them after building:
 ./arraystack_test
 ./sllist_test
 ./meldheap_test
+./arraydeque_test
+./dllist_test
+./skiplist_test
+./redblacktrees_test
 ```
 
 Benchmarks measure:
 - **Add / Enqueue / Push** time at multiple scales
 - **Remove / Dequeue / Pop** time at multiple scales
-- **Twist-specific metrics** (resize count, merge count, pool size, absorb time)
+- **Twist-specific metrics** (resize count, merge count, search count, pool size, absorb time)
 
 ---
 
@@ -204,6 +221,48 @@ On every push, the queue checks if `tail->next` is non-null, which would indicat
 Every call to `merge()` that performs real work (both arguments non-null) increments a counter. After a benchmark run, you can retrieve the total merge count via `get_merge_count()` and compare it to the theoretical O(log n) expectation.
 
 This empirically shows that the average merge depth per operation is ~0.65 × log₂(N) — less than the theoretical ceiling because the randomized coin flip tends to pick shorter paths on average.
+
+---
+
+### Array Deque — Two Twists
+
+**1. Growth Tracking**
+The stack tracks every internal `resize()` event via a counter accessible through `get_resize_count()`. This lets you observe the amortized growth pattern and verify that resize events are infrequent even at 100M operations.
+
+**2. Contains**
+`contains()` returns a boolean value depending on whether or not an inputted value is present within the Array Deque. This is helpful in trying to search for certain values that could be somewhere in the middle of the deque.
+
+---
+
+### DLList — Three Twists
+
+**1. Node Pooling**
+Instead of calling `new`/`delete` on every push and pop, freed nodes are stashed in a reuse `vector`. The next push grabs from the pool first before touching the heap. After warmup, the queue runs almost entirely allocation-free — directly addressing the biggest real-world weakness of linked lists.
+
+**2. Self-Healing via Floyd's Cycle Detection**
+On every push, the queue checks if `tail->next` is non-null, which would indicate a corrupted cycle. If triggered, Floyd's tortoise-and-hare algorithm finds the cycle entry point and cuts it, restoring the list automatically.
+
+> Reference: Floyd, R.W. — attributed in Knuth, D.E. *The Art of Computer Programming, Vol. 2*, §3.1, Exercise 6. Addison-Wesley, 1969.
+
+**3. Custom Traversal System**
+A current node is available to traverse the doubly linked list. They are able to go forward and backward using the `moveNextNode()` and `movePreviousNode()`. Additionally, you are able to insert new values after or before the current node with `insertAfterNode` and `insertBeforeNode` respectively.
+
+---
+
+### Skiplist — One Twist
+
+**Search Iteration Count**
+The number of iterations and moves it takes until the inputted value is found is recorded. You must use the `find()` function then `currentFindCount()`. This lets you observe the complexity of searching a value in a sorted skiplist.
+
+---
+
+### Red-Black Trees - Two Twists
+
+**1. Search Iteration Count**
+The number of iterations and moves it takes until the inputted value is found is recorded. You must use the `find()` function then `currentFindCount()`. This lets you observe the complexity of searching a value in a sorted red-black tree.
+
+**2. Display Leaves**
+Able to see all the nodes of the Red-Black Tree with their corresponding colors in order. `displayLeaves()` prints out the leaves directly. This is to see the integrity of the leaves, checking if they break the rules and conditions of a Red-Black Tree node.
 
 ---
 

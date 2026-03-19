@@ -1,10 +1,9 @@
 // FI-LI-FO-LO: An array-based deque
 
 // TWISTS:
-//  1. Remove item via element - remove all inputted items within the deque
-//  2. Boundary guards - safe get/set access that returns default values instead of crashing
-//  3. Allocation Telemetry — tracks internal resize events to monitor growth efficiency
-//  4. Contains - checks if an element is within the deque, returns true or false
+//  1. Boundary guards - safe get/set access that returns default values instead of crashing
+//  2. Allocation Telemetry — tracks internal resize events to monitor growth efficiency
+//  3. Contains - checks if an element is within the deque, returns true or false
 
 #pragma once
 #include "array.h"
