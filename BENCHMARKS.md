@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📊 Benchmark Results
+# Benchmark Results
 
 **Data Structures in C++ — Group C**
 CMSC 123: Data Structures and Algorithms | BS Computer Science, UP Cebu
@@ -22,7 +22,7 @@ CMSC 123: Data Structures and Algorithms | BS Computer Science, UP Cebu
 
 ---
 
-## 🥞 FILO Queue: Array Stack
+## FILO Queue: Array Stack
 
 ```
 Elements      Add Time (s)      Remove Time (s)   Total (s)
@@ -48,7 +48,7 @@ Elements      Add Time (s)      Remove Time (s)   Total (s)
 
 ---
 
-## 🔗 FIFO Queue: Singly Linked List
+## FIFO Queue: Singly Linked List
 
 ```
 Elements      Enqueue Time (s)   Dequeue Time (s)   Total (s)
@@ -64,7 +64,7 @@ Elements      Enqueue Time (s)   Dequeue Time (s)   Total (s)
 
 ---
 
-## ⛰️ Priority Queue: Meldable Heap
+## Priority Queue: Meldable Heap
 
 ```
 Elements     Add Time (s)    Remove Time (s)   Total (s)    Add Merges     Remove Merges
@@ -105,7 +105,7 @@ Elements      Absorb Time (s)
 
 ---
 
-## ⚔️ Custom vs Standard Template Library (STL)
+## Custom-made vs Standard Template Library (STL)
 
 Benchmarked against C++ Standard Library equivalents.
 Fixed random seed (42) for reproducibility across all runs.
@@ -149,7 +149,7 @@ Fixed random seed (42) for reproducibility across all runs.
 
 ---
 
-## 📋 Summary
+## Summary
 
 ### Performance vs STL
 
