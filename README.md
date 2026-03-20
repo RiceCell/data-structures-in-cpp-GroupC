@@ -121,18 +121,6 @@ cd data-structures-in-cpp-GroupC
 
 ## How to Build
 
-### Using Makefile (recommended)
-
-```bash
-# Build all benchmarks
-make all
-
-# Build a specific benchmark
-make arraystack_test
-make sllist_test
-make meld_test
-```
-
 ### Manual Compilation
 
 The general template for compiling any test is:
@@ -174,7 +162,7 @@ Benchmarks measure:
 
 ## Benchmark Results
 
-Full benchmark results, STL comparisons, merge counter analysis, and absorb timing are documented separately.
+Full benchmark results and STL comparisons are documented separately.
 
 ➤ **[View Full Benchmark Results →](./BENCHMARKS.md)**
 
