@@ -34,7 +34,7 @@ Elements      Add Time (s)      Remove Time (s)   Total (s)
 10,000,000    ~0.494428         ~0.621236         ~1.11566
 ```
 
-**Resize Telemetry** — number of internal array resizes triggered:
+**Resize Count** — number of internal array resizes triggered:
 
 | Elements | Resize Count |
 |----------|-------------|
@@ -60,7 +60,7 @@ Elements      Enqueue Time (s)   Dequeue Time (s)   Total (s)
 10,000,000    ~4.6761            ~16.0114           ~20.6875
 ```
 
-> SLList is significantly slower than ArrayStack due to per-node heap allocation and pointer chasing (cache misses). The Node Pooling twist reduces allocation overhead after warmup — freed nodes are recycled instead of deleted, making subsequent pushes nearly allocation-free.
+> SLList is significantly slower than ArrayStack due to per-node heap allocation and pointer chasing. The Node Pooling twist reduces allocation overhead after warmup — freed nodes are recycled instead of deleted, making subsequent pushes nearly allocation-free.
 
 ---
 
