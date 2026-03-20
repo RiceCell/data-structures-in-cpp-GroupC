@@ -91,8 +91,11 @@ data-structures-in-cpp-GroupC/
 │   ├── chainedhashtable.cpp
 │   └── adjacencymatrix.cpp
 │
+├── assets/
+│   └── demo_build.gif        # Build & run demo recording
+│
 ├── Makefile
-├── BENCHMARKS
+├── BENCHMARKS.md
 ├── LICENSE
 └── README.md
 ```
@@ -118,7 +121,7 @@ cd data-structures-in-cpp-GroupC
 
 ## How to Build
 
-### Using Makefile
+### Using Makefile (recommended)
 
 ```bash
 # Build all benchmarks
@@ -130,32 +133,21 @@ make sllist_test
 make meld_test
 ```
 
-### Manual compilation
+### Manual Compilation
+
+The general template for compiling any test is:
 
 ```bash
-# Array Stack
-g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/arraystack.cpp -o arraystack_test
-
-# Singly Linked List
-g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/sllist.cpp -o sllist_test
-
-# Meldable Heap
-g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/meldableheap.cpp -o meldheap_test
-
-# Array Deque
-g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/arraydeque.cpp -o arraydeque_test
-
-# Doubly Linked List
-g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/dllist.cpp -o dllist_test
-
-# Skiplists
-g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/skiplist.cpp -o skiplist_test
-
-# Red-Black Trees
-g++ -std=c++17 -g -O2 -Iinclude -Isrc tests/redblacktrees.cpp -o redblacktrees_test
+g++ -std=c++17 -O2 -Iinclude -Isrc tests/<name>.cpp -o <name>_test
 ```
 
-> Use `-O2` for optimized builds when running benchmarks. Use `-g` for debug builds when testing.
+> Replace `<name>` with the target — e.g. `arraystack`, `sllist`, `meldableheap`, `arraydeque`, `dllist`, `skiplist`, `redblacktrees`.
+
+> Use `-O2` for optimized benchmark builds. Swap for `-g` when debugging.
+
+Here's what a full build and run looks like:
+
+![Build & Run Demo](./assets/demo_build.gif)
 
 ---
 
@@ -185,6 +177,8 @@ Benchmarks measure:
 Full benchmark results, STL comparisons, merge counter analysis, and absorb timing are documented separately.
 
 ➤ **[View Full Benchmark Results →](./BENCHMARKS.md)**
+
+---
 
 ## The Twists
 
@@ -227,7 +221,7 @@ This empirically shows that the average merge depth per operation is ~0.65 × lo
 ### Array Deque — Two Twists
 
 **1. Growth Tracking**
-The stack tracks every internal `resize()` event via a counter accessible through `get_resize_count()`. This lets you observe the amortized growth pattern and verify that resize events are infrequent even at 100M operations.
+The deque tracks every internal `resize()` event via a counter accessible through `get_resize_count()`. This lets you observe the amortized growth pattern and verify that resize events are infrequent even at 100M operations.
 
 **2. Contains**
 `contains()` returns a boolean value depending on whether or not an inputted value is present within the Array Deque. This is helpful in trying to search for certain values that could be somewhere in the middle of the deque.
@@ -237,32 +231,32 @@ The stack tracks every internal `resize()` event via a counter accessible throug
 ### DLList — Three Twists
 
 **1. Node Pooling**
-Instead of calling `new`/`delete` on every push and pop, freed nodes are stashed in a reuse `vector`. The next push grabs from the pool first before touching the heap. After warmup, the queue runs almost entirely allocation-free — directly addressing the biggest real-world weakness of linked lists.
+Instead of calling `new`/`delete` on every push and pop, freed nodes are stashed in a reuse `vector`. The next push grabs from the pool first before touching the heap. After warmup, the list runs almost entirely allocation-free — directly addressing the biggest real-world weakness of linked lists.
 
 **2. Self-Healing via Floyd's Cycle Detection**
-On every push, the queue checks if `tail->next` is non-null, which would indicate a corrupted cycle. If triggered, Floyd's tortoise-and-hare algorithm finds the cycle entry point and cuts it, restoring the list automatically.
+On every push, the list checks if `tail->next` is non-null, which would indicate a corrupted cycle. If triggered, Floyd's tortoise-and-hare algorithm finds the cycle entry point and cuts it, restoring the list automatically.
 
 > Reference: Floyd, R.W. — attributed in Knuth, D.E. *The Art of Computer Programming, Vol. 2*, §3.1, Exercise 6. Addison-Wesley, 1969.
 
 **3. Custom Traversal System**
-A current node is available to traverse the doubly linked list. They are able to go forward and backward using the `moveNextNode()` and `movePreviousNode()`. Additionally, you are able to insert new values after or before the current node with `insertAfterNode` and `insertBeforeNode` respectively.
+A current node pointer is available to traverse the doubly linked list. Move forward and backward using `moveNextNode()` and `movePreviousNode()`. Additionally, insert new values relative to the current position with `insertAfterNode()` and `insertBeforeNode()`.
 
 ---
 
 ### Skiplist — One Twist
 
 **Search Iteration Count**
-The number of iterations and moves it takes until the inputted value is found is recorded. You must use the `find()` function then `currentFindCount()`. This lets you observe the complexity of searching a value in a sorted skiplist.
+The number of iterations and moves it takes until the inputted value is found is recorded. Use `find()` then `currentFindCount()` to retrieve it. This lets you observe the practical complexity of searching a value in a sorted skiplist.
 
 ---
 
-### Red-Black Trees - Two Twists
+### Red-Black Trees — Two Twists
 
 **1. Search Iteration Count**
-The number of iterations and moves it takes until the inputted value is found is recorded. You must use the `find()` function then `currentFindCount()`. This lets you observe the complexity of searching a value in a sorted red-black tree.
+The number of iterations and moves it takes until the inputted value is found is recorded. Use `find()` then `currentFindCount()` to retrieve it. This lets you observe the practical complexity of searching a value in a sorted red-black tree.
 
 **2. Display Leaves**
-Able to see all the nodes of the Red-Black Tree with their corresponding colors in order. `displayLeaves()` prints out the leaves directly. This is to see the integrity of the leaves, checking if they break the rules and conditions of a Red-Black Tree node.
+`displayLeaves()` prints all nodes of the Red-Black Tree with their corresponding colors in order. This is useful for verifying structural integrity — checking that no node violates the rules and conditions of a valid Red-Black Tree.
 
 ---
 
@@ -272,7 +266,6 @@ Able to see all the nodes of the Red-Black Tree with their corresponding colors 
   - §3 — Linked Lists
   - §10.2 — Randomized Meldable Heap
 - Knuth, D.E. *The Art of Computer Programming, Vol. 2: Seminumerical Algorithms*. Addison-Wesley, 1969. §3.1 — Floyd's Cycle Detection
-
 
 ---
 
@@ -295,7 +288,6 @@ See [`LICENSE`](./LICENSE) for the full license text.
 | Russel Niño Buno | ArrayStack, SLList, MeldableHeap, README |
 | Angelo Mari Manlangit | ArrayDeque, DLList, Skiplist, Red-Black Tree |
 | Gian Jefferson Reyes | ChainedHashTable, AdjacencyMatrix |
-
 
 ---
 

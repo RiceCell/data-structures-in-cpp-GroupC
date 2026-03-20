@@ -1,5 +1,3 @@
-// RUSSEL'S - Multi-Scale Benchmark
-
 #include <iostream>
 #include <chrono>
 #include <vector>
