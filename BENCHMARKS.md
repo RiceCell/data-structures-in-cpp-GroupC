@@ -6,7 +6,7 @@
 CMSC 123: Data Structures and Algorithms | BS Computer Science, UP Cebu
 
 > Benchmarked on: Windows 11, MSYS2/MinGW64, g++ 13.1, `-O2`
-> Random inputs use fixed seed (42) for reproducibility.
+> Random inputs use fixed seed for reproducibility.
 
 </div>
 
