@@ -180,24 +180,24 @@ Full benchmark results, STL comparisons, merge counter analysis, and absorb timi
 
 ---
 
-## The Twists
+## Some Twists
 
 Each data structure was given a non-standard twist beyond the textbook implementation.
 
-### ArrayStack — Three Twists
+### ArrayStack
 
 **1. Data Shredding**
-Vacated memory slots are zeroed out with `T()` after every `remove()` and `resize()`. This prevents sensitive data from lingering in memory beyond its logical lifetime which is a subtle but important security consideration.
+Vacated memory slots are zeroed out with `T()` after every `remove()` and `resize()`. This prevents sensitive data from lingering in memory beyond its lifetime which is a subtle but important security consideration.
 
 **2. Safety Netting**
 `get()` and `set()` return a default `T()` value instead of crashing when accessing out-of-bounds indices. Therefore, providing safe access without exceptions.
 
 **3. Growth Tracking**
-The stack tracks every internal `resize()` event via a counter accessible through `get_resize_count()`. This lets you observe the amortized growth pattern and verify that resize events are infrequent even at 100M operations.
+The stack tracks every internal `resize()` event via a counter accessible through `get_resize_count()`, which lets you observe the amortized growth pattern and verify that resize events are infrequent even at 100M operations.
 
 ---
 
-### SLList — Two Twists
+### SLList 
 
 **1. Node Pooling**
 Instead of calling `new`/`delete` on every push and pop, freed nodes are stashed in a reuse `vector`. The next push grabs from the pool first before touching the heap. After warmup, the queue runs almost entirely allocation-free — directly addressing the biggest real-world weakness of linked lists.
@@ -205,11 +205,9 @@ Instead of calling `new`/`delete` on every push and pop, freed nodes are stashed
 **2. Self-Healing via Floyd's Cycle Detection**
 On every push, the queue checks if `tail->next` is non-null, which would indicate a corrupted cycle. If triggered, Floyd's tortoise-and-hare algorithm finds the cycle entry point and cuts it, restoring the list automatically.
 
-> Reference: Floyd, R.W. — attributed in Knuth, D.E. *The Art of Computer Programming, Vol. 2*, §3.1, Exercise 6. Addison-Wesley, 1969.
-
 ---
 
-### MeldableHeap — One Twist
+### MeldableHeap 
 
 **Merge Counter**
 Every call to `merge()` that performs real work (both arguments non-null) increments a counter. After a benchmark run, you can retrieve the total merge count via `get_merge_count()` and compare it to the theoretical O(log n) expectation.
@@ -218,7 +216,7 @@ This empirically shows that the average merge depth per operation is ~0.65 × lo
 
 ---
 
-### Array Deque — Two Twists
+### Array Deque 
 
 **1. Growth Tracking**
 The deque tracks every internal `resize()` event via a counter accessible through `get_resize_count()`. This lets you observe the amortized growth pattern and verify that resize events are infrequent even at 100M operations.
@@ -228,7 +226,7 @@ The deque tracks every internal `resize()` event via a counter accessible throug
 
 ---
 
-### DLList — Three Twists
+### DLList 
 
 **1. Node Pooling**
 Instead of calling `new`/`delete` on every push and pop, freed nodes are stashed in a reuse `vector`. The next push grabs from the pool first before touching the heap. After warmup, the list runs almost entirely allocation-free — directly addressing the biggest real-world weakness of linked lists.
@@ -236,21 +234,19 @@ Instead of calling `new`/`delete` on every push and pop, freed nodes are stashed
 **2. Self-Healing via Floyd's Cycle Detection**
 On every push, the list checks if `tail->next` is non-null, which would indicate a corrupted cycle. If triggered, Floyd's tortoise-and-hare algorithm finds the cycle entry point and cuts it, restoring the list automatically.
 
-> Reference: Floyd, R.W. — attributed in Knuth, D.E. *The Art of Computer Programming, Vol. 2*, §3.1, Exercise 6. Addison-Wesley, 1969.
-
 **3. Custom Traversal System**
 A current node pointer is available to traverse the doubly linked list. Move forward and backward using `moveNextNode()` and `movePreviousNode()`. Additionally, insert new values relative to the current position with `insertAfterNode()` and `insertBeforeNode()`.
 
 ---
 
-### Skiplist — One Twist
+### Skiplist 
 
 **Search Iteration Count**
 The number of iterations and moves it takes until the inputted value is found is recorded. Use `find()` then `currentFindCount()` to retrieve it. This lets you observe the practical complexity of searching a value in a sorted skiplist.
 
 ---
 
-### Red-Black Trees — Two Twists
+### Red-Black Trees 
 
 **1. Search Iteration Count**
 The number of iterations and moves it takes until the inputted value is found is recorded. Use `find()` then `currentFindCount()` to retrieve it. This lets you observe the practical complexity of searching a value in a sorted red-black tree.
@@ -293,7 +289,7 @@ See [`LICENSE`](./LICENSE) for the full license text.
 
 <div align="center">
 
-Made with ☕ and too many benchmark runs. Manifesting perfect sa project Sir <3
+Made with ☕ and too many benchmark runs. This open-source project is part of a requirement in CMSC 123: Data Structures and Algorithms.
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
