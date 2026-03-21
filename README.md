@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=22&pause=1000&color=00FF88&center=true&vCenter=true&width=750&multiline=false&lines=CMSC%20123%3A%20Data%20Structures%20and%20Algorithms%20in%20C%2B%2B;Built%20from%20scratch.%20Learned%20from%20class.%20With%20twists.;From%20GROUP%20C%3A%20Buno%2C%20Manlangit%2C%20Reyes;Manifesting%20pasar%20%F0%9F%99%8F" alt="Typing SVG" />
+<img src="./assets/banner.svg" alt="Data Structures in C++">
 
-# Data Structures in C++
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=22&pause=1000&color=00FF88&center=true&vCenter=true&width=750&multiline=false&lines=CMSC%20123%3A%20Data%20Structures%20and%20Algorithms%20in%20C%2B%2B;Built%20from%20scratch.%20Learned%20from%20class.%20With%20twists.;From%20GROUP%20C%3A%20Buno%2C%20Manlangit%2C%20Reyes;Manifesting%20pasar%20%F0%9F%99%8F" alt="Typing SVG" />
 
 **A handcrafted open-source library of fundamental data structures — built from scratch and learned from class, benchmarked at scale, and twisted for fun. This project is made as a requirement for CMSC 123: Data Structures and Algorithms | BS Computer Science, UP Cebu**
 
@@ -14,7 +14,6 @@
 </div>
 
 ---
-
 ## Table of Contents
 
 1. [➤ About](#about)
