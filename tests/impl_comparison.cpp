@@ -1,4 +1,3 @@
-// STL Comparison Benchmark
 // Compares custom implementations against C++ Standard Template Libraries (STL) equivalents
 
 #include <iostream>
@@ -12,9 +11,11 @@
 #include "../src/sllist.h"
 #include "../src/meldableheap.h"
 
+const int RUNS = 10;
+
 std::vector<int> generate_random(long long N)
 {
-    std::default_random_engine gen(67); // fixed seed for reproducibility
+    std::default_random_engine gen(67); // fixed seed
     std::uniform_int_distribution<int> dist(1, 1000000);
     std::vector<int> data(N);
     for (auto &x : data)
@@ -56,41 +57,52 @@ void compare_stack(long long N)
 {
     auto data = generate_random(N);
 
-    // Custom ArrayStack
-    ArrayStack<int> custom;
-    auto t1 = std::chrono::high_resolution_clock::now();
-    for (int x : data)
-        custom.add(custom.size(), x);
-    auto t2 = std::chrono::high_resolution_clock::now();
-    for (long long i = 0; i < N; i++)
-        custom.remove(custom.size() - 1);
-    auto t3 = std::chrono::high_resolution_clock::now();
+    double total_custom_push = 0, total_custom_pop = 0;
+    double total_stl_push = 0, total_stl_pop = 0;
 
-    std::chrono::duration<double> custom_push = t2 - t1;
-    std::chrono::duration<double> custom_pop = t3 - t2;
+    for (int run = 0; run < RUNS; run++)
+    {
+        // Custom ArrayStack
+        ArrayStack<int> custom;
+        auto t1 = std::chrono::high_resolution_clock::now();
+        for (int x : data)
+            custom.add(custom.size(), x);
+        auto t2 = std::chrono::high_resolution_clock::now();
+        for (long long i = 0; i < N; i++)
+            custom.remove(custom.size() - 1);
+        auto t3 = std::chrono::high_resolution_clock::now();
 
-    // STL std::stack
-    std::stack<int> stl;
-    auto t4 = std::chrono::high_resolution_clock::now();
-    for (int x : data)
-        stl.push(x);
-    auto t5 = std::chrono::high_resolution_clock::now();
-    for (long long i = 0; i < N; i++)
-        stl.pop();
-    auto t6 = std::chrono::high_resolution_clock::now();
+        total_custom_push += std::chrono::duration<double>(t2 - t1).count();
+        total_custom_pop += std::chrono::duration<double>(t3 - t2).count();
 
-    std::chrono::duration<double> stl_push = t5 - t4;
-    std::chrono::duration<double> stl_pop = t6 - t5;
+        // STL std::stack
+        std::stack<int> stl;
+        auto t4 = std::chrono::high_resolution_clock::now();
+        for (int x : data)
+            stl.push(x);
+        auto t5 = std::chrono::high_resolution_clock::now();
+        for (long long i = 0; i < N; i++)
+            stl.pop();
+        auto t6 = std::chrono::high_resolution_clock::now();
 
-    double custom_total = custom_push.count() + custom_pop.count();
-    double stl_total = stl_push.count() + stl_pop.count();
+        total_stl_push += std::chrono::duration<double>(t5 - t4).count();
+        total_stl_pop += std::chrono::duration<double>(t6 - t5).count();
+    }
+
+    double avg_custom_push = total_custom_push / RUNS;
+    double avg_custom_pop = total_custom_pop / RUNS;
+    double avg_stl_push = total_stl_push / RUNS;
+    double avg_stl_pop = total_stl_pop / RUNS;
+
+    double custom_total = avg_custom_push + avg_custom_pop;
+    double stl_total = avg_stl_push + avg_stl_pop;
 
     std::cout << std::left
               << std::setw(16) << N
-              << std::setw(20) << custom_push.count()
-              << std::setw(20) << stl_push.count()
-              << std::setw(16) << custom_pop.count()
-              << std::setw(16) << stl_pop.count()
+              << std::setw(20) << avg_custom_push
+              << std::setw(20) << avg_stl_push
+              << std::setw(16) << avg_custom_pop
+              << std::setw(16) << avg_stl_pop
               << std::setw(12) << winner(custom_total, stl_total)
               << "\n";
 }
@@ -101,41 +113,52 @@ void compare_queue(long long N)
 {
     auto data = generate_random(N);
 
-    // Custom SLList
-    SLList<int> custom;
-    auto t1 = std::chrono::high_resolution_clock::now();
-    for (int x : data)
-        custom.push(x);
-    auto t2 = std::chrono::high_resolution_clock::now();
-    for (long long i = 0; i < N; i++)
-        custom.pop();
-    auto t3 = std::chrono::high_resolution_clock::now();
+    double total_custom_push = 0, total_custom_pop = 0;
+    double total_stl_push = 0, total_stl_pop = 0;
 
-    std::chrono::duration<double> custom_push = t2 - t1;
-    std::chrono::duration<double> custom_pop = t3 - t2;
+    for (int run = 0; run < RUNS; run++)
+    {
+        // Custom SLList
+        SLList<int> custom;
+        auto t1 = std::chrono::high_resolution_clock::now();
+        for (int x : data)
+            custom.push(x);
+        auto t2 = std::chrono::high_resolution_clock::now();
+        for (long long i = 0; i < N; i++)
+            custom.pop();
+        auto t3 = std::chrono::high_resolution_clock::now();
 
-    // STL std::queue
-    std::queue<int> stl;
-    auto t4 = std::chrono::high_resolution_clock::now();
-    for (int x : data)
-        stl.push(x);
-    auto t5 = std::chrono::high_resolution_clock::now();
-    for (long long i = 0; i < N; i++)
-        stl.pop();
-    auto t6 = std::chrono::high_resolution_clock::now();
+        total_custom_push += std::chrono::duration<double>(t2 - t1).count();
+        total_custom_pop += std::chrono::duration<double>(t3 - t2).count();
 
-    std::chrono::duration<double> stl_push = t5 - t4;
-    std::chrono::duration<double> stl_pop = t6 - t5;
+        // STL std::queue
+        std::queue<int> stl;
+        auto t4 = std::chrono::high_resolution_clock::now();
+        for (int x : data)
+            stl.push(x);
+        auto t5 = std::chrono::high_resolution_clock::now();
+        for (long long i = 0; i < N; i++)
+            stl.pop();
+        auto t6 = std::chrono::high_resolution_clock::now();
 
-    double custom_total = custom_push.count() + custom_pop.count();
-    double stl_total = stl_push.count() + stl_pop.count();
+        total_stl_push += std::chrono::duration<double>(t5 - t4).count();
+        total_stl_pop += std::chrono::duration<double>(t6 - t5).count();
+    }
+
+    double avg_custom_push = total_custom_push / RUNS;
+    double avg_custom_pop = total_custom_pop / RUNS;
+    double avg_stl_push = total_stl_push / RUNS;
+    double avg_stl_pop = total_stl_pop / RUNS;
+
+    double custom_total = avg_custom_push + avg_custom_pop;
+    double stl_total = avg_stl_push + avg_stl_pop;
 
     std::cout << std::left
               << std::setw(16) << N
-              << std::setw(20) << custom_push.count()
-              << std::setw(20) << stl_push.count()
-              << std::setw(16) << custom_pop.count()
-              << std::setw(16) << stl_pop.count()
+              << std::setw(20) << avg_custom_push
+              << std::setw(20) << avg_stl_push
+              << std::setw(16) << avg_custom_pop
+              << std::setw(16) << avg_stl_pop
               << std::setw(12) << winner(custom_total, stl_total)
               << "\n";
 }
@@ -146,41 +169,52 @@ void compare_heap(long long N)
 {
     auto data = generate_random(N);
 
-    // Custom MeldableHeap
-    MeldableHeap<int> custom;
-    auto t1 = std::chrono::high_resolution_clock::now();
-    for (int x : data)
-        custom.add(x);
-    auto t2 = std::chrono::high_resolution_clock::now();
-    for (long long i = 0; i < N; i++)
-        custom.remove();
-    auto t3 = std::chrono::high_resolution_clock::now();
+    double total_custom_push = 0, total_custom_pop = 0;
+    double total_stl_push = 0, total_stl_pop = 0;
 
-    std::chrono::duration<double> custom_push = t2 - t1;
-    std::chrono::duration<double> custom_pop = t3 - t2;
+    for (int run = 0; run < RUNS; run++)
+    {
+        // Custom MeldableHeap
+        MeldableHeap<int> custom;
+        auto t1 = std::chrono::high_resolution_clock::now();
+        for (int x : data)
+            custom.add(x);
+        auto t2 = std::chrono::high_resolution_clock::now();
+        for (long long i = 0; i < N; i++)
+            custom.remove();
+        auto t3 = std::chrono::high_resolution_clock::now();
 
-    // STL std::priority_queue (min-heap via greater<int>)
-    std::priority_queue<int, std::vector<int>, std::greater<int>> stl;
-    auto t4 = std::chrono::high_resolution_clock::now();
-    for (int x : data)
-        stl.push(x);
-    auto t5 = std::chrono::high_resolution_clock::now();
-    for (long long i = 0; i < N; i++)
-        stl.pop();
-    auto t6 = std::chrono::high_resolution_clock::now();
+        total_custom_push += std::chrono::duration<double>(t2 - t1).count();
+        total_custom_pop += std::chrono::duration<double>(t3 - t2).count();
 
-    std::chrono::duration<double> stl_push = t5 - t4;
-    std::chrono::duration<double> stl_pop = t6 - t5;
+        // STL std::priority_queue (min-heap via greater<int>)
+        std::priority_queue<int, std::vector<int>, std::greater<int>> stl;
+        auto t4 = std::chrono::high_resolution_clock::now();
+        for (int x : data)
+            stl.push(x);
+        auto t5 = std::chrono::high_resolution_clock::now();
+        for (long long i = 0; i < N; i++)
+            stl.pop();
+        auto t6 = std::chrono::high_resolution_clock::now();
 
-    double custom_total = custom_push.count() + custom_pop.count();
-    double stl_total = stl_push.count() + stl_pop.count();
+        total_stl_push += std::chrono::duration<double>(t5 - t4).count();
+        total_stl_pop += std::chrono::duration<double>(t6 - t5).count();
+    }
+
+    double avg_custom_push = total_custom_push / RUNS;
+    double avg_custom_pop = total_custom_pop / RUNS;
+    double avg_stl_push = total_stl_push / RUNS;
+    double avg_stl_pop = total_stl_pop / RUNS;
+
+    double custom_total = avg_custom_push + avg_custom_pop;
+    double stl_total = avg_stl_push + avg_stl_pop;
 
     std::cout << std::left
               << std::setw(16) << N
-              << std::setw(20) << custom_push.count()
-              << std::setw(20) << stl_push.count()
-              << std::setw(16) << custom_pop.count()
-              << std::setw(16) << stl_pop.count()
+              << std::setw(20) << avg_custom_push
+              << std::setw(20) << avg_stl_push
+              << std::setw(16) << avg_custom_pop
+              << std::setw(16) << avg_stl_pop
               << std::setw(12) << winner(custom_total, stl_total)
               << "\n";
 }
@@ -190,7 +224,7 @@ int main()
     std::vector<long long> sizes = {1000, 10000, 100000, 1000000};
 
     std::cout << "\nSTL COMPARISON BENCHMARK\n";
-    std::cout << "Custom implementations vs C++ Standard Library with fixed random seed.\n";
+    std::cout << "Custom implementations vs C++ Standard Library averages over " << RUNS << " runs, and a fixed random seed.\n";
 
     print_header("ArrayStack vs std::stack");
     for (long long n : sizes)
