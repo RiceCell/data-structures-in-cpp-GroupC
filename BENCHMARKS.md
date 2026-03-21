@@ -8,6 +8,7 @@ CMSC 123: Data Structures and Algorithms
 > **Compiler flags:** `-O2` across all benchmarks
 > **Methodology:** 10 iterations per N, results averaged. Random inputs use fixed seed for reproducibility.
 >
+>**Environment**
 > **Russel Niño Buno** — Acer Nitro AN515-58, i5-12500H, 8GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1 <br>
 > **Angelo Mari Manlangit** — Lenovo Thinkpad T14 Gen 3, AMD Ryzen 5 PRO 5650U with Radeon Graphics, 16GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1  <br>
 > **Gian Jefferson Reyes** — Extensa 215-55, i5-1235U, 8GB RAM, Windows 11
@@ -17,16 +18,16 @@ CMSC 123: Data Structures and Algorithms
 
 ## Table of Contents
 
-1. [➤ FILO Queue: Array Stack](#-filo-queue-array-stack)
-2. [➤ FIFO Queue: Singly Linked List](#-fifo-queue-singly-linked-list)
-3. [➤ Priority Queue: Meldable Heap](#-priority-queue-meldable-heap)
-5. [➤ Deque: Array Deque](#deque-array-deque)
-6. [➤ List: Doubly-Linked List](#list-doubly-linked-list)
-7. [➤ Sorted Set: Skiplist](#sorted-set-skiplist)
-8. [➤ Sorted Set: Red-Black Trees](#sorted-set-red-black-trees)
-9. [➤ Graph: Adjacency Matrix](#graph-adjacency-matrix)
-10. [➤ Custom vs STL](#-custom-vs-standard-template-library-stl)
-11. [➤ Summary](#-summary)
+1. [➤ FILO Queue: Array Stack](#filo-queue-array-stack)
+2. [➤ FIFO Queue: Singly Linked List](#fifo-queue-singly-linked-list)
+3. [➤ Priority Queue: Meldable Heap](#priority-queue-meldable-heap)
+4. [➤ Deque: Array Deque](#deque-array-deque)
+5. [➤ List: Doubly-Linked List](#list-doubly-linked-list)
+6. [➤ Sorted Set: Skiplist](#sorted-set-skiplist)
+7. [➤ Sorted Set: Red-Black Trees](#sorted-set-red-black-trees)
+8. [➤ Graph: Adjacency Matrix](#graph-adjacency-matrix)
+9. [➤ Unsorted Set: Chained Hash Table](#unsorted-set-chained-hash-table)
+10. [➤ Summary](#summary)
 
 ---
 
@@ -299,6 +300,8 @@ Vertices  Add Edges (ms)  outDegree (ms)  inDegree (ms)  outEdges (ms)  inEdges 
 > This Adjacency Matrix's key performance characteristic lies in its memory access patterns. This is most evident when comparing the "out" operations (outDegreeOf, outEdges) against the "in" operations (inDegreeOf, inEdges) as the graph scales. Because the 1D edgeMatrix vector maps 2D coordinates using index = i * numOfVertices + j, reading outgoing edges iterates through contiguous memory blocks. However, reading incoming edges via hasEdge(j, i) forces the CPU to jump forward by numOfVertices bytes on every single loop iteration, resulting in severe cache misses. For example, at N = 5000, inDegreeOf (~184.59 ms) is nearly 3.5x slower than outDegreeOf (~53.50 ms) despite both performing the exact same number of operations.
 
 ---
+
+## Unsorted Set: Chained Hash Table
 
 ### `ChainedHashTable` vs `std::unsorted_set`
 | Elements  | Custom Add (ms) | STL Add (ms) | Custom Find (ms) | STL Find (ms) | Search Winner |
