@@ -40,8 +40,7 @@ private:
     }
 
     // Floyd's Cycle Detection
-    // Runs on every push. If a cycle is found, we break it. In normal use this never triggers — but it saves you if
-    // something corrupts the list (e.g. a bad external pointer).
+    // Runs on every push. If a cycle is found, we break it.
 
     void heal_cycles()
     {
