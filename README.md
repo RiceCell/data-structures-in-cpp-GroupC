@@ -153,12 +153,14 @@ Each data structure has its own benchmark in `tests/`. Run them after building:
 ./dllist_test
 ./skiplist_test
 ./redblacktrees_test
+./chainedhash_test
+./adjmatrix_test
 ```
 
 Benchmarks measure:
 - **Add / Enqueue / Push** time at multiple scales
 - **Remove / Dequeue / Pop** time at multiple scales
-- **Twist-specific metrics** (resize count, merge count, search count, pool size, absorb time)
+- **Twist-specific metrics** (resize count, merge count, search count, pool size, absorb time and etc.)
 
 ---
 
@@ -313,7 +315,7 @@ See [`LICENSE`](./LICENSE) for the full license text.
 
 | Name | Implementations |
 |------|----------------|
-| Russel Niño Buno | ArrayStack, SLList, MeldableHeap, README |
+| Russel Niño Buno | ArrayStack, SLList, MeldableHeap|
 | Angelo Mari Manlangit | ArrayDeque, DLList, Skiplist, Red-Black Tree |
 | Gian Jefferson Reyes | ChainedHashTable, AdjacencyMatrix |
 
@@ -321,7 +323,7 @@ See [`LICENSE`](./LICENSE) for the full license text.
 
 <div align="center">
 
-Made with ☕ and too many benchmark runs. This open-source project is part of a requirement in CMSC 123: Data Structures and Algorithms.
+Made with ☕ and too many benchmark runs. This open-source project is part of a requirement in CMSC 123. Feel free to contribute!
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
