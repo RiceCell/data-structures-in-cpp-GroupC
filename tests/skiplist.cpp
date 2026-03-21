@@ -120,8 +120,8 @@ int randomizer_mode(std::vector<long long> sizes) {
 }
 
 int main() {
-    std::vector<long long> sizes = {1000, 10000, 100000, 1000000, 10000000};
-    // 1,000 - 10,000 - 100,000 - 1,000,000 - 10,000,000
+    std::vector<long long> sizes = {1000, 10000, 100000, 1000000};
+    // 1,000 - 10,000 - 100,000 - 1,000,000
 
     unsigned int benchmarkMode;
     std::cout << "SKIPLIST BENCHMARKING\n";

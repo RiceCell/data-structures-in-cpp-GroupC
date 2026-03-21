@@ -39,7 +39,7 @@ void run_regular_benchmark(long long N) {
     auto start_remove = std::chrono::high_resolution_clock::now();
     for (long long i = 0; i < N; i++)
     {
-            list.remove(i);
+        list.remove(i);
     }
     auto end_remove = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff_remove = end_remove - start_remove;
@@ -149,8 +149,8 @@ int special_mode() {
 }
 
 int main() {
-    std::vector<long long> sizes = {1000, 10000, 100000, 1000000, 10000000};
-    // 1,000 - 10,000 - 100,000 - 1,000,000 - 10,000,000
+    std::vector<long long> sizes = {1000, 10000, 100000, 1000000};
+    // 1,000 - 10,000 - 100,000 - 1,000,000
 
     unsigned int benchmarkMode;
     std::cout << "RED-BLACK TREE BENCHMARKING\n";
