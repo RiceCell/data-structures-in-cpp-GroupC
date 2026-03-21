@@ -322,15 +322,11 @@ Vertices  Add Edges (ms)  outDegree (ms)  inDegree (ms)  outEdges (ms)  inEdges 
 | SLList | O(1) | O(1) | O(n) | — | O(n) get(i) |
 | MeldableHeap | O(log n) | O(log n) | O(n) | O(log n) | absorb() in O(log n) |
 | ArrayDeque | O(1) amortized | O(1) amortized | O(n) | — | O(n) worst case resize |
-| DLList | O(1) | O(1) | O(n) | — | O(n) traversal |
+| DLList | O(1) | O(1) | O(n) | — | O(1) traversal ops, O(n) get(i) |
 | Skiplist | O(log n) avg | O(log n) avg | O(log n) avg | — | O(n) worst case |
 | Red-Black Tree | O(log n) | O(log n) | O(log n) | — | O(log n) rebalance |
 | ChainedHashTable | O(1) avg | O(1) avg | O(1) avg | — | O(n) worst case |
 | Adjacency Matrix | O(1) | O(1) | O(1) | — | O(n²) space |
-| `std::stack` | O(1) amortized | O(1) | — | — | — |
-| `std::queue` | O(1) amortized | O(1) | — | — | — |
-| `std::priority_queue` | O(log n) | O(log n) | O(n) | O(n log n) | no merge |
-| `std::unordered_set` | O(1) avg | O(1) avg | O(1) avg | — | O(n) worst case |
 
 ---
 
