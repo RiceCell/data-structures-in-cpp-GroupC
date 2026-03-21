@@ -252,7 +252,7 @@ Vertices  Add Edges (ms)  outDegree (ms)  inDegree (ms)  outEdges (ms)  inEdges 
 ```
 > This Adjacency Matrix's key performance characteristic lies in its memory access patterns. This is most evident when comparing the "out" operations (outDegreeOf, outEdges) against the "in" operations (inDegreeOf, inEdges) as the graph scales. Because the 1D edgeMatrix vector maps 2D coordinates using index = i * numOfVertices + j, reading outgoing edges iterates through contiguous memory blocks. However, reading incoming edges via hasEdge(j, i) forces the CPU to jump forward by numOfVertices bytes on every single loop iteration, resulting in severe cache misses. For example, at N = 5000, inDegreeOf (~184.59 ms) is nearly 3.5x slower than outDegreeOf (~53.50 ms) despite both performing the exact same number of operations.
 
---
+---
 
 ## Custom-made vs Standard Template Library (STL)
 
