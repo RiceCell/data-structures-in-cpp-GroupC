@@ -206,6 +206,8 @@ This empirically shows that the average merge depth per operation is ~0.65 × lo
 
 ### Array Deque 
 
+> A double-ended queue, elements are added, removed, and generally accessed from the front and end of the array. It grows dynamically.
+
 **1. Growth Tracking**
 The deque tracks every internal `resize()` event via a counter accessible through `get_resize_count()`. This lets you observe the amortized growth pattern and verify that resize events are infrequent even at 100M operations.
 
@@ -215,6 +217,8 @@ The deque tracks every internal `resize()` event via a counter accessible throug
 ---
 
 ### DLList 
+
+> Doubly-Linked Lists have pointers that point to the next and previous node. This makes traversal through nodes easier as you are able to go forwards and backwards at any given time. However, the implementation is slightly longer than Singly-Linked Lists as there is not an extra pointer to keep track of.
 
 **1. Node Pooling**
 Instead of calling `new`/`delete` on every push and pop, freed nodes are stashed in a reuse `vector`. The next push grabs from the pool first before touching the heap. After warmup, the list runs almost entirely allocation-free — directly addressing the biggest real-world weakness of linked lists.
@@ -229,12 +233,16 @@ A current node pointer is available to traverse the doubly linked list. Move for
 
 ### Skiplist 
 
+> Skiplists makes searching quicker through the use of express edges. In a skiplists, there are multiple levels of pointers that point to various of nodes. This makes traversal so much faster, specifically O(log N) for finding.
+
 **Search Iteration Count**
 The number of iterations and moves it takes until the inputted value is found is recorded. Use `find()` then `currentFindCount()` to retrieve it. This lets you observe the practical complexity of searching a value in a sorted skiplist.
 
 ---
 
 ### Red-Black Trees 
+
+> Red-Black Trees sort elements through the use of color and specific rules regarding the colors. Each node has a left and right node that could either contain a value or NIL Node (empty Node). 
 
 **1. Search Iteration Count**
 The number of iterations and moves it takes until the inputted value is found is recorded. Use `find()` then `currentFindCount()` to retrieve it. This lets you observe the practical complexity of searching a value in a sorted red-black tree.
