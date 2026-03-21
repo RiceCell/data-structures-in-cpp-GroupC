@@ -8,24 +8,26 @@ CMSC 123: Data Structures and Algorithms
 > **Compiler flags:** `-O2` across all benchmarks
 > **Methodology:** 10 iterations per N, results averaged. Random inputs use fixed seed for reproducibility.
 >
+>**Environment** <br>
 > **Russel Niño Buno** — Acer Nitro AN515-58, i5-12500H, 8GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1 <br>
 > **Angelo Mari Manlangit** — Lenovo Thinkpad T14 Gen 3, AMD Ryzen 5 PRO 5650U with Radeon Graphics, 16GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1  <br>
-> **Gian Jefferson Reyes** — *(to add)*
+> **Gian Jefferson Reyes** — Extensa 215-55, i5-1235U, 8GB RAM, Windows 11
 </div>
 
 ---
 
 ## Table of Contents
 
-1. [➤ FILO Queue: Array Stack](#-filo-queue-array-stack)
-2. [➤ FIFO Queue: Singly Linked List](#-fifo-queue-singly-linked-list)
-3. [➤ Priority Queue: Meldable Heap](#-priority-queue-meldable-heap)
-5. [➤ Deque: Array Deque](#deque-array-deque)
-6. [➤ List: Doubly-Linked List](#list-doubly-linked-list)
-7. [➤ Sorted Set: Skiplist](#sorted-set-skiplist)
-8. [➤ Sorted Set: Red-Black Trees](#sorted-set-red-black-trees)
-9. [➤ Custom vs STL](#-custom-vs-standard-template-library-stl)
-10. [➤ Summary](#-summary)
+1. [➤ FILO Queue: Array Stack](#filo-queue-array-stack)
+2. [➤ FIFO Queue: Singly Linked List](#fifo-queue-singly-linked-list)
+3. [➤ Priority Queue: Meldable Heap](#priority-queue-meldable-heap)
+4. [➤ Deque: Array Deque](#deque-array-deque)
+5. [➤ List: Doubly-Linked List](#list-doubly-linked-list)
+6. [➤ Sorted Set: Skiplist](#sorted-set-skiplist)
+7. [➤ Sorted Set: Red-Black Trees](#sorted-set-red-black-trees)
+8. [➤ Graph: Adjacency Matrix](#graph-adjacency-matrix)
+9. [➤ Unsorted Set: Chained Hash Table](#unsorted-set-chained-hash-table)
+10. [➤ Summary](#summary)
 
 ---
 
@@ -68,6 +70,51 @@ Elements      Avg Enqueue (s)    Avg Dequeue (s)    Avg Total (s)
 ```
 
 > SLList is significantly slower than ArrayStack due to per-node heap allocation and pointer chasing. The Node Pooling twist reduces allocation overhead after warmup — freed nodes are recycled instead of deleted, making subsequent pushes nearly allocation-free.
+
+---
+
+
+## Custom-made vs Standard Template Library (STL)
+
+Benchmarked against C++ Standard Library equivalents.
+Fixed random seed (67) for reproducibility across all runs.
+
+### ArrayStack vs `std::stack`
+
+| Elements | Custom Push (s) | STL Push (s) | Custom Pop (s) | STL Pop (s) | Winner |
+|----------|----------------|-------------|----------------|------------|--------|
+| 1,000 | 4.99e-06 | 1.91e-06 | 4.51e-06 | 1.18e-06 | STL +207% |
+| 10,000 | 6.625e-05 | 2.564e-05 | 8.725e-05 | 9.1e-06 | STL +341% |
+| 100,000 | 3.183e-04 | 2.0123e-04 | 3.5111e-04 | 1.0832e-04 | STL +116% |
+| 1,000,000 | 3.25475e-03 | 2.53726e-03 | 3.32543e-03 | 1.22032e-03 | STL +75% |
+
+> The gap **narrows significantly** as N grows — from 207% slower at 1K to only 75% slower at 1M. This is the amortized cost of our resize strategy evening out. `std::stack` wraps `std::deque` which uses a chunked memory layout, giving it better cache behavior than our single contiguous array at small sizes.
+
+---
+
+### SLList vs `std::queue`
+
+| Elements | Custom Push (s) | STL Push (s) | Custom Pop (s) | STL Pop (s) | Winner |
+|----------|----------------|-------------|----------------|------------|--------|
+| 1,000 | 2.382e-05 | 1.39e-06 | 8.65e-06 | 4.9e-07 | STL +1627% |
+| 10,000 | 2.7071e-04 | 1.515e-05 | 9.62e-05 | 4.53e-06 | STL +1764% |
+| 100,000 | 2.66509e-03 | 2.3115e-04 | 1.18127e-03 | 6.056e-05 | STL +1218% |
+| 1,000,000 | 2.74355e-02 | 1.98493e-03 | 1.15476e-02 | 8.849e-04 | STL +1258% |
+
+> This is the largest gap and the most expected result. `std::queue` wraps `std::deque` — a chunked array structure that avoids per-element heap allocation entirely. Our SLList calls `new`/`delete` (or pool recycle) on every node, which is fundamentally slower due to pointer chasing and cache misses. This is the classic linked list vs array-backed structure tradeoff — same O(1) complexity, vastly different constant factors.
+
+---
+
+### MeldableHeap vs `std::priority_queue`
+
+| Elements | Custom Push (s) | STL Push (s) | Custom Pop (s) | STL Pop (s) | Winner |
+|----------|----------------|-------------|----------------|------------|--------|
+| 1,000 | 1.1037e-04 | 1.607e-05 | 1.6614e-04 | 3.567e-05 | STL +434% |
+| 10,000 | 1.2945e-03 | 1.4239e-04 | 2.33696e-03 | 5.274e-04 | STL +442% |
+| 100,000 | 1.57155e-02 | 1.20592e-03 | 3.28409e-02 | 6.28853e-03 | STL +547% |
+| 1,000,000 | 2.19174e-01 | 1.17709e-02 | 8.13843e-01 | 8.35353e-02 | STL +983% |
+
+> `std::priority_queue` uses a binary heap on a contiguous `std::vector` — every operation benefits from CPU cache prefetching. Our MeldableHeap uses pointer-based tree nodes scattered in memory, making every merge step a potential cache miss. However, `std::priority_queue` **cannot merge two heaps** — there is no `absorb()` equivalent in the STL. Our MeldableHeap does it in **O(log n) — ~3.69 microseconds for 2 million elements**.
 
 ---
 
@@ -240,72 +287,49 @@ LEAVES:
 
 ---
 
-## Custom-made vs Standard Template Library (STL)
-
-Benchmarked against C++ Standard Library equivalents.
-Fixed random seed (67) for reproducibility across all runs.
-
-### ArrayStack vs `std::stack`
-
-| Elements | Custom Push (s) | STL Push (s) | Custom Pop (s) | STL Pop (s) | Winner |
-|----------|----------------|-------------|----------------|------------|--------|
-| 1,000 | 4.99e-06 | 1.91e-06 | 4.51e-06 | 1.18e-06 | STL +207% |
-| 10,000 | 6.625e-05 | 2.564e-05 | 8.725e-05 | 9.1e-06 | STL +341% |
-| 100,000 | 3.183e-04 | 2.0123e-04 | 3.5111e-04 | 1.0832e-04 | STL +116% |
-| 1,000,000 | 3.25475e-03 | 2.53726e-03 | 3.32543e-03 | 1.22032e-03 | STL +75% |
-
-> The gap **narrows significantly** as N grows — from 207% slower at 1K to only 75% slower at 1M. This is the amortized cost of our resize strategy evening out. `std::stack` wraps `std::deque` which uses a chunked memory layout, giving it better cache behavior than our single contiguous array at small sizes.
+## Graph: Adjacency Matrix
+```
+Vertices  Add Edges (ms)  outDegree (ms)  inDegree (ms)  outEdges (ms)  inEdges (ms)
+------------------------------------------------------------------------------------
+100       ~0.01           ~0.12           ~0.14          ~0.27          ~0.27
+500       ~0.12           ~2.28           ~2.28          ~3.32          ~4.34
+1000      ~0.26           ~9.86           ~22.19         ~12.21         ~21.31
+2500      ~0.83           ~26.24          ~81.81         ~29.96         ~81.29
+5000      ~6.10           ~53.50          ~184.59        ~56.70         ~184.94
+```
+> This Adjacency Matrix's key performance characteristic lies in its memory access patterns. This is most evident when comparing the "out" operations (outDegreeOf, outEdges) against the "in" operations (inDegreeOf, inEdges) as the graph scales. Because the 1D edgeMatrix vector maps 2D coordinates using index = i * numOfVertices + j, reading outgoing edges iterates through contiguous memory blocks. However, reading incoming edges via hasEdge(j, i) forces the CPU to jump forward by numOfVertices bytes on every single loop iteration, resulting in severe cache misses. For example, at N = 5000, inDegreeOf (~184.59 ms) is nearly 3.5x slower than outDegreeOf (~53.50 ms) despite both performing the exact same number of operations.
 
 ---
 
-### SLList vs `std::queue`
+## Unsorted Set: Chained Hash Table
 
-| Elements | Custom Push (s) | STL Push (s) | Custom Pop (s) | STL Pop (s) | Winner |
-|----------|----------------|-------------|----------------|------------|--------|
-| 1,000 | 2.382e-05 | 1.39e-06 | 8.65e-06 | 4.9e-07 | STL +1627% |
-| 10,000 | 2.7071e-04 | 1.515e-05 | 9.62e-05 | 4.53e-06 | STL +1764% |
-| 100,000 | 2.66509e-03 | 2.3115e-04 | 1.18127e-03 | 6.056e-05 | STL +1218% |
-| 1,000,000 | 2.74355e-02 | 1.98493e-03 | 1.15476e-02 | 8.849e-04 | STL +1258% |
-
-> This is the largest gap and the most expected result. `std::queue` wraps `std::deque` — a chunked array structure that avoids per-element heap allocation entirely. Our SLList calls `new`/`delete` (or pool recycle) on every node, which is fundamentally slower due to pointer chasing and cache misses. This is the classic linked list vs array-backed structure tradeoff — same O(1) complexity, vastly different constant factors.
-
----
-
-### MeldableHeap vs `std::priority_queue`
-
-| Elements | Custom Push (s) | STL Push (s) | Custom Pop (s) | STL Pop (s) | Winner |
-|----------|----------------|-------------|----------------|------------|--------|
-| 1,000 | 1.1037e-04 | 1.607e-05 | 1.6614e-04 | 3.567e-05 | STL +434% |
-| 10,000 | 1.2945e-03 | 1.4239e-04 | 2.33696e-03 | 5.274e-04 | STL +442% |
-| 100,000 | 1.57155e-02 | 1.20592e-03 | 3.28409e-02 | 6.28853e-03 | STL +547% |
-| 1,000,000 | 2.19174e-01 | 1.17709e-02 | 8.13843e-01 | 8.35353e-02 | STL +983% |
-
-> `std::priority_queue` uses a binary heap on a contiguous `std::vector` — every operation benefits from CPU cache prefetching. Our MeldableHeap uses pointer-based tree nodes scattered in memory, making every merge step a potential cache miss. However, `std::priority_queue` **cannot merge two heaps** — there is no `absorb()` equivalent in the STL. Our MeldableHeap does it in **O(log n) — ~3.69 microseconds for 2 million elements**.
+### `ChainedHashTable` vs `std::unsorted_set`
+| Elements  | Custom Add (ms) | STL Add (ms) | Custom Find (ms) | STL Find (ms) | Search Winner |
+|-----------|-----------------|--------------|------------------|---------------|---------------|
+| 1,000     | 0.705           | 0.611        | 0.156            | 0.819         | Custom +425%  |
+| 10,000    | 8.518           | 7.354        | 2.257            | 8.586         | Custom +280%  |
+| 100,000   | 81.685          | 71.411       | 32.787           | 90.347        | Custom +175%  |
+| 1,000,000 | 795.981         | 794.050      | 480.257          | 1080.212      | Custom +125%  |
+> `std::unordered_set` uses an identity hash for integers (where f(x) = x) and relies heavily on linked-node memory pooling, giving it a slight edge in insertion speed at smaller sizes. However, our `ChainedHashTable` dominates in search operations (up to 5x faster). This is because we implemented a robust `FastAvalancheHash` (utilizing a **MurmurHash3** 64-bit mix), which drastically reduces collision rates compared to the STL's default integer hash.
+> Note on `isSubsetOf`: The STL benchmark appears nearly instantaneous (~0.003 ms) because the external standard library helper function uses an early return (short-circuiting) the moment it finds a missing element. Conversely, our `ChainedHashTable::isSubsetOf` uses a `forEach` lambda loop that fully iterates through the entire underlying array stack, even after the subset condition has already failed. Implementing an early break in our custom iteration would close this artificial gap.
 
 ---
 
 ## Summary
 
-### Performance vs STL
-
-| Structure | vs STL | Why STL wins | What we have that STL doesn't |
-|-----------|--------|-------------|-------------------------------|
-| ArrayStack | STL +75–341% | `std::deque` chunked layout | Ghost Scrubbing, Boundary Guarding, Resize Telemetry |
-| SLList | STL +1218–1764% | No per-node allocation | Node Pooling, Self-Healing cycle detection |
-| MeldableHeap | STL +434–983% | Contiguous array cache locality | `absorb()` — O(log n) heap merge |
-
 ### Complexity Reference
 
-| Structure | Add | Remove | Merge | Special |
-|-----------|-----|--------|-------|---------|
-| ArrayStack | O(1) amortized | O(1) amortized | — | O(n) worst case resize |
-| SLList | O(1) | O(1) | — | O(n) get(i) |
-| MeldableHeap | O(log n) | O(log n) | O(log n) | absorb() in O(log n) |
-| `std::stack` | O(1) amortized | O(1) | — | — |
-| `std::queue` | O(1) amortized | O(1) | — | — |
-| `std::priority_queue` | O(log n) | O(log n) | O(n log n) | no merge |
-
-> STL wins on raw speed in all cases — this is expected. STL containers are engineered by the C++ standards committee and optimized over decades. The value of these custom implementations lies not in beating STL, but in understanding *why* the gap exists, and offering capabilities that STL simply does not provide.
+| Structure | Add | Remove | Find/Search | Special |
+|-----------|-----|--------|-------------|---------|
+| ArrayStack | O(1) amortized | O(1) amortized | O(n) | O(n) worst case resize |
+| SLList | O(1) | O(1) | O(n) | O(n) get(i) |
+| MeldableHeap | O(log n) | O(log n) | O(n) | absorb() in O(log n) |
+| ArrayDeque | O(1) amortized | O(1) amortized | O(n) | O(n) worst case resize |
+| DLList | O(1) | O(1) | O(n) | O(1) traversal ops, O(n) get(i) |
+| Skiplist | O(log n) avg | O(log n) avg | O(log n) avg | O(n) worst case |
+| Red-Black Tree | O(log n) | O(log n) | O(log n) | O(log n) rebalance |
+| ChainedHashTable | O(1) avg | O(1) avg | O(1) avg | O(n) worst case |
+| Adjacency Matrix | O(1) | O(1) | O(1) | O(n²) space |
 
 ---
 

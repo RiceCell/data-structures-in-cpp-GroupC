@@ -68,6 +68,8 @@ data-structures-in-cpp-GroupC/
 │   ├── node.h                # Singly & Doubly linked node structs
 │   ├── queue.h               # Queue ADT interface
 │   └── sset.h                # Sorted Set ADT interface
+│   └── uset.h                # Unsorted Set ADT interface
+│   └── graph.h               # Graoh ADT interface
 │
 ├── src/                      # Concrete implementations
 │   ├── arraystack.h          # FILO Stack (array-based)
@@ -77,8 +79,8 @@ data-structures-in-cpp-GroupC/
 │   ├── dllist.h              # Doubly Linked List
 │   ├── skiplist.h            # Sorted Set (skiplist)
 │   ├── redblacktrees.h       # Sorted Set (red-black tree)
-│   ├── chainedhashtable.h    # Unsorted Set (hash table)
-│   └── adjacencymatrix.h     # Graph (adjacency matrix)
+│   ├── ChainedHashTable.h    # Unsorted Set (hash table)
+│   └── AdjacencyMatrix.h     # Graph (adjacency matrix)
 │
 ├── tests/                    # Benchmarks & test cases
 │   ├── arraystack.cpp
@@ -88,11 +90,11 @@ data-structures-in-cpp-GroupC/
 │   ├── dllist.cpp
 │   ├── skiplist.cpp
 │   ├── redblacktrees.cpp
-│   ├── chainedhashtable.cpp
-│   └── adjacencymatrix.cpp
+│   ├── ChainedHashTable.cpp
+│   └── AdjacencyMatrix.cpp
 │
 ├── assets/
-│   └── demo_build.gif        # Build & run demo recording
+│   └── demo-build.gif        # Build & run demo recording
 │
 ├── Makefile
 ├── BENCHMARKS.md
@@ -135,7 +137,7 @@ g++ -std=c++17 -O2 -Iinclude -Isrc tests/<name>.cpp -o <name>_test
 
 Here's what a full build and run looks like:
 
-![Build & Run Demo](./assets/demo_build.gif)
+![Build & Run Demo](./assets/demo-build.gif)
 
 ---
 
