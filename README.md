@@ -51,8 +51,8 @@ The library is benchmarked at scales from **1,000 to 10,000,000 elements** to de
 | **Deque** | Array Deque | `src/arraydeque.h` | Growth Tracking, Contain | Angelo Mari Manlangit |
 | **List** | Array Deque + Doubly Linked List | `src/arraydeque.h`, `src/dllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection), Custom Traversal System | Angelo Mari Manlangit |
 | **Sorted Set** | Skiplist + Red-Black Tree | `src/skiplist.h`, `src/redblacktrees.h` | Search Iteration Count, Leaf Display (for Red-Black Trees) | Angelo Mari Manlangit |
-| **Unsorted Set** | Chained Hash Table | `src/ChainedHashTable.h` | Custom Hash Function, Set of Sets, Iterable, Set Functions | Gian Jefferson Reyes |
-| **Graph** | Adjacency Matrix | `src/adjacencymatrix.h` | *TO ADD* | Gian Jefferson Reyes |
+| **Unsorted Set** | Chained Hash Table | `src/chainedhashtable.h` | *TO ADD* | Gian Jefferson Reyes |
+| **Graph** | Adjacency Matrix | `src/adjacencymatrix.h` | Weighted Edges, Degree Calculation | Gian Jefferson Reyes |
 
 ---
 
