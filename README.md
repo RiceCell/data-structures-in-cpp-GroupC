@@ -1,7 +1,5 @@
 <div align="center">
-
 <img src="./assets/banner.svg" alt="Data Structures in C++">
-
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=22&pause=1000&color=00FF88&center=true&vCenter=true&width=750&multiline=false&lines=CMSC%20123%3A%20Data%20Structures%20and%20Algorithms%20in%20C%2B%2B;Built%20from%20scratch.%20Learned%20from%20class.%20With%20twists.;From%20GROUP%20C%3A%20Buno%2C%20Manlangit%2C%20Reyes;Manifesting%20pasar%20%F0%9F%99%8F" alt="Typing SVG" />
 
 **A handcrafted open-source library of fundamental data structures — built from scratch and learned from class, benchmarked at scale, and twisted for fun. This project is made as a requirement for CMSC 123: Data Structures and Algorithms | BS Computer Science, UP Cebu**
@@ -95,7 +93,6 @@ data-structures-in-cpp-GroupC/
 ├── assets/
 │   └── demo-build.gif        # Build & run demo recording
 │
-├── Makefile
 ├── BENCHMARKS.md
 ├── LICENSE
 └── README.md
@@ -108,7 +105,6 @@ data-structures-in-cpp-GroupC/
 ### Prerequisites
 
 - A C++17-compatible compiler: `g++ 9+` or `clang++ 9+`
-- `make` (optional but recommended)
 - Works on **Windows (MSYS2/MinGW)**, **Linux**, and **macOS**
 
 ### Clone the repository
@@ -194,33 +190,33 @@ The stack tracks every internal `resize()` event via a counter accessible throug
 
 > Singly-Linked Lists connect nodes in a single direction, providing a lightweight way to manage FIFO queues without the need for large contiguous memory blocks.
 
-**1. Node Pooling**
+**1. Node Pooling.**
 Instead of calling `new`/`delete` on every push and pop, freed nodes are stashed in a reuse `vector`. The next push grabs from the pool first before touching the heap. After warmup, the queue runs almost entirely allocation-free — directly addressing the biggest real-world weakness of linked lists.
 
-**2. Self-Healing via Floyd's Cycle Detection**
+**2. Self-Healing via Floyd's Cycle Detection.**
 On every push, the queue checks if `tail->next` is non-null, which would indicate a corrupted cycle. If triggered, Floyd's tortoise-and-hare algorithm finds the cycle entry point and cuts it, restoring the list automatically.
 
 ---
 
-### MeldableHeap 
+### MeldableHeap
 
 > MeldableHeaps are randomized priority queues that prioritize simplicity and merge-ability over rigid structural rules. By using a "coin flip" to decide which path to take during a merge, they maintain an efficient logarithmic height without the complex balancing logic required by traditional heaps.
 
-**Merge Counter**
+**1. Merge Counter.**
 Every call to `merge()` that performs real work (both arguments non-null) increments a counter. After a benchmark run, you can retrieve the total merge count via `get_merge_count()` and compare it to the theoretical O(log n) expectation.
 
 This empirically shows that the average merge depth per operation is ~0.65 × log₂(N) — less than the theoretical ceiling because the randomized coin flip tends to pick shorter paths on average.
 
 ---
 
-### Array Deque 
+### Array Deque
 
 > A double-ended queue, elements are added, removed, and generally accessed from the front and end of the array. It grows dynamically.
 
-**1. Growth Tracking**
+**1. Growth Tracking.**
 The deque tracks every internal `resize()` event via a counter accessible through `get_resize_count()`. This lets you observe the amortized growth pattern and verify that resize events are infrequent even at 100M operations.
 
-**2. Contains**
+**2. Contains.**
 `contains()` returns a boolean value depending on whether or not an inputted value is present within the Array Deque. This is helpful in trying to search for certain values that could be somewhere in the middle of the deque.
 
 ---
@@ -229,13 +225,13 @@ The deque tracks every internal `resize()` event via a counter accessible throug
 
 > Doubly-Linked Lists have pointers that point to the next and previous node. This makes traversal through nodes easier as you are able to go forwards and backwards at any given time. However, the implementation is slightly longer than Singly-Linked Lists as there is not an extra pointer to keep track of.
 
-**1. Node Pooling**
+**1. Node Pooling.**
 Instead of calling `new`/`delete` on every push and pop, freed nodes are stashed in a reuse `vector`. The next push grabs from the pool first before touching the heap. After warmup, the list runs almost entirely allocation-free — directly addressing the biggest real-world weakness of linked lists.
 
-**2. Self-Healing via Floyd's Cycle Detection**
+**2. Self-Healing via Floyd's Cycle Detection.**
 On every push, the list checks if `tail->next` is non-null, which would indicate a corrupted cycle. If triggered, Floyd's tortoise-and-hare algorithm finds the cycle entry point and cuts it, restoring the list automatically.
 
-**3. Custom Traversal System**
+**3. Custom Traversal System.**
 A current node pointer is available to traverse the doubly linked list. Move forward and backward using `moveNextNode()` and `movePreviousNode()`. Additionally, insert new values relative to the current position with `insertAfterNode()` and `insertBeforeNode()`.
 
 ---
@@ -244,7 +240,7 @@ A current node pointer is available to traverse the doubly linked list. Move for
 
 > Skiplists makes searching quicker through the use of express edges. In a skiplists, there are multiple levels of pointers that point to various of nodes. This makes traversal so much faster, specifically O(log N) for finding.
 
-**Search Iteration Count**
+**Search Iteration Count.**
 The number of iterations and moves it takes until the inputted value is found is recorded. Use `find()` then `currentFindCount()` to retrieve it. This lets you observe the practical complexity of searching a value in a sorted skiplist.
 
 ---
@@ -253,10 +249,10 @@ The number of iterations and moves it takes until the inputted value is found is
 
 > Red-Black Trees sort elements through the use of color and specific rules regarding the colors. Each node has a left and right node that could either contain a value or NIL Node (empty Node). 
 
-**1. Search Iteration Count**
+**1. Search Iteration Count.**
 The number of iterations and moves it takes until the inputted value is found is recorded. Use `find()` then `currentFindCount()` to retrieve it. This lets you observe the practical complexity of searching a value in a sorted red-black tree.
 
-**2. Display Leaves**
+**2. Display Leaves.**
 `displayLeaves()` prints all nodes of the Red-Black Tree with their corresponding colors in order. This is useful for verifying structural integrity — checking that no node violates the rules and conditions of a valid Red-Black Tree.
 
 ---
@@ -265,16 +261,16 @@ The number of iterations and moves it takes until the inputted value is found is
 
 > Chained Hash Tables organize unsorted elements by mapping them to specific "buckets" using a hash function, handling collisions through linked lists. With the use of hashing, we are able to quickly store data.
 
-**1. Custom Hash Function for Primitive T Elements**
+**1. Custom Hash Function for Primitive T Elements.**
 Use standard C++ hashing as a base, and then pass it through a strong "mixer" or "finalizer." (MurmurHash3 64-bit avalanche mixer)
 
-**2. Custom Hash Function for `ChainedHashTable<T>` Elements**
+**2. Custom Hash Function for `ChainedHashTable<T>` Elements.**
 To support a Set of Sets. Use an XOR sum over the hashed elements, XOR is commutative so order of elements does not matter, as should a USet.
 
-**3. Iterable**
+**3. Iterable.**
 A `forEach()` method was made for the USet to make it possible to iterate over each element with a callback.
 
-**4. Simple Set Functions**
+**4. Simple Set Functions.**
 Set operations such as Subset, Union, Intersection, and Difference were made into methods to emulate the behaviors of an actual set.
 
 ---
@@ -283,10 +279,10 @@ Set operations such as Subset, Union, Intersection, and Difference were made int
 
 > Adjacency Matrices represent relationships between nodes using a two-dimensional grid, making it super quick to check if an edge exists between two vertices. This implementation supports weighted edges and degree calculations, making modeling complex networks that much simpler.
 
-**1. Weighted Edges**
+**1. Weighted Edges.**
 The values in `edge[i][j]` include the weight of the edge, with `std::numeric_limits<double>::infinity()` representing the absence of edge.
 
-**2. Degree Calculation**
+**2. Degree Calculation.**
 There are methods to get the degree (count of edges) entering (`inDegreeOf()`) and leaving (`outDegreeOf()`) a vertex.
 
 ---
@@ -322,10 +318,10 @@ See [`LICENSE`](./LICENSE) for the full license text.
 
 <div align="center">
 
-Made with ☕ and too many benchmark runs. This open-source project is part of a requirement in CMSC 123. Feel free to contribute!
+Made with ☕ and too many benchmark runs. Feel free to contribute!
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-*Data Structures in C++ — Group C*
+*Data Structures and Algorithms in C++ — Group C*
 
 </div>
