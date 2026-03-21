@@ -52,7 +52,7 @@ The library is benchmarked at scales from **1,000 to 10,000,000 elements** to de
 | **List** | Array Deque + Doubly Linked List | `src/arraydeque.h`, `src/dllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection), Custom Traversal System | Angelo Mari Manlangit |
 | **Sorted Set** | Skiplist + Red-Black Tree | `src/skiplist.h`, `src/redblacktrees.h` | Search Iteration Count, Leaf Display (for Red-Black Trees) | Angelo Mari Manlangit |
 | **Unsorted Set** | Chained Hash Table | `src/chainedhashtable.h` | *TO ADD* | Gian Jefferson Reyes |
-| **Graph** | Adjacency Matrix | `src/adjacencymatrix.h` | Weighted Edges, Degree Calculation | Gian Jefferson Reyes |
+| **Graph** | Adjacency Matrix | `src/AdjacencyMatrix.h` | Weighted Edges, Degree Calculation | Gian Jefferson Reyes |
 
 ---
 
@@ -241,6 +241,16 @@ The number of iterations and moves it takes until the inputted value is found is
 
 **2. Display Leaves**
 `displayLeaves()` prints all nodes of the Red-Black Tree with their corresponding colors in order. This is useful for verifying structural integrity — checking that no node violates the rules and conditions of a valid Red-Black Tree.
+
+---
+
+### Graph: Adjacency Matrix
+
+**1. Weighted Edges**
+The values in `edge[i][j]` include the weight of the edge, with `std::numeric_limits<double>::infinity()` representing the absence of edge.
+
+**2. Degree Calculation**
+There are methods to get the degree (count of edges) entering (`inDegreeOf()`) and leaving (`outDegreeOf()`) a vertex.
 
 ---
 
