@@ -92,7 +92,7 @@ data-structures-in-cpp-GroupC/
 │   └── adjacencymatrix.cpp
 │
 ├── assets/
-│   └── demo_build.gif        # Build & run demo recording
+│   └── demo-build.gif        # Build & run demo recording
 │
 ├── Makefile
 ├── BENCHMARKS.md
@@ -135,7 +135,7 @@ g++ -std=c++17 -O2 -Iinclude -Isrc tests/<name>.cpp -o <name>_test
 
 Here's what a full build and run looks like:
 
-![Build & Run Demo](./assets/demo_build.gif)
+![Build & Run Demo](./assets/demo-build.gif)
 
 ---
 
@@ -197,8 +197,8 @@ On every push, the queue checks if `tail->next` is non-null, which would indicat
 
 ### MeldableHeap 
 
-**Merge Counter**
-Every call to `merge()` that performs real work (both arguments non-null) increments a counter. After a benchmark run, you can retrieve the total merge count via `get_merge_count()` and compare it to the theoretical O(log n) expectation.
+**1. Merge Counter**
+Every call to `merge()` that performs real increments a counter. After a benchmark run, you can retrieve the total merge count via `get_merge_count()` and compare it to the theoretical O(log n) expectation.
 
 This empirically shows that the average merge depth per operation is ~0.65 × log₂(N) — less than the theoretical ceiling because the randomized coin flip tends to pick shorter paths on average.
 

@@ -173,7 +173,7 @@ Fixed random seed (67) for reproducibility across all runs.
 | `std::queue` | O(1) amortized | O(1) | — | — |
 | `std::priority_queue` | O(log n) | O(log n) | O(n log n) | no merge |
 
-> STL wins on raw speed in all cases — this is expected. STL containers are engineered by the C++ standards committee and optimized over decades. The value of these custom implementations lies not in beating STL, but in understanding *why* the gap exists, and offering capabilities that STL simply does not provide.
+> STL wins on raw speed in all cases — this is expected. STL containers are engineered by the C++ standards committee and optimized over decades. The value of these custom implementations lies not in beating STL, but in understanding why it exists, and offering capabilities that STL simply does not provide.
 
 ---
 

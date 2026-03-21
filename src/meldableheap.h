@@ -1,5 +1,5 @@
 // Priority Queue: Meldable Heap
-
+//
 // TWIST: Merge Counter — tracks actual merge operations to empirically verify O(log n) behavior of the randomized merge
 
 #pragma once
@@ -12,124 +12,124 @@ template <typename T>
 class MeldableHeap : public Queue<T>
 {
 private:
-    struct Node
+    struct HeapNode
     {
-        T x;
-        Node *left, *right, *parent;
-        Node(const T &val) : x(val), left(nullptr), right(nullptr), parent(nullptr) {}
+        T val;
+        HeapNode *lc, *rc, *par;
+
+        HeapNode(const T &v) : val(v), lc(nullptr), rc(nullptr), par(nullptr) {}
     };
 
-    Node *r;
-    size_t n;
+    HeapNode *root;
+    size_t count;
     size_t merge_count;
 
-    Node *merge(Node *h1, Node *h2)
+    HeapNode *meld(HeapNode *a, HeapNode *b)
     {
-        if (h1 == nullptr)
-            return h2;
-        if (h2 == nullptr)
-            return h1;
+        if (!a)
+            return b;
+        if (!b)
+            return a;
 
-        if (h1->x > h2->x)
-        {
-            Node *temp = h1;
-            h1 = h2;
-            h2 = temp;
-        }
+        if (a->val > b->val)
+            std::swap(a, b);
 
         merge_count++;
 
-        if (rand() % 2)
+        bool goLeft = rand() % 2;
+
+        if (goLeft)
         {
-            h1->left = merge(h1->left, h2);
-            if (h1->left != nullptr)
-                h1->left->parent = h1;
+            a->lc = meld(a->lc, b);
+            if (a->lc)
+                a->lc->par = a;
         }
         else
         {
-            h1->right = merge(h1->right, h2);
-            if (h1->right != nullptr)
-                h1->right->parent = h1;
+            a->rc = meld(a->rc, b);
+            if (a->rc)
+                a->rc->par = a;
         }
-        return h1;
+
+        return a;
     }
 
-    void destroyNode(Node *u)
+    void freeTree(HeapNode *node)
     {
-        if (u == nullptr)
+        if (!node)
             return;
-        destroyNode(u->left);
-        destroyNode(u->right);
-        delete u;
+        freeTree(node->lc);
+        freeTree(node->rc);
+        delete node;
     }
 
 public:
-    MeldableHeap() : r(nullptr), n(0), merge_count(0) {}
+    MeldableHeap() : root(nullptr), count(0), merge_count(0) {}
 
-    ~MeldableHeap()
-    {
-        destroyNode(r);
-    }
+    ~MeldableHeap() { freeTree(root); }
 
     bool add(T x) override
     {
-        Node *u = new Node(x);
-        r = merge(u, r);
-        if (r != nullptr)
-            r->parent = nullptr;
-        n++;
+        HeapNode *fresh = new HeapNode(x);
+        root = meld(fresh, root);
+        if (root)
+            root->par = nullptr;
+        count++;
         return true;
     }
 
     T remove() override
     {
-        assert(n > 0);
-        T x = r->x;
-        Node *temp = r;
-        r = merge(r->left, r->right);
-        delete temp;
-        if (r != nullptr)
-            r->parent = nullptr;
-        n--;
-        return x;
+        assert(count > 0);
+
+        T top = root->val;
+        HeapNode *old = root;
+        root = meld(root->lc, root->rc);
+        delete old;
+
+        if (root)
+            root->par = nullptr;
+        count--;
+        return top;
     }
 
-    void remove(Node *u)
+    void remove(HeapNode *node)
     {
-        Node *merged = merge(u->left, u->right);
-        if (merged != nullptr)
-            merged->parent = u->parent;
+        HeapNode *merged = meld(node->lc, node->rc);
+        if (merged)
+            merged->par = node->par;
 
-        if (u->parent == nullptr)
-            r = merged;
-        else if (u->parent->left == u)
-            u->parent->left = merged;
+        if (!node->par)
+            root = merged;
+        else if (node->par->lc == node)
+            node->par->lc = merged;
         else
-            u->parent->right = merged;
+            node->par->rc = merged;
 
-        delete u;
-        n--;
+        delete node;
+        count--;
     }
 
     void absorb(MeldableHeap<T> &other)
     {
-        r = merge(r, other.r);
-        if (r != nullptr)
-            r->parent = nullptr;
-        n += other.n;
-        other.r = nullptr;
-        other.n = 0;
+        root = meld(root, other.root);
+        if (root)
+            root->par = nullptr;
+        count += other.count;
+        other.root = nullptr;
+        other.count = 0;
     }
 
     T peek() const
     {
-        if (n == 0)
+        if (count == 0)
             throw std::underflow_error("Heap is empty");
-        return r->x;
+        return root->val;
     }
 
-    size_t size() const override { return n; }
-    bool empty() const { return n == 0; }
+    size_t size() const override { return count; }
+    bool empty() const { return count == 0; }
+
     size_t get_merge_count() const { return merge_count; }
     void reset_merge_count() { merge_count = 0; }
 };
