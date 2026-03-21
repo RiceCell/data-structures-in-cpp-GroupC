@@ -9,7 +9,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge)](https://www.gnu.org/licenses/gpl-3.0)
 [![Language: C++17](https://img.shields.io/badge/Language-C%2B%2B17-00599C?style=for-the-badge&logo=c%2B%2B)](https://isocpp.org/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey?style=for-the-badge)]()
-[![Build](https://img.shields.io/badge/Build-g%2B%2B%20%7C%20Make-success?style=for-the-badge)]()
+[![Build](https://img.shields.io/badge/Build-g%2B%2B%20%7C%20MSYS2%2FMinGW64-success?style=for-the-badge)]()
 
 </div>
 
@@ -176,6 +176,8 @@ Each data structure was given a non-standard twist beyond the textbook implement
 
 ### ArrayStack
 
+> ArrayStacks manage elements in a Last-In, First-Out (LIFO) order using a dynamic array for contiguous memory efficiency. This implementation ensures fast O(1) amortized additions and removals while adding a layer of security through manual data shredding.
+
 **1. Data Shredding**
 Vacated memory slots are zeroed out with `T()` after every `remove()` and `resize()`. This prevents sensitive data from lingering in memory beyond its lifetime which is a subtle but important security consideration.
 
@@ -189,6 +191,8 @@ The stack tracks every internal `resize()` event via a counter accessible throug
 
 ### SLList 
 
+> Singly-Linked Lists connect nodes in a single direction, providing a lightweight way to manage FIFO queues without the need for large contiguous memory blocks.
+
 **1. Node Pooling**
 Instead of calling `new`/`delete` on every push and pop, freed nodes are stashed in a reuse `vector`. The next push grabs from the pool first before touching the heap. After warmup, the queue runs almost entirely allocation-free — directly addressing the biggest real-world weakness of linked lists.
 
@@ -199,8 +203,10 @@ On every push, the queue checks if `tail->next` is non-null, which would indicat
 
 ### MeldableHeap 
 
-**1. Merge Counter**
-Every call to `merge()` that performs real increments a counter. After a benchmark run, you can retrieve the total merge count via `get_merge_count()` and compare it to the theoretical O(log n) expectation.
+> MeldableHeaps are randomized priority queues that prioritize simplicity and merge-ability over rigid structural rules. By using a "coin flip" to decide which path to take during a merge, they maintain an efficient logarithmic height without the complex balancing logic required by traditional heaps.
+
+**Merge Counter**
+Every call to `merge()` that performs real work (both arguments non-null) increments a counter. After a benchmark run, you can retrieve the total merge count via `get_merge_count()` and compare it to the theoretical O(log n) expectation.
 
 This empirically shows that the average merge depth per operation is ~0.65 × log₂(N) — less than the theoretical ceiling because the randomized coin flip tends to pick shorter paths on average.
 
@@ -254,7 +260,10 @@ The number of iterations and moves it takes until the inputted value is found is
 
 ---
 
-### USet: ChainedHashTable
+### Chained Hash Table
+
+> Chained Hash Tables organize unsorted elements by mapping them to specific "buckets" using a hash function, handling collisions through linked lists. With the use of hashing, we are able to quickly store data.
+
 **1. Custom Hash Function for Primitive T Elements**
 Use standard C++ hashing as a base, and then pass it through a strong "mixer" or "finalizer." (MurmurHash3 64-bit avalanche mixer)
 
@@ -272,8 +281,6 @@ Set operations such as Subset, Union, Intersection, and Difference were made int
 ## References
 
 - Morin, P. *Open Data Structures (C++ Edition)*. [opendatastructures.org](https://opendatastructures.org)
-  - §3 — Linked Lists
-  - §10.2 — Randomized Meldable Heap
 - Knuth, D.E. *The Art of Computer Programming, Vol. 2: Seminumerical Algorithms*. Addison-Wesley, 1969. §3.1 — Floyd's Cycle Detection
 
 ---
