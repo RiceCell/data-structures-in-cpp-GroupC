@@ -244,6 +244,16 @@ The number of iterations and moves it takes until the inputted value is found is
 
 ---
 
+### Graph: Adjacency Matrix
+
+**1. Weighted Edges**
+The values in `edge[i][j]` include the weight of the edge, with `std::numeric_limits<double>::infinity()` representing the absence of edge.
+
+**2. Degree Calculation**
+There are methods to get the degree (count of edges) entering (`inDegreeOf()`) and leaving (`outDegreeOf()`) a vertex.
+
+---
+
 ## References
 
 - Morin, P. *Open Data Structures (C++ Edition)*. [opendatastructures.org](https://opendatastructures.org)
