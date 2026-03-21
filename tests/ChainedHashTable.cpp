@@ -4,7 +4,7 @@
 #include <chrono>
 #include <unordered_set>
 #include <iomanip>
-#include "ChainedHashTable.h"
+#include "../src/ChainedHashTable.h"
 
 // Helper Timer
 struct Timer {
