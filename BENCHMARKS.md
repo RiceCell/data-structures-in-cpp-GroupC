@@ -113,7 +113,7 @@ Elements      Avg Absorb (s)
 ---
 
 ## Deque: Array Deque
-**Regular Mode** - adding and remove 1 to N values
+**Regular Mode** - average time of adding and remove 1 to N values
 
 ```
 Elements    Avg Add Time (s)   Avg Remove Time (s)   Avg Total (s)
@@ -145,7 +145,7 @@ Elements    Add Time (s)   Check Time (s)   Found Number (s)   Remove Time (s)  
 
 ## List: Doubly-Linked List
 
-**Regular Mode**
+**Regular Mode** - average time of pushing and popping 1 to N values
 
 ```
 Elements    Avg Enqueue Time (s)   Avg Dequeue Time (s)   Avg Total (s)
@@ -157,7 +157,7 @@ Elements    Avg Enqueue Time (s)   Avg Dequeue Time (s)   Avg Total (s)
 100000000   1.76502                1.97526                3.74028 
 ```
 
-**Traversal Mode**
+**Traversal Mode** - pushing, moving forwards and backwards N times, and removal
 ```
 Elements    Enqueue Time (s)   Moving Forward (s)   Moving Backward (s)   Dequeue Time (s)   Total (s)
 -------------------------------------------------------------------------------------------------------
@@ -174,7 +174,7 @@ Elements    Enqueue Time (s)   Moving Forward (s)   Moving Backward (s)   Dequeu
 
 ## Sorted Set: Skiplist
 
-**Regular Mode**
+**Regular Mode** - average time of adding and remove 1 to N values
 
 ```
 Elements    Avg Add Time (s)   Avg Remove Time (s)   Avg Total (s)
@@ -185,7 +185,7 @@ Elements    Avg Add Time (s)   Avg Remove Time (s)   Avg Total (s)
 1000000     8.9263             0.125442              9.05174
 ```
 
-**Randomizer Mode**
+**Randomizer Mode** - adding, searching, and removing N items with random values 
 ```
 SEED: 20
 NUMBER TO FIND: 20
@@ -204,7 +204,7 @@ Elements    Add Time (s)   Find Time (s)   Found?  Find Count  Total (s)
 
 ## Sorted Set: Red-Black Trees
 
-**Regular Mode**
+**Regular Mode** - average time of adding and remove 1 to N values
 ```
 Elements    Avg Add Time (s)   Avg Remove Time (s)   Avg Total (s)
 ------------------------------------------------------------------
@@ -214,7 +214,7 @@ Elements    Avg Add Time (s)   Avg Remove Time (s)   Avg Total (s)
 ```
 *Note: 1 million elements was removed because it took way too long to finish the remove ;_;*
 
-**Randomizer Mode**
+**Randomizer Mode** - adding, searching, and removing N items with random values
 ```
 SEED: 20
 NUMBER TO FIND: 20
