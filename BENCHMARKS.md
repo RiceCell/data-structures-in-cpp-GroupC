@@ -10,7 +10,7 @@ CMSC 123: Data Structures and Algorithms
 >
 > **Russel Niño Buno** — Acer Nitro AN515-58, i5-12500H, 8GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1 <br>
 > **Angelo Mari Manlangit** — Lenovo Thinkpad T14 Gen 3, AMD Ryzen 5 PRO 5650U with Radeon Graphics, 16GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1  <br>
-> **Gian Jefferson Reyes** — *(to add)*
+> **Gian Jefferson Reyes** — Extensa 215-55, i5-1235U, 8GB RAM, Windows 11
 </div>
 
 ---
@@ -24,8 +24,9 @@ CMSC 123: Data Structures and Algorithms
 6. [➤ List: Doubly-Linked List](#list-doubly-linked-list)
 7. [➤ Sorted Set: Skiplist](#sorted-set-skiplist)
 8. [➤ Sorted Set: Red-Black Trees](#sorted-set-red-black-trees)
-9. [➤ Custom vs STL](#-custom-vs-standard-template-library-stl)
-10. [➤ Summary](#-summary)
+9. [➤ Graph: Adjacency Matrix](#graph-adjacency-matrix)
+10. [➤ Custom vs STL](#-custom-vs-standard-template-library-stl)
+11. [➤ Summary](#-summary)
 
 ---
 
@@ -240,6 +241,20 @@ LEAVES:
 
 ---
 
+## Graph: Adjacency Matrix
+```
+Vertices  Add Edges (ms)  outDegree (ms)  inDegree (ms)  outEdges (ms)  inEdges (ms)
+------------------------------------------------------------------------------------
+100       ~0.01           ~0.12           ~0.14          ~0.27          ~0.27
+500       ~0.12           ~2.28           ~2.28          ~3.32          ~4.34
+1000      ~0.26           ~9.86           ~22.19         ~12.21         ~21.31
+2500      ~0.83           ~26.24          ~81.81         ~29.96         ~81.29
+5000      ~6.10           ~53.50          ~184.59        ~56.70         ~184.94
+```
+> This Adjacency Matrix's key performance characteristic lies in its memory access patterns. This is most evident when comparing the "out" operations (outDegreeOf, outEdges) against the "in" operations (inDegreeOf, inEdges) as the graph scales. Because the 1D edgeMatrix vector maps 2D coordinates using index = i * numOfVertices + j, reading outgoing edges iterates through contiguous memory blocks. However, reading incoming edges via hasEdge(j, i) forces the CPU to jump forward by numOfVertices bytes on every single loop iteration, resulting in severe cache misses. For example, at N = 5000, inDegreeOf (~184.59 ms) is nearly 3.5x slower than outDegreeOf (~53.50 ms) despite both performing the exact same number of operations.
+
+---
+
 ## Custom-made vs Standard Template Library (STL)
 
 Benchmarked against C++ Standard Library equivalents.
@@ -281,6 +296,18 @@ Fixed random seed (67) for reproducibility across all runs.
 | 1,000,000 | 2.19174e-01 | 1.17709e-02 | 8.13843e-01 | 8.35353e-02 | STL +983% |
 
 > `std::priority_queue` uses a binary heap on a contiguous `std::vector` — every operation benefits from CPU cache prefetching. Our MeldableHeap uses pointer-based tree nodes scattered in memory, making every merge step a potential cache miss. However, `std::priority_queue` **cannot merge two heaps** — there is no `absorb()` equivalent in the STL. Our MeldableHeap does it in **O(log n) — ~3.69 microseconds for 2 million elements**.
+
+---
+
+### `ChainedHashTable` vs `std::unsorted_set`
+| Elements  | Custom Add (ms) | STL Add (ms) | Custom Find (ms) | STL Find (ms) | Search Winner |
+|-----------|-----------------|--------------|------------------|---------------|---------------|
+| 1,000     | 0.705           | 0.611        | 0.156            | 0.819         | Custom +425%  |
+| 10,000    | 8.518           | 7.354        | 2.257            | 8.586         | Custom +280%  |
+| 100,000   | 81.685          | 71.411       | 32.787           | 90.347        | Custom +175%  |
+| 1,000,000 | 795.981         | 794.050      | 480.257          | 1080.212      | Custom +125%  |
+> `std::unordered_set` uses an identity hash for integers (where f(x) = x) and relies heavily on linked-node memory pooling, giving it a slight edge in insertion speed at smaller sizes. However, our `ChainedHashTable` dominates in search operations (up to 5x faster). This is because we implemented a robust `FastAvalancheHash` (utilizing a **MurmurHash3** 64-bit mix), which drastically reduces collision rates compared to the STL's default integer hash.
+> Note on `isSubsetOf`: The STL benchmark appears nearly instantaneous (~0.003 ms) because the external standard library helper function uses an early return (short-circuiting) the moment it finds a missing element. Conversely, our `ChainedHashTable::isSubsetOf` uses a `forEach` lambda loop that fully iterates through the entire underlying array stack, even after the subset condition has already failed. Implementing an early break in our custom iteration would close this artificial gap.
 
 ---
 
