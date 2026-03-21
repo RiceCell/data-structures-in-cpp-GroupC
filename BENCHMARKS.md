@@ -24,6 +24,7 @@ CMSC 123: Data Structures and Algorithms
 6. [➤ List: Doubly-Linked List](#list-doubly-linked-list)
 7. [➤ Sorted Set: Skiplist](#sorted-set-skiplist)
 8. [➤ Sorted Set: Red-Black Trees](#sorted-set-red-black-trees)
+9. [➤ Graph: Adjacency Matrix](#graph-adjacency-matrix)
 9. [➤ Custom vs STL](#-custom-vs-standard-template-library-stl)
 10. [➤ Summary](#-summary)
 
