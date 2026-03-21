@@ -4,8 +4,8 @@
 #include <random>
 #include <limits>
 #include <iomanip>
-#include "AdjacencyMatrix.h"
-#include "arraystack.h"
+#include "../src/AdjacencyMatrix.h"
+#include "../src/arraystack.h"
 
 // Helper Timer
 class Timer {
