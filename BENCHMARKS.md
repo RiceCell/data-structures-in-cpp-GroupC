@@ -8,7 +8,7 @@ CMSC 123: Data Structures and Algorithms
 > **Compiler flags:** `-O2` across all benchmarks
 > **Methodology:** 10 iterations per N, results averaged. Random inputs use fixed seed for reproducibility.
 >
->**Environment**
+>**Environment** <br>
 > **Russel Niño Buno** — Acer Nitro AN515-58, i5-12500H, 8GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1 <br>
 > **Angelo Mari Manlangit** — Lenovo Thinkpad T14 Gen 3, AMD Ryzen 5 PRO 5650U with Radeon Graphics, 16GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1  <br>
 > **Gian Jefferson Reyes** — Extensa 215-55, i5-1235U, 8GB RAM, Windows 11
@@ -319,17 +319,17 @@ Vertices  Add Edges (ms)  outDegree (ms)  inDegree (ms)  outEdges (ms)  inEdges 
 
 ### Complexity Reference
 
-| Structure | Add | Remove | Find/Search | Merge | Special |
-|-----------|-----|--------|-------------|-------|---------|
-| ArrayStack | O(1) amortized | O(1) amortized | O(n) | — | O(n) worst case resize |
-| SLList | O(1) | O(1) | O(n) | — | O(n) get(i) |
-| MeldableHeap | O(log n) | O(log n) | O(n) | O(log n) | absorb() in O(log n) |
-| ArrayDeque | O(1) amortized | O(1) amortized | O(n) | — | O(n) worst case resize |
-| DLList | O(1) | O(1) | O(n) | — | O(1) traversal ops, O(n) get(i) |
-| Skiplist | O(log n) avg | O(log n) avg | O(log n) avg | — | O(n) worst case |
-| Red-Black Tree | O(log n) | O(log n) | O(log n) | — | O(log n) rebalance |
-| ChainedHashTable | O(1) avg | O(1) avg | O(1) avg | — | O(n) worst case |
-| Adjacency Matrix | O(1) | O(1) | O(1) | — | O(n²) space |
+| Structure | Add | Remove | Find/Search | Special |
+|-----------|-----|--------|-------------|---------|
+| ArrayStack | O(1) amortized | O(1) amortized | O(n) | O(n) worst case resize |
+| SLList | O(1) | O(1) | O(n) | O(n) get(i) |
+| MeldableHeap | O(log n) | O(log n) | O(n) | absorb() in O(log n) |
+| ArrayDeque | O(1) amortized | O(1) amortized | O(n) | O(n) worst case resize |
+| DLList | O(1) | O(1) | O(n) | O(1) traversal ops, O(n) get(i) |
+| Skiplist | O(log n) avg | O(log n) avg | O(log n) avg | O(n) worst case |
+| Red-Black Tree | O(log n) | O(log n) | O(log n) | O(log n) rebalance |
+| ChainedHashTable | O(1) avg | O(1) avg | O(1) avg | O(n) worst case |
+| Adjacency Matrix | O(1) | O(1) | O(1) | O(n²) space |
 
 ---
 
