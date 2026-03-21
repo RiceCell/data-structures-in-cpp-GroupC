@@ -175,13 +175,13 @@ Each data structure was given a non-standard twist beyond the textbook implement
 
 > ArrayStacks manage elements in a Last-In, First-Out (LIFO) order using a dynamic array for contiguous memory efficiency. This implementation ensures fast O(1) amortized additions and removals while adding a layer of security through manual data shredding.
 
-**1. Data Shredding**
+**1. Data Shredding.**
 Vacated memory slots are zeroed out with `T()` after every `remove()` and `resize()`. This prevents sensitive data from lingering in memory beyond its lifetime which is a subtle but important security consideration.
 
-**2. Safety Netting**
+**2. Safety Netting.**
 `get()` and `set()` return a default `T()` value instead of crashing when accessing out-of-bounds indices. Therefore, providing safe access without exceptions.
 
-**3. Growth Tracking**
+**3. Growth Tracking.**
 The stack tracks every internal `resize()` event via a counter accessible through `get_resize_count()`, which lets you observe the amortized growth pattern and verify that resize events are infrequent even at 100M operations.
 
 ---
