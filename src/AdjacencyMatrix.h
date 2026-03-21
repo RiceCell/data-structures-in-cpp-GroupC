@@ -1,7 +1,7 @@
 /*
 TWISTS:
 
-1) Weighted Edges - The values in edge[i][j] include the weight of the edge, with std::numeric_limits<double>::infinit() representing the absence of edge.
+1) Weighted Edges - The values in edge[i][j] include the weight of the edge, with std::numeric_limits<double>::infinity() representing the absence of edge.
 2) Degree Calculation - Methods to get the degree (count of edges) entering/leaving a vertex.
 */
 
