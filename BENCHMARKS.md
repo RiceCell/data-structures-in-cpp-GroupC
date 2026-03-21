@@ -9,7 +9,7 @@ CMSC 123: Data Structures and Algorithms
 > **Methodology:** 10 iterations per N, results averaged. Random inputs use fixed seed for reproducibility.
 >
 > **Russel Niño Buno** — Acer Nitro AN515-58, i5-12500H, 8GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1 <br>
-> **Angelo Mari Manlangit** — *(to add)* <br>
+> **Angelo Mari Manlangit** — Lenovo Thinkpad T14 Gen 3, AMD Ryzen 5 PRO 5650U with Radeon Graphics, 16GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1  <br>
 > **Gian Jefferson Reyes** — *(to add)*
 </div>
 
@@ -112,13 +112,13 @@ Elements      Avg Absorb (s)
 **Regular Mode** - adding and remove 1 to N values
 
 ```
-Elements    Add Time (s)   Remove Time (s)   Total (s)
--------------------------------------------------------
-1000        ~2.9e-05       ~1.3e-05         ~4.2e-05        
-10000       ~0.0001199     ~0.0001116       ~0.0002315      
-100000      ~0.0013386     ~0.0009833       ~0.0023219      
-1000000     ~0.0111597     ~0.0081268       ~0.0192865      
-100000000   ~1.4263        ~0.93523         ~2.36153        
+Elements    Avg Add Time (s)   Avg Remove Time (s)   Avg Total (s)
+------------------------------------------------------------------
+1000        1.663e-05          1.419e-05             3.082e-05        
+10000       0.00019187         0.0001851             0.00037697     
+100000      0.00148547         0.00095102            0.00243649      
+1000000     0.0121042          0.00761675            0.019721      
+100000000   1.30462            0.830724              2.13534        
 ```
 
 **Random Mode** - adding, searching, and removing N items with random values
@@ -135,7 +135,7 @@ Elements    Add Time (s)   Check Time (s)   Found Number (s)   Remove Time (s)  
 100000000   ~2.89581       ~9e-07           true               ~1.09112          ~3.98693       
 ```
 
-> array deque observation
+> The Array Deque has a really quick add and removal time compared to other Array-based Data Structures as the addition and removal of values are only accessible to the first or last index, as the Deque is Double Ended. This makes the processes in the array significantly quicker since it only concerns itself with the boundaries of the deque. Surprisingly, being able to find a certain value is relatively quick. Although, this might also have to do with the position in which the number to find is in so the quick time could indicate that that number is near the earlier indexes. Further testings need to be done in order to correctly make a statement about it.
 
 ---
 
@@ -144,13 +144,13 @@ Elements    Add Time (s)   Check Time (s)   Found Number (s)   Remove Time (s)  
 **Regular Mode**
 
 ```
-Elements    Enqueue Time (s)   Dequeue Time (s)   Total (s)
-------------------------------------------------------------
-1000        ~0.0001082         ~2.4e-05           ~0.0001322  
-10000       ~0.0006424         ~0.0002379         ~0.0008803     
-100000      ~0.0063525         ~0.0017028         ~0.0080553    
-1000000     ~0.0655111         ~0.021264          ~0.0867751   
-100000000   ~7.26153           ~2.61715           ~9.87868 
+Elements    Avg Enqueue Time (s)   Avg Dequeue Time (s)   Avg Total (s)
+-----------------------------------------------------------------------
+1000        1.262e-05              5.23e-06               1.785e-05 
+10000       0.0001157              6.529e-05              0.00018099     
+100000      0.00149918             0.00061647             0.00211565    
+1000000     0.0148384              0.0167264              0.0315648   
+100000000   1.76502                1.97526                3.74028 
 ```
 
 **Traversal Mode**
@@ -164,7 +164,7 @@ Elements    Enqueue Time (s)   Moving Forward (s)   Moving Backward (s)   Dequeu
 100000000   ~6.63476           ~1.05611             ~1.10625              ~2.46785           ~11.265
 ```
 
-> list observation
+> The Doubly-Linked List have similar times to its Singly-Linked counterpart. However, you may notice that the average enqueue time is **1.77 secs** in the Regular Mode but takes **~6.63 secs** in the Traversal Mode. The time difference between the two are incredibly huge. Behind the scenes, it actually took **~7 secs** for the Enqueue time in the first iteration. However, due to its Node Pooling feature, it was able to save Enqueue time by recycling previously removed nodes as in the benchmark, the values of each iteration to get the average times are the same throughout (from 0 to N - 1).
 
 ---
 
@@ -173,12 +173,12 @@ Elements    Enqueue Time (s)   Moving Forward (s)   Moving Backward (s)   Dequeu
 **Regular Mode**
 
 ```
-Elements    Add Time (s)   Remove Time (s)   Total (s)
--------------------------------------------------------
-1000        ~0.0003253     ~8.06e-05         ~0.0004059
-10000       ~0.0029362     ~0.0008859        ~0.0038221
-100000      ~0.0639081     ~0.0101834        ~0.0740915
-1000000     ~8.36841       ~0.102109         ~8.47052
+Elements    Avg Add Time (s)   Avg Remove Time (s)   Avg Total (s)
+------------------------------------------------------------------
+1000        0.00028755         8.46e-05              0.00037215
+10000       0.00340626         0.00097727            0.00438353
+100000      0.070961           0.0118663             0.0828273
+1000000     8.9263             0.125442              9.05174
 ```
 
 **Randomizer Mode**
@@ -194,7 +194,7 @@ Elements    Add Time (s)   Find Time (s)   Found?  Find Count  Total (s)
 1000000     ~6.40796       ~1.8e-06        true    5           ~6.40797
 ```
 
-> skiplist observation
+> Skiplists' key feature is in its searching process, making it faster to go through multiple nodes via the express edges in the higher levels. This is most evident within the `find()` function as the it is consistent with the O(log n) complexity. For example, at N = 1000, log(1000) would be = **3**, which is the same value as the *Find Count*.
 
 ---
 
@@ -202,11 +202,11 @@ Elements    Add Time (s)   Find Time (s)   Found?  Find Count  Total (s)
 
 **Regular Mode**
 ```
-Elements    Add Time (s)   Remove Time (s)   Total (s)
----------------------------------------------------------
-1000        ~0.0001772     ~0.0003673        ~0.0005445
-10000       ~0.0016806     ~0.0793107        ~0.0809913
-100000      ~0.0181373     ~15.7051          ~15.7232
+Elements    Avg Add Time (s)   Avg Remove Time (s)   Avg Total (s)
+------------------------------------------------------------------
+1000        0.00012862         0.00038751            0.00051613
+10000       0.00213398         0.0897772             0.0919112
+100000      0.0203826          17.3044               17.3248
 ```
 *Note: 1 million elements was removed because it took way too long to finish the remove ;_;*
 
@@ -232,7 +232,7 @@ LEAVES:
 35(RED) 588(BLACK) 622(RED) 640(RED) 816(BLACK) 888(BLACK) 892(BLACK) 898(RED) 953(RED) 955(BLACK)
 ```
 
-> red black trees
+> Red-Black Trees when compared to its Sorted Set brother, Skiplists, it has a faster time in adding elements but slower in removing elements. This is because of how much procedures goes into balancing the trees when removing compared to adding elements. It also takes longer to find a certain node in higher elements as it has to go through multiple nodes and compare its value with what to find and choose whether to go left or right and repeats that process until the node or NIL is found. However, it is much more organized and simpler to implement a display function that prints the leaves than a skiplist.
 
 ---
 

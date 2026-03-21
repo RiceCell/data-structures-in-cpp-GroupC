@@ -18,32 +18,45 @@ Note: adding values will simultaneously add in front and back for random search
 #include <cstdlib>
 #include "../src/arraydeque.h"
 
+const int RUNS = 10;
+
 // for regular benchmark times
 void run_regular_benchmark(long long N) {
     ArrayDeque<int> deque;
 
-    // Time ADD
-    auto start_add = std::chrono::high_resolution_clock::now();
-    for (long long i = 0; i < N; i++)
-    {
-        deque.addFirst(i);
-    }
-    auto end_add = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff_add = end_add - start_add;
+    double total_add = 0.0;
+    double total_remove = 0.0;
 
-    // Time REMOVE
-    auto start_remove = std::chrono::high_resolution_clock::now();
-    for (long long i = 0; i < N; i++)
-    {
-            deque.removeLast();
+    for (int run = 0; run < RUNS; run++) {
+        // Time ADD
+        auto start_add = std::chrono::high_resolution_clock::now();
+        for (long long i = 0; i < N; i++)
+        {
+            deque.addFirst(i);
+        }
+        auto end_add = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> diff_add = end_add - start_add;
+        total_add += diff_add.count();
+        
+        // Time REMOVE
+        auto start_remove = std::chrono::high_resolution_clock::now();
+        for (long long i = 0; i < N; i++)
+        {
+                deque.removeLast();
+        }
+        auto end_remove = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> diff_remove = end_remove - start_remove;
+        total_remove += diff_remove.count();
     }
-    auto end_remove = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff_remove = end_remove - start_remove;
+    
+    double avg_add = total_add / RUNS;
+    double avg_remove = total_remove / RUNS;
+    double avg_total = avg_add + avg_remove;
 
     std::cout << std::setw(12) << N
-              << std::setw(15) << diff_add.count()
-              << std::setw(15) << diff_remove.count()
-              << std::setw(15) << (diff_add.count() + diff_remove.count()) << "seconds" << std::endl;
+              << std::setw(15) << avg_add
+              << std::setw(15) << avg_remove
+              << std::setw(15) << avg_total << "seconds\n";
 }
 
 // with searching and random values
