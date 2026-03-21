@@ -10,7 +10,7 @@ CMSC 123: Data Structures and Algorithms
 >
 > **Russel Niño Buno** — Acer Nitro AN515-58, i5-12500H, 8GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1 <br>
 > **Angelo Mari Manlangit** — Lenovo Thinkpad T14 Gen 3, AMD Ryzen 5 PRO 5650U with Radeon Graphics, 16GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1  <br>
-> **Gian Jefferson Reyes** — *(to add)*
+> **Gian Jefferson Reyes** — Extensa 215-55, i5-1235U, 8GB RAM, Windows 11
 </div>
 
 ---
