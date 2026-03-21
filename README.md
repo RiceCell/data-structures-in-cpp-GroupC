@@ -278,6 +278,18 @@ Set operations such as Subset, Union, Intersection, and Difference were made int
 
 ---
 
+### Adjacency Matrix
+
+> Adjacency Matrices represent relationships between nodes using a two-dimensional grid, making it super quick to check if an edge exists between two vertices. This implementation supports weighted edges and degree calculations, making modeling complex networks that much simpler.
+
+**1. Weighted Edges**
+The values in `edge[i][j]` include the weight of the edge, with `std::numeric_limits<double>::infinity()` representing the absence of edge.
+
+**2. Degree Calculation**
+There are methods to get the degree (count of edges) entering (`inDegreeOf()`) and leaving (`outDegreeOf()`) a vertex.
+
+---
+
 ## References
 
 - Morin, P. *Open Data Structures (C++ Edition)*. [opendatastructures.org](https://opendatastructures.org)
