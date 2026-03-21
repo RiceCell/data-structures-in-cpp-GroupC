@@ -52,7 +52,7 @@ The library is benchmarked at scales from **1,000 to 10,000,000 elements** to de
 | **List** | Array Deque + Doubly Linked List | `src/arraydeque.h`, `src/dllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection), Custom Traversal System | Angelo Mari Manlangit |
 | **Sorted Set** | Skiplist + Red-Black Tree | `src/skiplist.h`, `src/redblacktrees.h` | Search Iteration Count, Leaf Display (for Red-Black Trees) | Angelo Mari Manlangit |
 | **Unsorted Set** | Chained Hash Table | `src/chainedhashtable.h` | *TO ADD* | Gian Jefferson Reyes |
-| **Graph** | Adjacency Matrix | `src/adjacencymatrix.h` | Weighted Edges, Degree Calculation | Gian Jefferson Reyes |
+| **Graph** | Adjacency Matrix | `src/AdjacencyMatrix.h` | Weighted Edges, Degree Calculation | Gian Jefferson Reyes |
 
 ---
 
