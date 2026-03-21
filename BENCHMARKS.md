@@ -9,7 +9,7 @@ CMSC 123: Data Structures and Algorithms
 > **Methodology:** 10 iterations per N, results averaged. Random inputs use fixed seed for reproducibility.
 >
 > **Russel Niño Buno** — Acer Nitro AN515-58, i5-12500H, 8GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1 <br>
-> **Angelo Mari Manlangit** — *(to add)* <br>
+> **Angelo Mari Manlangit** — Lenovo Thinkpad T14 Gen 3, AMD Ryzen 5 PRO 5650U with Radeon Graphics, 16GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1  <br>
 > **Gian Jefferson Reyes** — *(to add)*
 </div>
 
@@ -20,8 +20,12 @@ CMSC 123: Data Structures and Algorithms
 1. [➤ FILO Queue: Array Stack](#-filo-queue-array-stack)
 2. [➤ FIFO Queue: Singly Linked List](#-fifo-queue-singly-linked-list)
 3. [➤ Priority Queue: Meldable Heap](#-priority-queue-meldable-heap)
-4. [➤ Custom vs STL](#-custom-vs-standard-template-library-stl)
-5. [➤ Summary](#-summary)
+5. [➤ Deque: Array Deque](#deque-array-deque)
+6. [➤ List: Doubly-Linked List](#list-doubly-linked-list)
+7. [➤ Sorted Set: Skiplist](#sorted-set-skiplist)
+8. [➤ Sorted Set: Red-Black Trees](#sorted-set-red-black-trees)
+9. [➤ Custom vs STL](#-custom-vs-standard-template-library-stl)
+10. [➤ Summary](#-summary)
 
 ---
 
@@ -105,6 +109,134 @@ Elements      Avg Absorb (s)
 ```
 
 > Absorbing 2 million elements takes **~3.69 microseconds**. From 2,000 to 2,000,000 elements — a 1000× increase in data — absorb time grows only ~10×, consistent with O(log n). This is the defining feature of a meldable heap: merging two massive heaps is essentially instant regardless of size. `std::priority_queue` has no equivalent — merging two STL heaps requires re-inserting every element at O(n log n) cost.
+
+---
+
+## Deque: Array Deque
+**Regular Mode** - average time of adding and remove 1 to N values
+
+```
+Elements    Avg Add Time (s)   Avg Remove Time (s)   Avg Total (s)
+------------------------------------------------------------------
+1000        1.663e-05          1.419e-05             3.082e-05        
+10000       0.00019187         0.0001851             0.00037697     
+100000      0.00148547         0.00095102            0.00243649      
+1000000     0.0121042          0.00761675            0.019721      
+100000000   1.30462            0.830724              2.13534        
+```
+
+**Random Mode** - adding, searching, and removing N items with random values
+```
+SEED: 20
+NUMBER TO FIND: 20
+
+Elements    Add Time (s)   Check Time (s)   Found Number (s)   Remove Time (s)   Total (s)
+------------------------------------------------------------------------------------------
+1000        ~4.98e-05      ~3.1e-06         true               ~1.55e-05         ~6.84e-05       
+10000       ~0.0002646     ~4.8e-06         true               ~0.0001317        ~0.0004011      
+100000      ~0.0029728     ~5.6e-06         true               ~0.0011686        ~0.004147       
+1000000     ~0.0259146     ~9e-07           true               ~0.0097084        ~0.0356239      
+100000000   ~2.89581       ~9e-07           true               ~1.09112          ~3.98693       
+```
+
+> The Array Deque has a really quick add and removal time compared to other Array-based Data Structures as the addition and removal of values are only accessible to the first or last index, as the Deque is Double Ended. This makes the processes in the array significantly quicker since it only concerns itself with the boundaries of the deque. Surprisingly, being able to find a certain value is relatively quick. Although, this might also have to do with the position in which the number to find is in so the quick time could indicate that that number is near the earlier indexes. Further testings need to be done in order to correctly make a statement about it.
+
+---
+
+## List: Doubly-Linked List
+
+**Regular Mode** - average time of pushing and popping 1 to N values
+
+```
+Elements    Avg Enqueue Time (s)   Avg Dequeue Time (s)   Avg Total (s)
+-----------------------------------------------------------------------
+1000        1.262e-05              5.23e-06               1.785e-05 
+10000       0.0001157              6.529e-05              0.00018099     
+100000      0.00149918             0.00061647             0.00211565    
+1000000     0.0148384              0.0167264              0.0315648   
+100000000   1.76502                1.97526                3.74028 
+```
+
+**Traversal Mode** - pushing, moving forwards and backwards N times, and removal
+```
+Elements    Enqueue Time (s)   Moving Forward (s)   Moving Backward (s)   Dequeue Time (s)   Total (s)
+-------------------------------------------------------------------------------------------------------
+1000        ~9.48e-05          ~4.6e-06             ~3.4e-06              ~2.27e-05          ~0.0001255      
+10000       ~0.0006355         ~4.83e-05            ~3.9e-05              ~0.0003065         ~0.0010293      
+100000      ~0.006522          ~0.000773            ~0.0004379            ~0.0014615         ~0.0091944      
+1000000     ~0.0657628         ~0.0115529           ~0.0090122            ~0.0170636         ~0.103391      
+100000000   ~6.63476           ~1.05611             ~1.10625              ~2.46785           ~11.265
+```
+
+> The Doubly-Linked List have similar times to its Singly-Linked counterpart. However, you may notice that the average enqueue time is **1.77 secs** in the Regular Mode but takes **~6.63 secs** in the Traversal Mode. The time difference between the two are incredibly huge. Behind the scenes, it actually took **~7 secs** for the Enqueue time in the first iteration. However, due to its Node Pooling feature, it was able to save Enqueue time by recycling previously removed nodes as in the benchmark, the values of each iteration to get the average times are the same throughout (from 0 to N - 1).
+
+---
+
+## Sorted Set: Skiplist
+
+**Regular Mode** - average time of adding and remove 1 to N values
+
+```
+Elements    Avg Add Time (s)   Avg Remove Time (s)   Avg Total (s)
+------------------------------------------------------------------
+1000        0.00028755         8.46e-05              0.00037215
+10000       0.00340626         0.00097727            0.00438353
+100000      0.070961           0.0118663             0.0828273
+1000000     8.9263             0.125442              9.05174
+```
+
+**Randomizer Mode** - adding, searching, and removing N items with random values 
+```
+SEED: 20
+NUMBER TO FIND: 20
+
+Elements    Add Time (s)   Find Time (s)   Found?  Find Count  Total (s)
+-------------------------------------------------------------------------
+1000        ~0.0004004     ~2e-07          true    3           ~0.0004006
+10000       ~0.0047681     ~4e-07          true    4           ~0.0047685
+100000      ~0.10455       ~4e-07          true    3           ~0.104551
+1000000     ~6.40796       ~1.8e-06        true    5           ~6.40797
+```
+
+> Skiplists' key feature is in its searching process, making it faster to go through multiple nodes via the express edges in the higher levels. This is most evident within the `find()` function as the it is consistent with the O(log n) complexity. For example, at N = 1000, log(1000) would be = **3**, which is the same value as the *Find Count*.
+
+---
+
+## Sorted Set: Red-Black Trees
+
+**Regular Mode** - average time of adding and remove 1 to N values
+```
+Elements    Avg Add Time (s)   Avg Remove Time (s)   Avg Total (s)
+------------------------------------------------------------------
+1000        0.00012862         0.00038751            0.00051613
+10000       0.00213398         0.0897772             0.0919112
+100000      0.0203826          17.3044               17.3248
+```
+*Note: 1 million elements was removed because it took way too long to finish the remove ;_;*
+
+**Randomizer Mode** - adding, searching, and removing N items with random values
+```
+SEED: 20
+NUMBER TO FIND: 20
+
+Elements    Add Time (s)   Find Time (s)   Found?  Find Count  Total (s)
+-------------------------------------------------------------------------
+1000        ~0.0001942     ~2e-07          true    10          ~0.0001944
+10000       ~0.0021392     ~4e-07          true    13          ~0.0021396
+100000      ~0.0340155     ~3e-07          true    10          ~0.0340158
+1000000     ~0.87734       ~1e-06          true    20          ~0.877341
+```
+
+**Special Mode** - displays the leaves and their respective colors of the red-black tree after addding random items
+```
+SEED: 20
+MAX VALUE (N): 1000
+
+LEAVES:
+35(RED) 588(BLACK) 622(RED) 640(RED) 816(BLACK) 888(BLACK) 892(BLACK) 898(RED) 953(RED) 955(BLACK)
+```
+
+> Red-Black Trees when compared to its Sorted Set brother, Skiplists, it has a faster time in adding elements but slower in removing elements. This is because of how much procedures goes into balancing the trees when removing compared to adding elements. It also takes longer to find a certain node in higher elements as it has to go through multiple nodes and compare its value with what to find and choose whether to go left or right and repeats that process until the node or NIL is found. However, it is much more organized and simpler to implement a display function that prints the leaves than a skiplist.
 
 ---
 
