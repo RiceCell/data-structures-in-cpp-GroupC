@@ -24,6 +24,10 @@ Red-Black-Trees Special:
 
 // for regular benchmark times
 void run_regular_benchmark(long long N) {
+    // 1  mil is cancelled
+    if (N == 1000000)
+        return;
+        
     RedBlackTree<int> list;
 
     // Time ADD

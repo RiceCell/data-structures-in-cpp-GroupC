@@ -183,6 +183,9 @@ Elements    Add Time (s)   Remove Time (s)   Total (s)
 
 **Randomizer Mode**
 ```
+SEED: 20
+NUMBER TO FIND: 20
+
 Elements    Add Time (s)   Find Time (s)   Found?  Find Count  Total (s)
 -------------------------------------------------------------------------
 1000        ~0.0004004     ~2e-07          true    3           ~0.0004006
@@ -195,7 +198,41 @@ Elements    Add Time (s)   Find Time (s)   Found?  Find Count  Total (s)
 
 ---
 
-## Sorted Set: 
+## Sorted Set: Red-Black Trees
+
+**Regular Mode**
+```
+Elements    Add Time (s)   Remove Time (s)   Total (s)
+---------------------------------------------------------
+1000        ~0.0001772     ~0.0003673        ~0.0005445
+10000       ~0.0016806     ~0.0793107        ~0.0809913
+100000      ~0.0181373     ~15.7051          ~15.7232
+```
+*Note: 1 million elements was removed because it took way too long to finish the remove ;_;*
+
+**Randomizer Mode**
+```
+SEED: 20
+NUMBER TO FIND: 20
+
+Elements    Add Time (s)   Find Time (s)   Found?  Find Count  Total (s)
+-------------------------------------------------------------------------
+1000        ~0.0001942     ~2e-07          true    10          ~0.0001944
+10000       ~0.0021392     ~4e-07          true    13          ~0.0021396
+100000      ~0.0340155     ~3e-07          true    10          ~0.0340158
+1000000     ~0.87734       ~1e-06          true    20          ~0.877341
+```
+
+**Special Mode** - displays the leaves and their respective colors of the red-black tree after addding random items
+```
+SEED: 20
+MAX VALUE (N): 1000
+
+LEAVES:
+35(RED) 588(BLACK) 622(RED) 640(RED) 816(BLACK) 888(BLACK) 892(BLACK) 898(RED) 953(RED) 955(BLACK)
+```
+
+> red black trees
 
 ---
 
