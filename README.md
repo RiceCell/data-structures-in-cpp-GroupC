@@ -45,14 +45,14 @@ The library is benchmarked at scales from **1,000 to 10,000,000 elements** to de
 
 | ADT | Implementation | File | Features | Author |
 |-----|---------------|------|-------|--------|
-| **FILO Queue** | Array Stack | `src/arraystack.h` | Data Shredding, Safety Netting, Growth Tracking | Russel Niño Buno |
-| **FIFO Queue** | Singly Linked List | `src/sllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection) | Russel Niño Buno |
-| **Priority Queue** | Meldable Heap | `src/meldableheap.h` | Merge Counter as O(log n) proof | Russel Niño Buno |
-| **Deque** | Array Deque | `src/arraydeque.h` | Growth Tracking, Contain | Angelo Mari Manlangit |
-| **List** | Array Deque + Doubly Linked List | `src/arraydeque.h`, `src/dllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection), Custom Traversal System | Angelo Mari Manlangit |
-| **Sorted Set** | Skiplist + Red-Black Tree | `src/skiplist.h`, `src/redblacktrees.h` | Search Iteration Count, Leaf Display (for Red-Black Trees) | Angelo Mari Manlangit |
-| **Unsorted Set** | Chained Hash Table | `src/ChainedHashTable.h` | Custom Hash Function, Set of Sets, Iterable, Simple Set Functions | Gian Jefferson Reyes |
-| **Graph** | Adjacency Matrix | `src/adjacencymatrix.h` | Weighted Edges, Degree Calculation | Gian Jefferson Reyes |
+| **FILO Queue** | [Array Stack](https://github.com/RiceCell/data-structures-in-cpp-GroupC/blob/main/src/arraystack.h) | `src/arraystack.h` | Data Shredding, Safety Netting, Growth Tracking | Russel Niño Buno |
+| **FIFO Queue** | [Singly Linked List](https://github.com/RiceCell/data-structures-in-cpp-GroupC/blob/main/src/sllist.h) | `src/sllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection) | Russel Niño Buno |
+| **Priority Queue** | [Meldable Heap](https://github.com/RiceCell/data-structures-in-cpp-GroupC/blob/main/src/meldableheap.h) | `src/meldableheap.h` | Merge Counter as O(log n) proof | Russel Niño Buno |
+| **Deque** | [Array Deque](https://github.com/RiceCell/data-structures-in-cpp-GroupC/blob/main/src/arraydeque.h) | `src/arraydeque.h` | Growth Tracking, Contain | Angelo Mari Manlangit |
+| **List** | [Array Deque](https://github.com/RiceCell/data-structures-in-cpp-GroupC/blob/main/src/arraydeque.h) + [Doubly Linked List](https://github.com/RiceCell/data-structures-in-cpp-GroupC/blob/main/src/dllist.h) | `src/arraydeque.h`, `src/dllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection), Custom Traversal System | Angelo Mari Manlangit |
+| **Sorted Set** | [Skiplist](https://github.com/RiceCell/data-structures-in-cpp-GroupC/blob/main/src/skiplist.h) + [Red-Black Tree](https://github.com/RiceCell/data-structures-in-cpp-GroupC/blob/main/src/redblacktrees.h) | `src/skiplist.h`, `src/redblacktrees.h` | Search Iteration Count, Leaf Display (for Red-Black Trees) | Angelo Mari Manlangit |
+| **Unsorted Set** | [Chained Hash Table](https://github.com/RiceCell/data-structures-in-cpp-GroupC/blob/main/src/ChainedHashTable.h) | `src/ChainedHashTable.h` | Custom Hash Function, Set of Sets, Iterable, Simple Set Functions | Gian Jefferson Reyes |
+| **Graph** | [Adjacency Matrix](https://github.com/RiceCell/data-structures-in-cpp-GroupC/blob/main/src/AdjacencyMatrix.h) | `src/adjacencymatrix.h` | Weighted Edges, Degree Calculation | Gian Jefferson Reyes |
 
 ---
 
