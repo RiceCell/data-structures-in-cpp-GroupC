@@ -45,7 +45,7 @@ The library is benchmarked at scales from **1,000 to 10,000,000 elements** to de
 
 | ADT | Implementation | File | Features | Author |
 |-----|---------------|------|-------|--------|
-| **FILO Queue** | Array Stack | `src/arraystack.h` | Data Shredding, Safety Netting, Growth Tracking | Russel Niño Buno |
+| [**FILO Queue**](https://github.com/RiceCell/data-structures-in-cpp-GroupC/blob/main/src/arraystack.h) | Array Stack | `src/arraystack.h` | Data Shredding, Safety Netting, Growth Tracking | Russel Niño Buno |
 | **FIFO Queue** | Singly Linked List | `src/sllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection) | Russel Niño Buno |
 | **Priority Queue** | Meldable Heap | `src/meldableheap.h` | Merge Counter as O(log n) proof | Russel Niño Buno |
 | **Deque** | Array Deque | `src/arraydeque.h` | Growth Tracking, Contain | Angelo Mari Manlangit |
