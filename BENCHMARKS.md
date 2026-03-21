@@ -20,8 +20,12 @@ CMSC 123: Data Structures and Algorithms
 1. [➤ FILO Queue: Array Stack](#-filo-queue-array-stack)
 2. [➤ FIFO Queue: Singly Linked List](#-fifo-queue-singly-linked-list)
 3. [➤ Priority Queue: Meldable Heap](#-priority-queue-meldable-heap)
-4. [➤ Custom vs STL](#-custom-vs-standard-template-library-stl)
-5. [➤ Summary](#-summary)
+5. [➤ Deque: Array Deque](#deque-array-deque)
+6. [➤ List: Doubly-Linked List](#list-doubly-linked-list)
+7. [➤ Sorted Set: Skiplist](#sorted-set-skiplist)
+8. [➤ Sorted Set: Red-Black Trees](#sorted-set-red-black-trees)
+9. [➤ Custom vs STL](#-custom-vs-standard-template-library-stl)
+10. [➤ Summary](#-summary)
 
 ---
 
