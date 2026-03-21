@@ -8,8 +8,8 @@ CMSC 123: Data Structures and Algorithms
 > **Compiler flags:** `-O2` across all benchmarks
 > **Methodology:** 10 iterations per N, results averaged. Random inputs use fixed seed for reproducibility.
 >
-> **Russel Niño Buno** — Acer Nitro AN515-58, i5-12500H, 8GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1
-> **Angelo Mari Manlangit** — *(to add)*
+> **Russel Niño Buno** — Acer Nitro AN515-58, i5-12500H, 8GB RAM, Windows 11, MSYS2/MinGW64, g++ 13.1 <br>
+> **Angelo Mari Manlangit** — *(to add)* <br>
 > **Gian Jefferson Reyes** — *(to add)*
 </div>
 
