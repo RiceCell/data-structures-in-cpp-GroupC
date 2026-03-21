@@ -52,7 +52,7 @@ The library is benchmarked at scales from **1,000 to 10,000,000 elements** to de
 | **List** | Array Deque + Doubly Linked List | `src/arraydeque.h`, `src/dllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection), Custom Traversal System | Angelo Mari Manlangit |
 | **Sorted Set** | Skiplist + Red-Black Tree | `src/skiplist.h`, `src/redblacktrees.h` | Search Iteration Count, Leaf Display (for Red-Black Trees) | Angelo Mari Manlangit |
 | **Unsorted Set** | Chained Hash Table | `src/ChainedHashTable.h` | Custom Hash Function, Set of Sets, Iterable, Simple Set Functions | Gian Jefferson Reyes |
-| **Graph** | Adjacency Matrix | `src/adjacencymatrix.h` | Weighted Edges, Degree Calculation | Gian Jefferson Reyes |
+| **Graph** | Adjacency Matrix | `src/AdjacencyMatrix.h` | Weighted Edges, Degree Calculation | Gian Jefferson Reyes |
 
 ---
 
@@ -68,6 +68,8 @@ data-structures-in-cpp-GroupC/
 │   ├── node.h                # Singly & Doubly linked node structs
 │   ├── queue.h               # Queue ADT interface
 │   └── sset.h                # Sorted Set ADT interface
+│   └── uset.h                # Unsorted Set ADT interface
+│   └── graph.h               # Graoh ADT interface
 │
 ├── src/                      # Concrete implementations
 │   ├── arraystack.h          # FILO Stack (array-based)
@@ -77,8 +79,8 @@ data-structures-in-cpp-GroupC/
 │   ├── dllist.h              # Doubly Linked List
 │   ├── skiplist.h            # Sorted Set (skiplist)
 │   ├── redblacktrees.h       # Sorted Set (red-black tree)
-│   ├── chainedhashtable.h    # Unsorted Set (hash table)
-│   └── adjacencymatrix.h     # Graph (adjacency matrix)
+│   ├── ChainedHashTable.h    # Unsorted Set (hash table)
+│   └── AdjacencyMatrix.h     # Graph (adjacency matrix)
 │
 ├── tests/                    # Benchmarks & test cases
 │   ├── arraystack.cpp
@@ -88,8 +90,8 @@ data-structures-in-cpp-GroupC/
 │   ├── dllist.cpp
 │   ├── skiplist.cpp
 │   ├── redblacktrees.cpp
-│   ├── chainedhashtable.cpp
-│   └── adjacencymatrix.cpp
+│   ├── ChainedHashTable.cpp
+│   └── AdjacencyMatrix.cpp
 │
 ├── assets/
 │   └── demo-build.gif        # Build & run demo recording
