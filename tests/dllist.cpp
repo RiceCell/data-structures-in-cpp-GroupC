@@ -14,6 +14,8 @@ WHAT TO DO:
 #include <iomanip>
 #include "../src/dllist.h"
 
+const int RUNS = 10;
+
 void run_traversal_benchmark(long long N) {
     DLList<int> queue;
 
@@ -65,28 +67,39 @@ void run_benchmark(long long N)
 {
     DLList<int> queue;
 
-    // Time ENQUEUE (push)
-    auto start_push = std::chrono::high_resolution_clock::now();
-    for (long long i = 0; i < N; i++)
-    {
-        queue.push(i);
-    }
-    auto end_push = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff_push = end_push - start_push;
+    double total_add = 0.0;
+    double total_remove = 0.0;
 
-    // Time DEQUEUE (pop)
-    auto start_pop = std::chrono::high_resolution_clock::now();
-    for (long long i = 0; i < N; i++)
-    {
-        queue.pop();
+    for (int run = 0; run < RUNS; run++) {
+        // Time ENQUEUE (push)
+        auto start_push = std::chrono::high_resolution_clock::now();
+        for (long long i = 0; i < N; i++)
+        {
+            queue.push(i);
+        }
+        auto end_push = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> diff_push = end_push - start_push;
+        total_add += diff_push.count();
+
+        // Time DEQUEUE (pop)
+        auto start_pop = std::chrono::high_resolution_clock::now();
+        for (long long i = 0; i < N; i++)
+        {
+            queue.pop();
+        }
+        auto end_pop = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> diff_pop = end_pop - start_pop;
+        total_remove += diff_pop.count();
     }
-    auto end_pop = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff_pop = end_pop - start_pop;
+    
+    double avg_add = total_add / RUNS;
+    double avg_remove = total_remove / RUNS;
+    double avg_total = avg_add + avg_remove;
 
     std::cout << std::setw(12) << N
-              << std::setw(15) << diff_push.count()
-              << std::setw(15) << diff_pop.count()
-              << std::setw(15) << (diff_push.count() + diff_pop.count()) << "seconds" << std::endl;
+              << std::setw(15) << avg_add
+              << std::setw(15) << avg_remove
+              << std::setw(15) << avg_total << "seconds\n";
 }
 
 int traversal_mode(std::vector<long long> sizes) {

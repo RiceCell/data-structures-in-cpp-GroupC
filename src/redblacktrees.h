@@ -110,22 +110,6 @@ class RedBlackTree: SSet<T> {
         }
 
         // remove helper functions
-        // iteratively searches for the node with the data
-        // gonna actually use this for the find function too so there is also searchCount
-        RBTNode<T>* search(RBTNode<T>* n, const T key) {
-            RBTNode<T>* curr = n;
-            
-            while (curr != this->NIL && key != curr->data) {
-                this->searchCount++;
-                if (key < curr->data)
-                    curr = curr->left;
-                else
-                    curr = curr->right;
-            }
-
-            return curr;
-        }
-
         // finds the node with minimum value
         RBTNode<T> *minimum(RBTNode<T> *n) {
             while (n->left != this->NIL) {
@@ -283,7 +267,11 @@ class RedBlackTree: SSet<T> {
         }
 
         T remove(const T &x) override {
-            RBTNode<T> *toBeDeleted = this->search(this->root, x);
+            RBTNode<T> *toBeDeleted = this->root; 
+            while (toBeDeleted != this->NIL && x != toBeDeleted->data) {
+                toBeDeleted = (x < toBeDeleted->data) ? toBeDeleted->left : toBeDeleted->right;
+            }
+
             if (toBeDeleted == this->NIL) { return T(); } // no such value was found
 
             // variables to aid in deletion
@@ -331,7 +319,14 @@ class RedBlackTree: SSet<T> {
 
         bool find(const T &x) override {
             this->searchCount = 0;
-            if (this->search(this->root, x) != this->NIL)
+
+            RBTNode<T> *curr = this->root;
+            while (curr != this->NIL && x != curr->data) {
+                searchCount++;
+                curr = (x < curr->data) ? curr->left : curr->right;
+            }
+
+            if (curr != this->NIL)
                 return true;
             
             return false;

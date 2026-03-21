@@ -51,7 +51,7 @@ The library is benchmarked at scales from **1,000 to 10,000,000 elements** to de
 | **Deque** | Array Deque | `src/arraydeque.h` | Growth Tracking, Contain | Angelo Mari Manlangit |
 | **List** | Array Deque + Doubly Linked List | `src/arraydeque.h`, `src/dllist.h` | Node Pooling, Self-Healing (Floyd's Cycle Detection), Custom Traversal System | Angelo Mari Manlangit |
 | **Sorted Set** | Skiplist + Red-Black Tree | `src/skiplist.h`, `src/redblacktrees.h` | Search Iteration Count, Leaf Display (for Red-Black Trees) | Angelo Mari Manlangit |
-| **Unsorted Set** | Chained Hash Table | `src/chainedhashtable.h` | *TO ADD* | Gian Jefferson Reyes |
+| **Unsorted Set** | Chained Hash Table | `src/ChainedHashTable.h` | Custom Hash Function, Set of Sets, Iterable, Simple Set Functions | Gian Jefferson Reyes |
 | **Graph** | Adjacency Matrix | `src/adjacencymatrix.h` | Weighted Edges, Degree Calculation | Gian Jefferson Reyes |
 
 ---
@@ -241,6 +241,21 @@ The number of iterations and moves it takes until the inputted value is found is
 
 **2. Display Leaves**
 `displayLeaves()` prints all nodes of the Red-Black Tree with their corresponding colors in order. This is useful for verifying structural integrity — checking that no node violates the rules and conditions of a valid Red-Black Tree.
+
+---
+
+### USet: ChainedHashTable
+**1. Custom Hash Function for Primitive T Elements**
+Use standard C++ hashing as a base, and then pass it through a strong "mixer" or "finalizer." (MurmurHash3 64-bit avalanche mixer)
+
+**2. Custom Hash Function for `ChainedHashTable<T>` Elements**
+To support a Set of Sets. Use an XOR sum over the hashed elements, XOR is commutative so order of elements does not matter, as should a USet.
+
+**3. Iterable**
+A `forEach()` method was made for the USet to make it possible to iterate over each element with a callback.
+
+**4. Simple Set Functions**
+Set operations such as Subset, Union, Intersection, and Difference were made into methods to emulate the behaviors of an actual set.
 
 ---
 
